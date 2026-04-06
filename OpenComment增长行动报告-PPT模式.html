@@ -1,0 +1,1284 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>OpenComment 增长行动报告 - HTML PPT 模式</title>
+  <style>
+    :root {
+      --bg: #f4efe7;
+      --panel: #fffdf8;
+      --ink: #1c1b19;
+      --muted: #675f56;
+      --accent: #123f6b;
+      --accent-soft: #e8f0f8;
+      --accent-2: #bf642e;
+      --line: #ddd2c1;
+      --card: rgba(255, 255, 255, 0.94);
+      --shadow: 0 24px 64px rgba(24, 30, 38, 0.16);
+      --good: #23623f;
+      --warn: #9a4f1a;
+    }
+
+    * { box-sizing: border-box; }
+    html, body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at top left, rgba(18, 63, 107, 0.10), transparent 28%),
+        radial-gradient(circle at bottom right, rgba(191, 100, 46, 0.10), transparent 24%),
+        linear-gradient(135deg, #efe7d7 0%, #f9f5ee 52%, #edf2f8 100%);
+      font-family: "SF Pro Display", "PingFang SC", "Helvetica Neue", Arial, sans-serif;
+    }
+
+    body { display: flex; align-items: center; justify-content: center; }
+    .deck {
+      position: relative;
+      width: min(1360px, 100vw);
+      height: min(820px, 100vh);
+      overflow: hidden;
+      border: 1px solid rgba(0, 0, 0, 0.08);
+      background: var(--panel);
+      box-shadow: var(--shadow);
+    }
+
+    .slide {
+      position: absolute;
+      inset: 0 0 0 230px;
+      display: none;
+      padding: 40px 46px 34px;
+      background:
+        radial-gradient(circle at top right, rgba(18, 63, 107, 0.08), transparent 24%),
+        radial-gradient(circle at bottom left, rgba(191, 100, 46, 0.08), transparent 22%),
+        var(--panel);
+    }
+
+    .slide.active { display: grid; grid-template-rows: auto 1fr auto; gap: 18px; }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 14px;
+      border-radius: 999px;
+      background: var(--accent-soft);
+      color: var(--accent);
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    h1, h2, h3, p { margin: 0; }
+    h1 {
+      font-size: 46px;
+      line-height: 1.04;
+      letter-spacing: -0.04em;
+      max-width: 960px;
+    }
+    h2 {
+      font-size: 30px;
+      line-height: 1.1;
+      letter-spacing: -0.03em;
+    }
+    h3 {
+      font-size: 18px;
+      line-height: 1.28;
+      color: var(--accent);
+    }
+
+    .subtitle {
+      margin-top: 12px;
+      max-width: 940px;
+      color: var(--muted);
+      font-size: 20px;
+      line-height: 1.45;
+    }
+    .small {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.45;
+    }
+    .meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+    .stack, .grid-2, .grid-3, .hero, .kpi {
+      min-height: 0;
+    }
+    .stack {
+      display: grid;
+      gap: 16px;
+      align-content: start;
+    }
+    .hero {
+      display: grid;
+      grid-template-columns: 1.05fr 0.95fr;
+      gap: 24px;
+      min-height: 0;
+    }
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+    }
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+    }
+    .kpi {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+    }
+    .card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      padding: 18px 20px;
+      box-shadow: 0 10px 28px rgba(22, 29, 37, 0.06);
+    }
+    .card p, .card li {
+      font-size: 15px;
+      line-height: 1.45;
+      color: var(--ink);
+    }
+    .card strong {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 28px;
+      letter-spacing: -0.03em;
+      color: var(--accent);
+    }
+    .quote {
+      padding: 16px 18px;
+      border-left: 4px solid var(--accent-2);
+      background: rgba(191, 100, 46, 0.06);
+      border-radius: 16px;
+      color: var(--muted);
+      font-size: 17px;
+      line-height: 1.5;
+    }
+    ul {
+      margin: 0;
+      padding-left: 18px;
+    }
+    li + li { margin-top: 6px; }
+    .image-box {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 14px;
+      background: rgba(244, 239, 231, 0.85);
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      overflow: hidden;
+    }
+    .image-box img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      border-radius: 14px;
+    }
+    .timeline {
+      display: grid;
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+      gap: 12px;
+      align-items: stretch;
+    }
+    .phase {
+      border-radius: 22px;
+      padding: 16px;
+      border: 1px solid var(--line);
+      background: linear-gradient(180deg, rgba(18, 63, 107, 0.06), rgba(255,255,255,0.96));
+    }
+    .phase h3 { margin-bottom: 8px; }
+    .phase .date {
+      display: inline-block;
+      margin-bottom: 10px;
+      padding: 4px 8px;
+      border-radius: 999px;
+      background: rgba(18, 63, 107, 0.10);
+      color: var(--accent);
+      font-size: 12px;
+      font-weight: 700;
+    }
+    .phase p, .phase li { font-size: 13px; line-height: 1.4; }
+    .status {
+      display: inline-block;
+      padding: 4px 8px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 700;
+    }
+    .status.good { background: rgba(35, 98, 63, 0.1); color: var(--good); }
+    .status.warn { background: rgba(154, 79, 26, 0.12); color: var(--warn); }
+    .table-wrap {
+      min-height: 0;
+      overflow: auto;
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      background: rgba(255, 255, 255, 0.94);
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 1080px;
+      font-size: 13px;
+      line-height: 1.4;
+    }
+    th, td {
+      border: 1px solid var(--line);
+      padding: 10px 12px;
+      text-align: left;
+      vertical-align: top;
+    }
+    th {
+      position: sticky;
+      top: 0;
+      background: #eef3f8;
+      color: var(--accent);
+    }
+    .footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+    .compact-slide.active { gap: 12px; }
+    .compact-slide h2 { font-size: 28px; }
+    .compact-slide .table-wrap {
+      border-radius: 18px;
+    }
+    .compact-slide table {
+      min-width: 960px;
+      font-size: 12px;
+      line-height: 1.24;
+    }
+    .compact-slide th,
+    .compact-slide td {
+      padding: 7px 9px;
+    }
+    .compact-slide .grid-2 {
+      gap: 12px;
+    }
+    .compact-slide .card {
+      padding: 14px 16px;
+      border-radius: 18px;
+    }
+    .compact-slide .card h3 {
+      font-size: 16px;
+    }
+    .compact-slide .card li,
+    .compact-slide .card p {
+      font-size: 14px;
+      line-height: 1.32;
+    }
+    .controls {
+      position: absolute;
+      right: 22px;
+      bottom: 18px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      z-index: 4;
+    }
+    .btn {
+      border: 0;
+      border-radius: 999px;
+      padding: 10px 14px;
+      background: var(--accent);
+      color: #fff;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 10px 24px rgba(18, 63, 107, 0.20);
+    }
+    .btn.secondary {
+      background: rgba(18, 63, 107, 0.1);
+      color: var(--accent);
+      box-shadow: none;
+    }
+    .counter {
+      min-width: 84px;
+      text-align: center;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--accent);
+    }
+    .sidebar {
+      position: absolute;
+      inset: 0 auto 0 0;
+      width: 230px;
+      padding: 20px 16px 18px;
+      border-right: 1px solid var(--line);
+      background:
+        linear-gradient(180deg, rgba(18, 63, 107, 0.06), rgba(255, 255, 255, 0.96));
+      z-index: 3;
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      gap: 16px;
+    }
+    .sidebar-title {
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+    .sidebar-subtitle {
+      font-size: 12px;
+      line-height: 1.45;
+      color: var(--muted);
+    }
+    .toc {
+      display: grid;
+      gap: 8px;
+      align-content: start;
+      overflow: auto;
+      padding-right: 4px;
+    }
+    .toc-btn {
+      width: 100%;
+      text-align: left;
+      border: 1px solid transparent;
+      border-radius: 14px;
+      padding: 10px 12px;
+      background: rgba(255,255,255,0.72);
+      color: var(--ink);
+      cursor: pointer;
+      transition: 0.18s ease;
+    }
+    .toc-btn:hover {
+      border-color: rgba(18, 63, 107, 0.16);
+      background: rgba(255,255,255,0.96);
+    }
+    .toc-btn.active {
+      border-color: rgba(18, 63, 107, 0.22);
+      background: var(--accent-soft);
+      box-shadow: 0 8px 18px rgba(18, 63, 107, 0.08);
+    }
+    .toc-btn .toc-no {
+      display: block;
+      margin-bottom: 4px;
+      font-size: 11px;
+      font-weight: 800;
+      color: var(--accent);
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+    .toc-btn .toc-label {
+      display: block;
+      font-size: 13px;
+      line-height: 1.35;
+    }
+    .sidebar-note {
+      font-size: 12px;
+      line-height: 1.45;
+      color: var(--muted);
+      border-top: 1px solid var(--line);
+      padding-top: 12px;
+    }
+
+    @media (max-width: 1100px) {
+      .deck { width: 100vw; height: 100vh; }
+      .slide {
+        inset: 0;
+        padding: 28px 24px 26px;
+      }
+      .sidebar { display: none; }
+      .hero, .grid-2, .grid-3, .kpi, .timeline { grid-template-columns: 1fr; }
+      h1 { font-size: 36px; }
+      .subtitle { font-size: 18px; }
+    }
+  </style>
+</head>
+<body>
+  <main class="deck">
+    <aside class="sidebar">
+      <div class="stack" style="gap:8px;">
+        <div class="sidebar-title">目录</div>
+        <div class="sidebar-subtitle">按“问题 -> 判断 -> owner -> 时间线 -> 执行 -> 风险 -> 结论”展开。</div>
+      </div>
+      <nav class="toc" id="toc">
+        <button class="toc-btn active" type="button" data-slide="0">
+          <span class="toc-no">01</span>
+          <span class="toc-label">封面与核心路径</span>
+        </button>
+        <button class="toc-btn" type="button" data-slide="1">
+          <span class="toc-no">02</span>
+          <span class="toc-label">一页结论</span>
+        </button>
+        <button class="toc-btn" type="button" data-slide="2">
+          <span class="toc-no">03</span>
+          <span class="toc-label">增长逻辑与主引擎</span>
+        </button>
+        <button class="toc-btn" type="button" data-slide="3">
+          <span class="toc-no">04</span>
+          <span class="toc-label">谁在什么时候做什么</span>
+        </button>
+        <button class="toc-btn" type="button" data-slide="4">
+          <span class="toc-no">05</span>
+          <span class="toc-label">12 个月总时间轴</span>
+        </button>
+        <button class="toc-btn" type="button" data-slide="5">
+          <span class="toc-no">06</span>
+          <span class="toc-label">前 90 天作战图</span>
+        </button>
+        <button class="toc-btn" type="button" data-slide="6">
+          <span class="toc-no">07</span>
+          <span class="toc-label">前 12 周关键任务</span>
+        </button>
+        <button class="toc-btn" type="button" data-slide="7">
+          <span class="toc-no">08</span>
+          <span class="toc-label">每月重点任务</span>
+        </button>
+        <button class="toc-btn" type="button" data-slide="8">
+          <span class="toc-no">09</span>
+          <span class="toc-label">平台优先级</span>
+        </button>
+        <button class="toc-btn" type="button" data-slide="9">
+          <span class="toc-no">10</span>
+          <span class="toc-label">注册链接与素材</span>
+        </button>
+        <button class="toc-btn" type="button" data-slide="10">
+          <span class="toc-no">11</span>
+          <span class="toc-label">关键指标与风险</span>
+        </button>
+        <button class="toc-btn" type="button" data-slide="11">
+          <span class="toc-no">12</span>
+          <span class="toc-label">最终结论</span>
+        </button>
+      </nav>
+      <div class="sidebar-note">
+        老板最需要看的三页：`04 owner 分工`、`05 时间轴`、`06 前 90 天作战图`。
+      </div>
+    </aside>
+    <section class="slide active">
+      <header class="stack">
+        <span class="eyebrow">OpenComment / HTML PPT</span>
+        <h1>增长行动报告</h1>
+        <p class="subtitle">目标不是做一份抽象增长建议，而是回答老板最关心的三个问题：为什么是这条路、什么时候见效、谁来负责。</p>
+        <div class="meta">
+          <span>起始时间：2026-03-30（周一）</span>
+          <span>周期：2026-03-30 ~ 2027-03-31</span>
+          <span>形式：HTML deck，可翻页展示</span>
+        </div>
+      </header>
+      <div class="hero">
+        <div class="stack">
+          <div class="card">
+            <h3>核心路径</h3>
+            <ul>
+              <li>LinkedIn comment-led growth workflow</li>
+              <li>官网内容承接</li>
+              <li>公开入口放大</li>
+              <li>信任资产沉淀</li>
+            </ul>
+          </div>
+          <div class="quote">
+            这条路的重点不是“先把功能全部做完，再去大规模推广”，而是先用 LinkedIn 跑通最小闭环，再用内容、案例和公开入口放大。
+          </div>
+        </div>
+        <div class="image-box">
+          <img src="/Users/liuxinyun/Documents/DesktopOrganizer/文件夹 1/个人简历库/投递记录/open comment/产品资料/opencomment LinkedIn banner.png" alt="OpenComment Banner" />
+        </div>
+      </div>
+      <footer class="footer">
+        <span>主战场：LinkedIn / 官网 / Blog / 公开入口</span>
+        <span>1 / 12</span>
+      </footer>
+    </section>
+
+    <section class="slide">
+      <header class="stack">
+        <span class="eyebrow">Slide 02</span>
+        <h2>一页结论</h2>
+      </header>
+      <div class="kpi">
+        <div class="card">
+          <strong>4-6 个月</strong>
+          <p>跑出增长雏形，做到在目标圈层“明显被看见”。</p>
+        </div>
+        <div class="card">
+          <strong>9-12 个月</strong>
+          <p>建立更稳定的圈层认知、搜索复利和持续使用。</p>
+        </div>
+        <div class="card">
+          <strong>Month 1</strong>
+          <p>启动 LinkedIn 评论、发帖、官网首页承接。</p>
+        </div>
+        <div class="card">
+          <strong>Month 2</strong>
+          <p>启动 Blog / SEO / GEO、FAQ、安全说明和 use case 页面。</p>
+        </div>
+      </div>
+      <div class="note" style="margin-top:16px;">
+        老板新要求补充后的关键调整：`公司 Profile / 外链占位要前置`，但 `Product Hunt` 这类正式 launch 平台仍然不应在 4 月就公开推出。
+      </div>
+      <div class="grid-2">
+        <div class="card">
+          <h3>为什么这条路适合 OpenComment</h3>
+          <ul>
+            <li>产品天然适合 founder-led growth</li>
+            <li>用户决策高度依赖信任和边界说明</li>
+            <li>LinkedIn 是最强自然分发场景</li>
+            <li>评论和帖子本身能不断生成内容素材</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>市场与竞品启发</h3>
+          <ul>
+            <li>Warmr：评论驱动增长叙事成立</li>
+            <li>Supergrow：创始人公开表达带来早期口碑</li>
+            <li>AuthoredUp：帮助中心和安全表述是底盘</li>
+            <li>Taplio / Shield：公开入口和结果证明会形成复利</li>
+          </ul>
+        </div>
+      </div>
+      <footer class="footer">
+        <span>先回答“值不值得做”，再回答“谁来做”，最后回答“具体怎么做”</span>
+        <span>2 / 12</span>
+      </footer>
+    </section>
+
+    <section class="slide">
+      <header class="stack">
+        <span class="eyebrow">Slide 03</span>
+        <h2>增长逻辑与主引擎</h2>
+      </header>
+      <div class="grid-2">
+        <div class="stack">
+          <div class="card">
+            <h3>增长主轴</h3>
+            <ul>
+              <li>评论区露面带来曝光</li>
+              <li>发帖建立观点和品牌归因</li>
+              <li>官网和 Blog 把曝光承接成理解与试用</li>
+              <li>案例、FAQ 和安全说明把理解转化成信任</li>
+              <li>公开入口把增长结果放大成公开存在证明</li>
+            </ul>
+          </div>
+          <div class="grid-2">
+            <div class="card">
+              <h3>LinkedIn 分发引擎</h3>
+              <p>用 OpenComment 自己做 KOL 评论区增长，叠加创始人/品牌号发帖。</p>
+            </div>
+            <div class="card">
+              <h3>官网内容引擎</h3>
+              <p>用首页、use case、FAQ、安全说明、Blog 做解释和承接。</p>
+            </div>
+            <div class="card">
+              <h3>公开入口引擎</h3>
+              <p>用 Chrome Web Store、Product Hunt 做公开存在证明和放大。</p>
+            </div>
+            <div class="card">
+              <h3>信任资产引擎</h3>
+              <p>用案例、截图、帮助中心、结果证明降低试用门槛。</p>
+            </div>
+          </div>
+        </div>
+        <div class="image-box">
+          <img src="/Users/liuxinyun/Documents/DesktopOrganizer/文件夹 1/个人简历库/投递记录/open comment/产品资料/opcm工作流.png" alt="OpenComment Workflow" />
+        </div>
+      </div>
+      <footer class="footer">
+        <span>这页回答：为什么这条路径比“大而全平台”或“先投流”更适合现在的 OpenComment</span>
+        <span>3 / 12</span>
+      </footer>
+    </section>
+
+    <section class="slide">
+      <header class="stack">
+        <span class="eyebrow">Slide 04</span>
+        <h2>谁在什么时候做什么</h2>
+      </header>
+      <div class="grid-2">
+        <div class="card">
+          <h3>必须先明确一个角色：增长代言人</h3>
+          <ul>
+            <li>不一定是创始人，但必须有一个固定公开面孔</li>
+            <li>负责对外解释产品是什么、适合谁、不是什么</li>
+            <li>负责持续发布 LinkedIn 内容并进入评论区</li>
+            <li>负责用产品 dogfooding，产出案例和结果证明</li>
+            <li>负责承担早期信任背书</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>角色分工</h3>
+          <ul>
+            <li><strong style="font-size:16px; margin-bottom:0;">运营</strong>：KOL 清单、内容日历、Blog、公开入口素材、数据复盘</li>
+            <li><strong style="font-size:16px; margin-bottom:0;">产品</strong>：ICP、定位、FAQ、use case、comparison、公司 profile 统一口径、激活路径</li>
+            <li><strong style="font-size:16px; margin-bottom:0;">合规</strong>：安全口径、边界表达、平台风险和上架审核</li>
+            <li><strong style="font-size:16px; margin-bottom:0;">技术</strong>：页面上线、稳定性、埋点、截图数据、profile 素材、CWS/PH 技术准备</li>
+          </ul>
+        </div>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>时间</th>
+              <th>重点目标</th>
+              <th>增长代言人</th>
+              <th>运营</th>
+              <th>产品</th>
+              <th>合规</th>
+              <th>技术</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Month 1</strong></td>
+              <td>跑通最小闭环 + 建立基础 profile</td>
+              <td>开始发声、评论、发帖、dogfooding</td>
+              <td>建 KOL 清单、内容节奏、记录数据，并创建 LinkedIn 企业页、整理 AlternativeTo / Crunchbase 素材池</td>
+              <td>定首页、CTA、FAQ 结构、激活定义，并统一各平台简介口径</td>
+              <td>定安全口径和边界</td>
+              <td>上线首页、demo、埋点，并支持 profile 素材</td>
+            </tr>
+            <tr>
+              <td><strong>Month 2</strong></td>
+              <td>建内容承接 + 完成第一批外链占位</td>
+              <td>输出方法论和案例雏形</td>
+              <td>上线 Blog、use case、comparison 雏形，并完成 AlternativeTo / Crunchbase 基础占位</td>
+              <td>访谈、提炼页面结构，并完善 G2 / Product Hunt / CWS 所需统一简介</td>
+              <td>审核 FAQ / 安全说明 / profile 表述与目录平台文案</td>
+              <td>支持 Blog / FAQ / 页面上线</td>
+            </tr>
+            <tr>
+              <td><strong>Month 3-6</strong></td>
+              <td>系统化增长 + 放大公开存在</td>
+              <td>用案例和观点建立信任</td>
+              <td>建内容日历、案例素材，先准备 CWS / PH，再在合适窗口推进 G2 评论</td>
+              <td>优化转化与案例结构，并补齐 launch / review 平台所需素材</td>
+              <td>审核公开入口表述、上架风险和评论邀请话术</td>
+              <td>支持案例页、帮助中心、上架与数据提取，并保证 listing 体验稳定</td>
+            </tr>
+            <tr>
+              <td><strong>Month 7-12</strong></td>
+              <td>建立认知</td>
+              <td>稳定承担市场发声人</td>
+              <td>放大内容、合作渠道、报告分发</td>
+              <td>类目语言、留存和激活优化</td>
+              <td>审核更广泛对外内容</td>
+              <td>支持报告、内容基础设施和持续优化</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <footer class="footer">
+        <span>给老板的直白解释：没有创始人出面也可以做，但必须明确一个增长代言人和每阶段 owner</span>
+        <span>4 / 12</span>
+      </footer>
+    </section>
+
+    <section class="slide">
+      <header class="stack">
+        <span class="eyebrow">Slide 05</span>
+        <h2>12 个月总时间轴</h2>
+        <p class="small">从 2026-03-30 启动，前 2 个月跑最小闭环，5-6 个月推出公开入口，9-12 个月建立认知。</p>
+      </header>
+      <div class="timeline">
+        <div class="phase">
+          <span class="date">2026-03-30 ~ 2026-04-26</span>
+          <h3>Phase 1</h3>
+          <p><strong>启动验证</strong></p>
+          <ul>
+            <li>评论增长</li>
+            <li>发帖 + LinkedIn 企业页</li>
+            <li>首页最小闭环</li>
+          </ul>
+        </div>
+        <div class="phase">
+          <span class="date">2026-04-27 ~ 2026-05-31</span>
+          <h3>Phase 2</h3>
+          <p><strong>内容承接</strong></p>
+          <ul>
+            <li>Blog / SEO / GEO</li>
+            <li>FAQ / 安全说明</li>
+            <li>Use case + AlternativeTo / Crunchbase</li>
+          </ul>
+        </div>
+        <div class="phase">
+          <span class="date">2026-06-01 ~ 2026-07-31</span>
+          <h3>Phase 3</h3>
+          <p><strong>系统化增长</strong></p>
+          <ul>
+            <li>案例与结果证明</li>
+            <li>主题簇</li>
+            <li>CWS / PH / G2 准备</li>
+          </ul>
+        </div>
+        <div class="phase">
+          <span class="date">2026-08-01 ~ 2026-09-30</span>
+          <h3>Phase 4</h3>
+          <p><strong>公开证明</strong></p>
+          <ul>
+            <li>Chrome Web Store</li>
+            <li>Product Hunt</li>
+            <li>G2 / 评价与帮助中心</li>
+          </ul>
+        </div>
+        <div class="phase">
+          <span class="date">2026-10-01 ~ 2026-12-31</span>
+          <h3>Phase 5</h3>
+          <p><strong>复利放大</strong></p>
+          <ul>
+            <li>主题簇扩张</li>
+            <li>comparison 页面</li>
+            <li>轻合作渠道</li>
+          </ul>
+        </div>
+        <div class="phase">
+          <span class="date">2027-01-01 ~ 2027-03-31</span>
+          <h3>Phase 6</h3>
+          <p><strong>认知建立</strong></p>
+          <ul>
+            <li>benchmark / report</li>
+            <li>类目表达</li>
+            <li>年度整合</li>
+          </ul>
+        </div>
+      </div>
+      <div class="grid-2">
+        <div class="card">
+          <span class="status good">4-6 months</span>
+          <p style="margin-top:10px;">目标是跑出增长雏形：在目标圈层“明显被看见”，并形成首批试用、案例和公开存在证明。</p>
+        </div>
+        <div class="card">
+          <span class="status warn">9-12 months</span>
+          <p style="margin-top:10px;">目标是建立圈层认知：通过内容复利、搜索复利、案例和类目语言，形成稳定认知。</p>
+        </div>
+      </div>
+      <footer class="footer">
+        <span>时间轴重点：公开入口从一开始准备，但在第 5-6 个月择机推出</span>
+        <span>5 / 12</span>
+      </footer>
+    </section>
+
+    <section class="slide">
+      <header class="stack">
+        <span class="eyebrow">Slide 06</span>
+        <h2>前 90 天作战图</h2>
+      </header>
+      <div class="grid-3">
+        <div class="card">
+          <h3>Month 1｜评论 + 发帖 + 首页</h3>
+          <ul>
+            <li>建立 30-50 人 KOL 清单</li>
+            <li>定义评论筛选规则</li>
+            <li>每周发 2-3 条 LinkedIn post</li>
+            <li>首页上线 Hero、CTA、demo 入口</li>
+            <li>建立周指标表</li>
+            <li>建立 LinkedIn 企业页，并整理 AlternativeTo / Crunchbase 信息模板</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>Month 2｜Blog / SEO / GEO + FAQ</h3>
+          <ul>
+            <li>上线首批高意图 Blog</li>
+            <li>上线 FAQ / 安全说明 / use case 页面</li>
+            <li>开始 comparison 页面框架</li>
+            <li>把高表现帖子改写为文章</li>
+            <li>完成 AlternativeTo / Crunchbase 占位，并准备 G2 profile</li>
+            <li>做首批用户访谈</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>Month 3｜案例 + 主题簇 + 公开入口准备</h3>
+          <ul>
+            <li>上线首个案例页</li>
+            <li>围绕主主题做内容簇</li>
+            <li>优化 onboarding 和 CTA</li>
+            <li>建立帮助中心基础结构</li>
+            <li>完成 CWS / PH 素材包，并判断 G2 何时开始推评论</li>
+          </ul>
+        </div>
+      </div>
+      <div class="quote">
+        第 1 个月就启动 LinkedIn 内容系统，第 2 个月就启动 SEO/GEO 基础盘。第 3 个月开始做系统化，而不是到那时才开始做。
+      </div>
+      <footer class="footer">
+        <span>前 90 天的任务不是“做很多”，而是尽快证明哪种内容、哪种 ICP、哪种承接最有效</span>
+        <span>6 / 12</span>
+      </footer>
+    </section>
+
+    <section class="slide">
+      <header class="stack">
+        <span class="eyebrow">Slide 07</span>
+        <h2>按周推进：前 12 周谁做什么</h2>
+      </header>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>周次</th>
+              <th>时间</th>
+              <th>Owner</th>
+              <th>核心任务</th>
+              <th>输出</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Week 1</strong></td>
+              <td>03-30 ~ 04-05</td>
+              <td>产品 + 运营</td>
+              <td>确定主 ICP、建立 30-50 人 KOL 清单、定义评论规则、确认首页主标题与 CTA，并明确增长代言人</td>
+              <td>KOL 清单、评论规则、首页文案、周指标表</td>
+            </tr>
+            <tr>
+              <td><strong>Week 2</strong></td>
+              <td>04-06 ~ 04-12</td>
+              <td>增长代言人 + 运营</td>
+              <td>高频评论、发布首批 2 条 LinkedIn post、首页最小闭环上线、梳理 FAQ 问题池、创建 LinkedIn 企业页</td>
+              <td>首页最小版、评论样本、FAQ 问题池、LinkedIn 企业页</td>
+            </tr>
+            <tr>
+              <td><strong>Week 3</strong></td>
+              <td>04-13 ~ 04-19</td>
+              <td>技术 + 产品 + 运营</td>
+              <td>继续评论与发帖、上线 demo 模块、上线 FAQ 第一版、整理 AlternativeTo / Crunchbase 信息模板、复盘前两周数据</td>
+              <td>demo 页面、FAQ 第一版、平台信息模板、首轮数据复盘</td>
+            </tr>
+            <tr>
+              <td><strong>Week 4</strong></td>
+              <td>04-20 ~ 04-26</td>
+              <td>合规 + 运营</td>
+              <td>优化评论风格、固定发帖栏目、完成安全说明第一版、明确首批 Blog 选题、完成 4 月阶段复盘</td>
+              <td>安全说明第一版、Blog 选题库、4 月阶段复盘</td>
+            </tr>
+            <tr>
+              <td><strong>Week 5-8</strong></td>
+              <td>04-27 ~ 05-24</td>
+              <td>运营 + 产品</td>
+              <td>上线首批 Blog、use case、comparison、访谈试用用户、完成 AlternativeTo / Crunchbase 占位，并整理首个案例草稿</td>
+              <td>Blog 基础盘、use case 页、comparison 雏形、目录占位、案例草稿</td>
+            </tr>
+            <tr>
+              <td><strong>Week 9-12</strong></td>
+              <td>05-25 ~ 06-21</td>
+              <td>增长代言人 + 运营 + 技术</td>
+              <td>形成内容日历、上线案例页、建立帮助中心结构、准备 CWS / PH 素材，并判断 G2 何时进入评论推动窗口</td>
+              <td>内容日历、案例页、帮助中心雏形、CWS/PH 素材清单、G2 判断结论</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <footer class="footer">
+        <span>周视角只回答一件事：本周谁负责把哪一个关键节点推进到完成</span>
+        <span>7 / 12</span>
+      </footer>
+    </section>
+
+    <section class="slide">
+      <header class="stack">
+        <span class="eyebrow">Slide 08</span>
+        <h2>按月推进：4 月到 9 月每月谁做什么</h2>
+      </header>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>月份</th>
+              <th>重点目标</th>
+              <th>Owner</th>
+              <th>必须完成</th>
+              <th>月末判断</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>2026-04</strong></td>
+              <td>跑通最小闭环 + 建基础 profile</td>
+              <td>增长代言人 + 运营</td>
+              <td>LinkedIn 评论 / 发帖、首页最小闭环、FAQ / 安全说明、LinkedIn 企业页、AlternativeTo / Crunchbase 素材准备</td>
+              <td>是否有人从 LinkedIn 进入官网并开始试用</td>
+            </tr>
+            <tr>
+              <td><strong>2026-05</strong></td>
+              <td>建内容承接 + 完成第一批目录占位</td>
+              <td>运营 + 产品</td>
+              <td>Blog、use case、comparison 雏形、AlternativeTo / Crunchbase 占位、G2 profile 准备</td>
+              <td>是否开始形成稳定内容承接</td>
+            </tr>
+            <tr>
+              <td><strong>2026-06</strong></td>
+              <td>建案例 + 准备 launch 素材</td>
+              <td>增长代言人 + 技术</td>
+              <td>首个案例页、帮助中心雏形、CWS / PH 素材初版</td>
+              <td>是否具备公开放大所需的最小案例和素材</td>
+            </tr>
+            <tr>
+              <td><strong>2026-07</strong></td>
+              <td>系统化内容和转化</td>
+              <td>运营 + 产品</td>
+              <td>内容日历、主题簇、转化链路优化、结果证明扩充</td>
+              <td>是否明确最高转化 ICP 和主题</td>
+            </tr>
+            <tr>
+              <td><strong>2026-08</strong></td>
+              <td>公开放大准备到位</td>
+              <td>运营 + 合规 + 技术</td>
+              <td>CWS 上架准备、G2 profile、评价邀请路径、Launch 风险检查</td>
+              <td>是否具备正式推进公开入口的条件</td>
+            </tr>
+            <tr>
+              <td><strong>2026-09</strong></td>
+              <td>推出公开入口并整理成果</td>
+              <td>增长代言人 + 运营</td>
+              <td>视准备度推进 Chrome Web Store / Product Hunt、整理 4-6 个月成果</td>
+              <td>是否在圈层里开始“明显被看见”</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="grid-2">
+        <div class="card">
+          <h3>4-6 个月的“成功长相”</h3>
+          <p>有首批案例和结果证明，有稳定的 LinkedIn 访问和一定搜索承接，有 Chrome Web Store / PH 的准备或上线成果，在目标圈层里开始“明显被看见”。</p>
+        </div>
+        <div class="card">
+          <h3>9-12 个月的“成功长相”</h3>
+          <p>搜索流量和内容复利更稳定，品牌认知明显提升，市场开始把 OpenComment 和 comment-led growth 联系起来，增长不再只依赖创始人单点输出。</p>
+        </div>
+      </div>
+      <footer class="footer">
+        <span>月度视角回答“本月必须完成什么”，阶段视角回答“为什么要做这些”</span>
+        <span>8 / 12</span>
+      </footer>
+    </section>
+
+    <section class="slide">
+      <header class="stack">
+        <span class="eyebrow">Slide 09</span>
+        <h2>公开入口与外链节奏：先看优先级，再看上线时点</h2>
+      </header>
+      <div class="card">
+        <table>
+          <thead>
+            <tr>
+              <th>优先级</th>
+              <th>平台</th>
+              <th>建议启动时间</th>
+              <th>当前动作</th>
+              <th>主要价值</th>
+              <th>结论</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>P0</strong></td>
+              <td>LinkedIn 企业页</td>
+              <td>2026-04</td>
+              <td>立即创建并发首批 post</td>
+              <td>品牌可信度、分发、官网外链</td>
+              <td>必须现在就做</td>
+            </tr>
+            <tr>
+              <td><strong>P0</strong></td>
+              <td>Chrome Web Store</td>
+              <td>2026-04 准备 / 2026-08~09 公开</td>
+              <td>现在做 listing 素材和上架准备</td>
+              <td>安装入口、评分、公开存在证明</td>
+              <td>现在准备，不能 4 月硬 launch</td>
+            </tr>
+            <tr>
+              <td><strong>P0</strong></td>
+              <td>Product Hunt</td>
+              <td>2026-04 准备 / 2026-08~09 公开</td>
+              <td>现在做 launch 素材包</td>
+              <td>正式 launch、公开背书、评论承接</td>
+              <td>中期放大器，不是冷启动起点</td>
+            </tr>
+            <tr>
+              <td><strong>P1</strong></td>
+              <td>AlternativeTo</td>
+              <td>2026-04~05</td>
+              <td>尽快完成基础占位</td>
+              <td>“替代谁”搜索流量、目录占位</td>
+              <td>应前置</td>
+            </tr>
+            <tr>
+              <td><strong>P1</strong></td>
+              <td>Crunchbase</td>
+              <td>2026-04~05</td>
+              <td>尽快完成公司档案</td>
+              <td>品牌可信度、搜索结果占位</td>
+              <td>应前置</td>
+            </tr>
+            <tr>
+              <td><strong>P1</strong></td>
+              <td>G2</td>
+              <td>2026-05~07 准备 / 有用户后推评论</td>
+              <td>先准备 profile，后推动评价</td>
+              <td>第三方评价、采购心智</td>
+              <td>二阶段优先</td>
+            </tr>
+            <tr>
+              <td><strong>P2</strong></td>
+              <td>BetaList / Indie Hackers / Reddit / YouTube</td>
+              <td>2026-05+</td>
+              <td>作为补充曝光和内容分发</td>
+              <td>冷启动补充、反馈、教程承接</td>
+              <td>可做，但不是 4 月第一优先级</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="quote">
+        这页只回答一个问题：现在先做谁。结论是 `Profile 前置，Launch 后置`，把 LinkedIn 企业页、AlternativeTo、Crunchbase 提前，把 Product Hunt 和 G2 评论往后放。
+      </div>
+      <footer class="footer">
+        <span>老板先拍优先级，再拍具体提交动作</span>
+        <span>9 / 12</span>
+      </footer>
+    </section>
+
+    <section class="slide compact-slide">
+      <header class="stack">
+        <span class="eyebrow">Slide 10</span>
+        <h2>注册链接与最低素材：执行层可以直接按表开工</h2>
+      </header>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>平台</th>
+              <th>注册链接</th>
+              <th>最低必备素材</th>
+              <th>责任人建议</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>LinkedIn 企业页</td>
+              <td><a href="https://www.linkedin.com/help/linkedin/answer/a543852" target="_blank" rel="noreferrer">Create a LinkedIn Page</a></td>
+              <td>公司名、公共 URL、官网、行业、公司规模、Logo、Banner、Tagline、简介、3-5 条首发内容</td>
+              <td>运营主导，产品给口径</td>
+            </tr>
+            <tr>
+              <td>Chrome Web Store</td>
+              <td><a href="https://developer.chrome.com/docs/webstore/publish/" target="_blank" rel="noreferrer">Publish Guide</a><br /><a href="https://chrome.google.com/webstore/devconsole" target="_blank" rel="noreferrer">Developer Dashboard</a></td>
+              <td>扩展 zip 包、商店标题、副标题、描述、截图、图标、Privacy Policy、Support Email、官网、FAQ、测试说明</td>
+              <td>技术 + 运营 + 合规</td>
+            </tr>
+            <tr>
+              <td>Product Hunt</td>
+              <td><a href="https://www.producthunt.com/" target="_blank" rel="noreferrer">Product Hunt</a><br /><a href="https://www.producthunt.com/posts/new" target="_blank" rel="noreferrer">Start a new post</a></td>
+              <td>产品名、一句话定位、Logo、缩略图、5-7 张截图、官网链接、短 demo、maker 资料、首发文案、评论区回复话术</td>
+              <td>增长代言人 + 运营</td>
+            </tr>
+            <tr>
+              <td>AlternativeTo / Crunchbase</td>
+              <td><a href="https://alternativeto.net/" target="_blank" rel="noreferrer">AlternativeTo</a><br /><a href="https://www.crunchbase.com/" target="_blank" rel="noreferrer">Crunchbase</a></td>
+              <td>产品名、官网、短描述、分类、竞品名单、公司简介、团队、Logo、截图</td>
+              <td>运营</td>
+            </tr>
+            <tr>
+              <td>G2</td>
+              <td><a href="https://documentation.g2.com/g2/docs/product-information/" target="_blank" rel="noreferrer">G2 Docs</a><br /><a href="https://my.g2.com/" target="_blank" rel="noreferrer">my.G2</a></td>
+              <td>产品简介、分类、官网、Logo、Banner、截图、FAQ、评价邀请文案、支持信息</td>
+              <td>运营 + 产品 + 合规</td>
+            </tr>
+            <tr>
+              <td>BetaList / Indie Hackers / Reddit / YouTube</td>
+              <td><a href="https://betalist.com/" target="_blank" rel="noreferrer">BetaList</a> / <a href="https://www.indiehackers.com/" target="_blank" rel="noreferrer">Indie Hackers</a> / <a href="https://www.reddit.com/" target="_blank" rel="noreferrer">Reddit</a> / <a href="https://www.youtube.com/" target="_blank" rel="noreferrer">YouTube</a></td>
+              <td>产品简介、截图、故事、FAQ、风险边界、demo、walkthrough、社区话术</td>
+              <td>运营 + 增长代言人</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="grid-2">
+        <div class="card">
+          <h3>2026-04 必须完成</h3>
+          <ul>
+            <li>LinkedIn 企业页</li>
+            <li>Chrome Web Store / Product Hunt 素材包</li>
+            <li>AlternativeTo / Crunchbase 信息准备</li>
+            <li>FAQ / 安全说明 / 隐私政策整理</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>2026-08~09 才适合正式推进</h3>
+          <ul>
+            <li>Chrome Web Store 正式公开</li>
+            <li>Product Hunt 正式 launch</li>
+            <li>G2 评论推动</li>
+            <li>YouTube walkthrough 放大承接</li>
+          </ul>
+        </div>
+      </div>
+      <footer class="footer">
+        <span>这页回答“去哪里注册、准备什么素材”</span>
+        <span>10 / 12</span>
+      </footer>
+    </section>
+
+    <section class="slide">
+      <header class="stack">
+        <span class="eyebrow">Slide 11</span>
+        <h2>关键指标与风险</h2>
+      </header>
+      <div class="grid-2">
+        <div class="card">
+          <h3>每周必须看</h3>
+          <ul>
+            <li>LinkedIn 评论带来的 profile visits</li>
+            <li>LinkedIn post 带来的官网点击</li>
+            <li>官网访问到注册转化率</li>
+            <li>注册到首次成功动作转化率</li>
+            <li>Blog 页面访问和 CTA 点击</li>
+            <li>高价值试用用户数</li>
+            <li>LinkedIn 企业页访问和外链收录进度</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>每月必须看</h3>
+          <ul>
+            <li>最有效的评论类型</li>
+            <li>最有效的发帖类型</li>
+            <li>最有效的 Blog / SEO 主题</li>
+            <li>最容易激活的 ICP</li>
+            <li>用户流失在哪一层：理解、信任、上手还是结果</li>
+            <li>哪些外链 / profile 平台值得下月继续维护</li>
+          </ul>
+        </div>
+      </div>
+      <div class="grid-3">
+        <div class="card">
+          <h3>关键前置条件</h3>
+          <ul>
+            <li>持续产出可见内容</li>
+            <li>尽早建立 FAQ / 安全说明</li>
+            <li>形成案例和结果证明</li>
+            <li>坚持窄 ICP</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>主要风险</h3>
+          <ul>
+            <li>只做评论、不做发帖，品牌归因弱</li>
+            <li>只做首页、不做 Blog，流量难沉淀</li>
+            <li>太早上线 CWS / PH，浪费第一波注意力</li>
+            <li>太晚做 SEO/GEO，复利启动过慢</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>阶段判断</h3>
+          <ul>
+            <li><strong>2 个月</strong>：闭环是否跑通</li>
+            <li><strong>4-6 个月</strong>：是否开始明显被看见</li>
+            <li><strong>9-12 个月</strong>：是否形成圈层认知</li>
+          </ul>
+        </div>
+      </div>
+      <footer class="footer">
+        <span>最需要避免的不是“做慢了”，而是把错误动作做得很快</span>
+        <span>11 / 12</span>
+      </footer>
+    </section>
+
+    <section class="slide">
+      <header class="stack">
+        <span class="eyebrow">Slide 12</span>
+        <h2>最终结论</h2>
+      </header>
+      <div class="grid-2">
+        <div class="stack">
+          <div class="card">
+            <h3>OpenComment 的最快增长路径</h3>
+            <ul>
+              <li>从 2026-03-30 起，立刻启动 LinkedIn 评论增长、LinkedIn 发帖和官网首页承接</li>
+            <li>从第 1-2 个月起，同时推进 LinkedIn 企业页和基础外链 / 公司档案占位</li>
+            <li>从第 2 个月起，启动 Blog / SEO / GEO、FAQ、安全说明、use case 页面</li>
+            <li>从第 3-4 个月起，把评论、内容、官网、案例和转化做成系统，并准备 CWS / PH / G2</li>
+            <li>在第 5-6 个月，把 Chrome Web Store / Product Hunt 作为放大器择机推出</li>
+            <li>在第 9-12 个月，通过内容复利、搜索复利、案例和类目表达建立圈层认知</li>
+          </ul>
+        </div>
+          <div class="quote">
+            OpenComment 不需要一开始就证明自己是一个“大平台”。它需要先证明自己能让用户在正确时间进入正确对话，并把这件事变成可重复的增长链路。
+          </div>
+        </div>
+        <div class="stack">
+          <div class="card">
+            <h3>一句话定位</h3>
+            <p><strong style="font-size:22px; margin-bottom:0;">Comment-led growth workflow</strong></p>
+            <p>for founders, marketers, and sales teams who want to show up in the right conversations at the right moment.</p>
+          </div>
+          <div class="card">
+            <h3>这份报告适合直接继续扩写为</h3>
+            <ul>
+              <li>正式 PPT 演示稿</li>
+              <li>季度执行 OKR</li>
+              <li>月度内容日历</li>
+              <li>公开入口准备清单</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <footer class="footer">
+        <span>建议下一步：基于这份 deck 继续细化 4 月执行版和首页/Blog 文案版</span>
+        <span>12 / 12</span>
+      </footer>
+    </section>
+
+    <div class="controls">
+      <button class="btn secondary" type="button" id="prevBtn">Prev</button>
+      <div class="counter" id="counter">1 / 12</div>
+      <button class="btn" type="button" id="nextBtn">Next</button>
+    </div>
+  </main>
+
+  <script>
+    const slides = Array.from(document.querySelectorAll(".slide"));
+    const tocButtons = Array.from(document.querySelectorAll(".toc-btn"));
+    const counter = document.getElementById("counter");
+    const prevBtn = document.getElementById("prevBtn");
+    const nextBtn = document.getElementById("nextBtn");
+    let current = 0;
+
+    function renderSlide(index) {
+      current = (index + slides.length) % slides.length;
+      slides.forEach((slide, idx) => {
+        slide.classList.toggle("active", idx === current);
+      });
+      tocButtons.forEach((btn, idx) => {
+        btn.classList.toggle("active", idx === current);
+      });
+      counter.textContent = `${current + 1} / ${slides.length}`;
+    }
+
+    tocButtons.forEach((btn) => {
+      btn.addEventListener("click", () => renderSlide(Number(btn.dataset.slide)));
+    });
+
+    prevBtn.addEventListener("click", () => renderSlide(current - 1));
+    nextBtn.addEventListener("click", () => renderSlide(current + 1));
+
+    window.addEventListener("keydown", (event) => {
+      if (event.key === "ArrowRight" || event.key === "PageDown") {
+        renderSlide(current + 1);
+      }
+      if (event.key === "ArrowLeft" || event.key === "PageUp") {
+        renderSlide(current - 1);
+      }
+    });
+
+    renderSlide(0);
+  </script>
+</body>
+</html>

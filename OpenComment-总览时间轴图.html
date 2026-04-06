@@ -1,0 +1,890 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>OpenComment 总览时间轴图</title>
+  <style>
+    :root {
+      --bg: #f4efe7;
+      --panel: #fffdf8;
+      --ink: #1f1b17;
+      --muted: #6d665d;
+      --line: #ddd1bf;
+      --accent: #123f6b;
+      --accent-soft: #e7eff8;
+      --accent-2: #bf642e;
+      --good: #235f43;
+      --warn: #9a4f1a;
+      --card: rgba(255, 255, 255, 0.94);
+      --shadow: 0 24px 60px rgba(20, 26, 34, 0.12);
+    }
+
+    * { box-sizing: border-box; }
+    html, body {
+      margin: 0;
+      padding: 0;
+      background:
+        radial-gradient(circle at top left, rgba(18, 63, 107, 0.10), transparent 22%),
+        radial-gradient(circle at bottom right, rgba(191, 100, 46, 0.10), transparent 18%),
+        linear-gradient(135deg, #efe7d7 0%, #f8f4ec 48%, #edf2f8 100%);
+      color: var(--ink);
+      font-family: "SF Pro Display", "PingFang SC", "Helvetica Neue", Arial, sans-serif;
+    }
+
+    body {
+      min-height: 100vh;
+      overflow: auto;
+      padding: 28px;
+    }
+
+    .canvas {
+      width: 1880px;
+      min-height: 1160px;
+      margin: 0 auto;
+      padding: 26px 26px 30px;
+      border: 1px solid rgba(0, 0, 0, 0.08);
+      border-radius: 28px;
+      background: var(--panel);
+      box-shadow: var(--shadow);
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      padding: 8px 14px;
+      border-radius: 999px;
+      background: var(--accent-soft);
+      color: var(--accent);
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    h1, h2, h3, p { margin: 0; }
+    h1 {
+      margin-top: 14px;
+      font-size: 44px;
+      line-height: 1.04;
+      letter-spacing: -0.04em;
+    }
+    .subtitle {
+      margin-top: 10px;
+      max-width: 1100px;
+      color: var(--muted);
+      font-size: 18px;
+      line-height: 1.45;
+    }
+
+    .meta {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 14px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .top-grid {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 16px;
+      margin-top: 20px;
+    }
+
+    .panel {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      padding: 18px 20px;
+      box-shadow: 0 10px 24px rgba(22, 29, 37, 0.05);
+    }
+
+    .goal-strip {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 14px;
+    }
+
+    .goal {
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 14px 16px;
+      background: rgba(255,255,255,0.88);
+    }
+
+    .goal strong {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 28px;
+      color: var(--accent);
+      letter-spacing: -0.03em;
+    }
+
+    .goal p {
+      font-size: 14px;
+      line-height: 1.4;
+    }
+
+    .principles ul,
+    .phase-goals ul,
+    .cell ul,
+    .role-card ul {
+      margin: 0;
+      padding-left: 18px;
+    }
+
+    li + li { margin-top: 6px; }
+
+    .phase-goals {
+      margin-top: 18px;
+      display: grid;
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .phase {
+      position: relative;
+      padding: 14px;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: linear-gradient(180deg, rgba(18, 63, 107, 0.05), rgba(255,255,255,0.95));
+      min-height: 160px;
+    }
+
+    .phase .date {
+      display: inline-flex;
+      padding: 4px 8px;
+      border-radius: 999px;
+      background: rgba(18, 63, 107, 0.10);
+      color: var(--accent);
+      font-size: 11px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .phase h3 {
+      margin-bottom: 8px;
+      font-size: 17px;
+      color: var(--accent);
+    }
+
+    .phase p,
+    .phase li {
+      font-size: 13px;
+      line-height: 1.35;
+    }
+
+    .legend {
+      display: grid;
+      gap: 10px;
+    }
+
+    .legend-box {
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 14px 16px;
+      background: rgba(255,255,255,0.9);
+    }
+
+    .legend-box h3 {
+      margin-bottom: 8px;
+      font-size: 16px;
+      color: var(--accent);
+    }
+
+    .legend-box p,
+    .legend-box li {
+      font-size: 13px;
+      line-height: 1.4;
+      color: var(--ink);
+    }
+
+    .timeline-board {
+      margin-top: 22px;
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      overflow: hidden;
+      background: rgba(255,255,255,0.88);
+    }
+
+    .board-grid {
+      display: grid;
+      grid-template-columns: 220px repeat(6, minmax(0, 1fr));
+    }
+
+    .board-head {
+      background: #eef3f8;
+      color: var(--accent);
+      font-weight: 700;
+      font-size: 13px;
+      padding: 14px 12px;
+      border-right: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .board-head.role-head {
+      background: #e6ebf2;
+    }
+
+    .role-card {
+      padding: 16px 14px;
+      border-right: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      background: linear-gradient(180deg, rgba(18, 63, 107, 0.05), rgba(255,255,255,0.98));
+    }
+
+    .role-card h3 {
+      margin-bottom: 8px;
+      font-size: 17px;
+      color: var(--accent);
+    }
+
+    .role-card p,
+    .role-card li {
+      font-size: 12px;
+      line-height: 1.35;
+      color: var(--muted);
+    }
+
+    .cell {
+      position: relative;
+      padding: 14px 12px;
+      border-right: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      min-height: 150px;
+      background: rgba(255,255,255,0.84);
+    }
+
+    .cell h4 {
+      margin: 0 0 8px;
+      font-size: 14px;
+      color: var(--accent);
+    }
+
+    .cell p,
+    .cell li {
+      font-size: 12px;
+      line-height: 1.35;
+      color: var(--ink);
+    }
+
+    .cell .tag {
+      display: inline-flex;
+      margin-bottom: 8px;
+      padding: 3px 8px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    .tag.now { background: rgba(35, 95, 67, 0.10); color: var(--good); }
+    .tag.prep { background: rgba(18, 63, 107, 0.10); color: var(--accent); }
+    .tag.later { background: rgba(154, 79, 26, 0.12); color: var(--warn); }
+    .evidence {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      display: inline-flex;
+      align-items: center;
+      padding: 3px 8px;
+      border-radius: 999px;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      box-shadow: 0 4px 10px rgba(20, 26, 34, 0.08);
+    }
+    .evidence.done {
+      background: rgba(35, 95, 67, 0.12);
+      color: var(--good);
+    }
+    .evidence.progress {
+      background: rgba(18, 63, 107, 0.12);
+      color: var(--accent);
+    }
+    .evidence.check {
+      background: rgba(154, 79, 26, 0.14);
+      color: var(--warn);
+    }
+
+    .footer-note {
+      margin-top: 18px;
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 14px;
+    }
+
+    .callout {
+      padding: 16px 18px;
+      border-left: 4px solid var(--accent-2);
+      border-radius: 16px;
+      background: rgba(191, 100, 46, 0.08);
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.5;
+    }
+
+    .summary {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .summary .mini {
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 12px 14px;
+      background: rgba(255,255,255,0.88);
+    }
+
+    .summary .mini strong {
+      display: block;
+      margin-bottom: 6px;
+      font-size: 18px;
+      color: var(--accent);
+    }
+
+    .summary .mini p {
+      font-size: 12px;
+      line-height: 1.35;
+    }
+
+    .status-section {
+      margin-top: 16px;
+      display: grid;
+      grid-template-columns: 1.05fr 0.95fr;
+      gap: 14px;
+    }
+
+    .status-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .status-card {
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 14px 16px;
+      background: rgba(255,255,255,0.9);
+    }
+
+    .status-card h3 {
+      margin-bottom: 8px;
+      font-size: 16px;
+      color: var(--accent);
+    }
+
+    .status-card li,
+    .status-card p {
+      font-size: 12px;
+      line-height: 1.35;
+    }
+
+    .status-note {
+      margin-top: 8px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.4;
+    }
+
+    @media (max-width: 1920px) {
+      body { padding: 14px; }
+      .canvas { transform-origin: top center; }
+    }
+  </style>
+</head>
+<body>
+  <main class="canvas">
+    <div class="eyebrow">OpenComment / Timeline Map</div>
+    <h1>增长总览时间轴图</h1>
+    <p class="subtitle">把老板最关心的四件事放到同一张图里：总目标是什么、每阶段的小目标是什么、每个月怎么推进、每个岗位在什么时间做什么。</p>
+    <div class="meta">
+      <span>起始时间：2026-03-30</span>
+      <span>核心判断：4-6 个月跑出增长雏形，9-12 个月建立圈层认知</span>
+      <span>结构：总目标 / 阶段目标 / 月周节奏 / 岗位泳道</span>
+    </div>
+
+    <section class="top-grid">
+      <div class="panel">
+        <h2 style="font-size:24px; color:var(--accent);">总目标</h2>
+        <div class="goal-strip">
+          <div class="goal">
+            <strong>0-2 个月</strong>
+            <p>跑通 LinkedIn 评论曝光 -> 官网访问 -> 注册 / 试用 的最小闭环，并建立基础 profile 与 trust assets。</p>
+          </div>
+          <div class="goal">
+            <strong>4-6 个月</strong>
+            <p>在目标圈层里“明显被看见”，形成首批稳定试用、案例、公开存在证明和目录占位。</p>
+          </div>
+          <div class="goal">
+            <strong>9-12 个月</strong>
+            <p>形成内容复利、搜索复利和类目表达，把 OpenComment 从工具推进到 comment-led growth 认知。</p>
+          </div>
+        </div>
+
+        <div class="phase-goals">
+          <div class="phase">
+            <span class="evidence progress">进行中</span>
+            <span class="date">2026-04</span>
+            <h3>阶段 1</h3>
+            <p><strong>最小闭环</strong></p>
+            <ul>
+              <li>评论 + 发帖 + 首页</li>
+              <li>LinkedIn 企业页</li>
+              <li>FAQ / 安全说明</li>
+            </ul>
+          </div>
+          <div class="phase">
+            <span class="date">2026-05</span>
+            <h3>阶段 2</h3>
+            <p><strong>内容承接</strong></p>
+            <ul>
+              <li>Blog / SEO / GEO</li>
+              <li>use case / comparison</li>
+              <li>AlternativeTo / Crunchbase</li>
+            </ul>
+          </div>
+          <div class="phase">
+            <span class="evidence progress">已备素材</span>
+            <span class="date">2026-06</span>
+            <h3>阶段 3</h3>
+            <p><strong>案例与素材</strong></p>
+            <ul>
+              <li>案例页</li>
+              <li>帮助中心雏形</li>
+              <li>CWS / PH 素材包</li>
+            </ul>
+          </div>
+          <div class="phase">
+            <span class="date">2026-07</span>
+            <h3>阶段 4</h3>
+            <p><strong>系统化增长</strong></p>
+            <ul>
+              <li>内容日历</li>
+              <li>主题簇</li>
+              <li>转化优化</li>
+            </ul>
+          </div>
+          <div class="phase">
+            <span class="date">2026-08~09</span>
+            <h3>阶段 5</h3>
+            <p><strong>公开放大</strong></p>
+            <ul>
+              <li>Chrome Web Store</li>
+              <li>Product Hunt</li>
+              <li>G2 评论窗口</li>
+            </ul>
+          </div>
+          <div class="phase">
+            <span class="date">2026-10 ~ 2027-03</span>
+            <h3>阶段 6</h3>
+            <p><strong>复利与认知</strong></p>
+            <ul>
+              <li>benchmark / report</li>
+              <li>类目表达</li>
+              <li>轻合作渠道</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="legend">
+        <div class="legend-box principles">
+          <h3>这张图的使用方式</h3>
+          <ul>
+            <li>上层看：总目标和阶段小目标</li>
+            <li>中层看：月度节奏与公开入口时点</li>
+            <li>下层看：每个岗位在对应月份必须推进的任务</li>
+          </ul>
+        </div>
+        <div class="legend-box">
+          <h3>公开入口节奏</h3>
+          <ul>
+            <li><strong>Now</strong>：LinkedIn 企业页、AlternativeTo / Crunchbase</li>
+            <li><strong>Prep</strong>：Chrome Web Store、Product Hunt、G2 profile</li>
+            <li><strong>Later</strong>：G2 评论、YouTube walkthrough、更多内容外链</li>
+          </ul>
+        </div>
+        <div class="legend-box">
+          <h3>老板应该看什么</h3>
+          <ul>
+            <li>4 月是否形成最小闭环</li>
+            <li>5-6 月是否形成内容承接和案例</li>
+            <li>8-9 月是否具备公开放大的条件</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="timeline-board">
+      <div class="board-grid">
+        <div class="board-head role-head">岗位 / 时间</div>
+        <div class="board-head">2026-04<br />按周推进</div>
+        <div class="board-head">2026-05<br />按月推进</div>
+        <div class="board-head">2026-06</div>
+        <div class="board-head">2026-07</div>
+        <div class="board-head">2026-08~09</div>
+        <div class="board-head">2026-10 ~ 2027-03</div>
+
+        <div class="role-card">
+          <h3>增长代言人</h3>
+          <p>承担公开面孔、方法论表达、评论与发帖、案例背书。</p>
+        </div>
+        <div class="cell">
+          <span class="evidence progress">进行中</span>
+          <span class="tag now">W1-W4</span>
+          <ul>
+            <li>开始稳定发 LinkedIn post</li>
+            <li>每天进入目标 KOL 评论区</li>
+            <li>明确“这是什么 / 不是什么”表达</li>
+            <li>参与 dogfooding 并沉淀样本</li>
+          </ul>
+        </div>
+        <div class="cell">
+          <span class="tag now">Month Goal</span>
+          <ul>
+            <li>输出方法论帖和案例雏形</li>
+            <li>把高表现评论改写成内容</li>
+            <li>配合 use case / comparison 口径</li>
+          </ul>
+        </div>
+        <div class="cell">
+          <span class="evidence done">已备脚本</span>
+          <span class="tag prep">案例期</span>
+          <ul>
+            <li>开始公开讲案例</li>
+            <li>录 demo / launch 所需短视频</li>
+            <li>协助整理 PH narrative</li>
+          </ul>
+        </div>
+        <div class="cell">
+          <span class="tag prep">系统化</span>
+          <ul>
+            <li>固定内容栏目</li>
+            <li>围绕最高转化主题持续发声</li>
+            <li>准备 launch 前对外话术</li>
+          </ul>
+        </div>
+        <div class="cell">
+          <span class="tag later">放大</span>
+          <ul>
+            <li>对外讲 4-6 个月增长结果</li>
+            <li>配合 CWS / PH / G2 节奏</li>
+            <li>承担市场信任背书</li>
+          </ul>
+        </div>
+        <div class="cell">
+          <span class="tag later">认知</span>
+          <ul>
+            <li>稳定承担类目发声人</li>
+            <li>参与 benchmark / report 输出</li>
+            <li>进入合作露面和行业讨论</li>
+          </ul>
+        </div>
+
+        <div class="role-card">
+          <h3>运营</h3>
+          <p>负责内容节奏、分发、平台占位、目录资料、数据复盘。</p>
+        </div>
+        <div class="cell">
+          <span class="evidence progress">进行中</span>
+          <span class="tag now">W1-W4</span>
+          <ul>
+            <li>建 30-50 人 KOL 清单</li>
+            <li>排评论节奏和发帖节奏</li>
+            <li>创建 LinkedIn 企业页</li>
+            <li>整理 AlternativeTo / Crunchbase 模板</li>
+          </ul>
+        </div>
+        <div class="cell">
+          <span class="evidence check">待确认</span>
+          <span class="tag now">Month Goal</span>
+          <ul>
+            <li>上线 Blog / use case / comparison 雏形</li>
+            <li>完成 AlternativeTo / Crunchbase 占位</li>
+            <li>准备 G2 profile 所需资料</li>
+          </ul>
+        </div>
+        <div class="cell">
+          <span class="tag prep">素材期</span>
+          <ul>
+            <li>输出案例页和内容日历</li>
+            <li>整理 CWS / PH 素材清单</li>
+            <li>梳理帮助中心结构</li>
+          </ul>
+        </div>
+        <div class="cell">
+          <span class="tag prep">系统化</span>
+          <ul>
+            <li>按主题簇扩内容</li>
+            <li>沉淀结果证明和推荐语</li>
+            <li>确认公开入口上线窗口</li>
+          </ul>
+        </div>
+        <div class="cell">
+          <span class="tag later">公开放大</span>
+          <ul>
+            <li>推进 CWS / PH 发布节奏</li>
+            <li>组织 G2 评价邀请</li>
+            <li>整理 4-6 个月成果页</li>
+          </ul>
+        </div>
+        <div class="cell">
+          <span class="tag later">复利</span>
+          <ul>
+            <li>扩大案例、评价、用户证言</li>
+            <li>推进合作渠道和报告分发</li>
+            <li>维护高价值目录和内容外链</li>
+          </ul>
+        </div>
+
+        <div class="role-card">
+          <h3>产品</h3>
+          <p>负责 ICP、定位、页面结构、激活路径、平台统一口径。</p>
+        </div>
+        <div class="cell">
+          <span class="evidence done">已备材料</span>
+          <span class="tag now">W1-W4</span>
+          <ul>
+            <li>定义主 ICP 和首要场景</li>
+            <li>确定首页 Hero / CTA / FAQ 结构</li>
+            <li>统一对外简介和边界表达</li>
+          </ul>
+        </div>
+        <div class="cell">
+          <span class="evidence progress">进行中</span>
+          <span class="tag now">Month Goal</span>
+          <ul>
+            <li>完善 use case / comparison 信息架构</li>
+            <li>支持 Blog 选题与问题词布局</li>
+            <li>补 G2 / PH / CWS 统一简介</li>
+          </ul>
+        </div>
+        <div class="cell">
+          <span class="tag prep">案例期</span>
+          <ul>
+            <li>定义案例结构</li>
+            <li>梳理 onboarding 和首个成功动作</li>
+            <li>确定 CWS / PH 价值表达</li>
+          </ul>
+        </div>
+        <div class="cell">
+          <span class="tag prep">系统化</span>
+          <ul>
+            <li>优化转化链路</li>
+            <li>识别最高转化 ICP 和主题</li>
+            <li>补齐支持公开放大的 narrative</li>
+          </ul>
+        </div>
+        <div class="cell">
+          <span class="tag later">放大</span>
+          <ul>
+            <li>整理成果叙事</li>
+            <li>配合 launch 页面和 listing 文案</li>
+            <li>完善 G2 / CWS / PH 所需信息</li>
+          </ul>
+        </div>
+        <div class="cell">
+          <span class="tag later">认知</span>
+          <ul>
+            <li>沉淀 comment-led growth 类目语言</li>
+            <li>支持 benchmark / report 结构</li>
+            <li>持续优化激活和留存</li>
+          </ul>
+        </div>
+
+        <div class="role-card">
+          <h3>合规</h3>
+          <p>负责安全口径、边界说明、平台风险和审核支持。</p>
+        </div>
+        <div class="cell">
+          <span class="evidence progress">进行中</span>
+          <span class="tag now">W1-W4</span>
+          <ul>
+            <li>明确“不是 spam automation”口径</li>
+            <li>审核 FAQ / 安全说明</li>
+            <li>明确不能做什么</li>
+          </ul>
+        </div>
+        <div class="cell">
+          <span class="tag now">Month Goal</span>
+          <ul>
+            <li>审核目录平台 profile 表述</li>
+            <li>审核 comparison / use case 风险点</li>
+            <li>补隐私政策和支持邮箱规范</li>
+          </ul>
+        </div>
+        <div class="cell">
+          <span class="tag prep">素材期</span>
+          <ul>
+            <li>审核 CWS / PH / G2 基础文案</li>
+            <li>确认 launch 前最小合规包</li>
+          </ul>
+        </div>
+        <div class="cell">
+          <span class="tag prep">系统化</span>
+          <ul>
+            <li>审核评论邀请话术</li>
+            <li>确认平台上线风险边界</li>
+          </ul>
+        </div>
+        <div class="cell">
+          <span class="tag later">上线窗口</span>
+          <ul>
+            <li>审核 CWS / PH 提交内容</li>
+            <li>审核 G2 评论推动路径</li>
+            <li>确保支持文档完备</li>
+          </ul>
+        </div>
+        <div class="cell">
+          <span class="tag later">复利期</span>
+          <ul>
+            <li>审核更广泛对外内容</li>
+            <li>支持报告和合作渠道合规</li>
+          </ul>
+        </div>
+
+        <div class="role-card">
+          <h3>技术</h3>
+          <p>负责页面上线、稳定性、埋点、截图数据、商店 / launch 技术支撑。</p>
+        </div>
+        <div class="cell">
+          <span class="evidence progress">进行中</span>
+          <span class="tag now">W1-W4</span>
+          <ul>
+            <li>上线首页最小闭环</li>
+            <li>提供 demo 模块和基础埋点</li>
+            <li>输出 profile 可用素材</li>
+          </ul>
+        </div>
+        <div class="cell">
+          <span class="tag now">Month Goal</span>
+          <ul>
+            <li>支持 Blog / FAQ / use case 上线</li>
+            <li>保证基础转化跟踪</li>
+            <li>协助目录资料截图整理</li>
+          </ul>
+        </div>
+        <div class="cell">
+          <span class="tag prep">案例期</span>
+          <ul>
+            <li>支持案例页和帮助中心雏形</li>
+            <li>准备 CWS 上架所需技术包</li>
+            <li>支持 demo / walkthrough 录制</li>
+          </ul>
+        </div>
+        <div class="cell">
+          <span class="tag prep">系统化</span>
+          <ul>
+            <li>优化 onboarding / CTA</li>
+            <li>支持主题页和 comparison 页</li>
+            <li>确保 listing 体验稳定</li>
+          </ul>
+        </div>
+        <div class="cell">
+          <span class="tag later">上线窗口</span>
+          <ul>
+            <li>支持 CWS 提交和更新</li>
+            <li>支持 Product Hunt 流量承接</li>
+            <li>提取截图和结果数据</li>
+          </ul>
+        </div>
+        <div class="cell">
+          <span class="tag later">复利期</span>
+          <ul>
+            <li>支持 benchmark / report 数据提取</li>
+            <li>优化内容基础设施和站内体验</li>
+            <li>维护长期增长所需埋点</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="footer-note">
+      <div class="callout">
+        这张图的关键判断是：OpenComment 的时间轴不该只讲“阶段”，也不该只讲“任务”。真正适合老板拍板的是，把总目标、小目标、月度节奏和 owner 放到同一张图里。这样才能清楚看到：4 月建 profile，5 月做承接，6-7 月做案例与 launch 素材，8-9 月再正式放大。
+      </div>
+      <div class="summary">
+        <div class="mini">
+          <strong>Now</strong>
+          <p>LinkedIn 企业页、评论与发帖、首页、FAQ、安全说明。</p>
+        </div>
+        <div class="mini">
+          <strong>Prep</strong>
+          <p>AlternativeTo / Crunchbase、G2 profile、CWS / PH 素材包。</p>
+        </div>
+        <div class="mini">
+          <strong>Later</strong>
+          <p>Chrome Web Store、Product Hunt、G2 评论、benchmark / report。</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="status-section">
+      <div class="panel">
+        <h2 style="font-size:22px; color:var(--accent);">基于当前文件夹证据的进度标注</h2>
+        <div class="status-grid" style="margin-top:12px;">
+          <div class="status-card">
+            <h3>已完成</h3>
+            <ul>
+              <li>竞品研究和平台检索报告</li>
+              <li>增长主报告、4 月执行版、总览时间轴图</li>
+              <li>LinkedIn banner 和 workflow 视觉素材</li>
+              <li>官网 45-60 秒 demo 脚本与完整版 demo 脚本</li>
+              <li>LinkedIn Company Page 材料包已存在</li>
+            </ul>
+          </div>
+          <div class="status-card">
+            <h3>进行中</h3>
+            <ul>
+              <li>首页最小闭环、FAQ、安全说明的内容规划</li>
+              <li>CWS / PH / G2 / 外链平台的素材准备</li>
+              <li>4 月执行节奏、周任务和月任务拆解</li>
+              <li>GEO / SEO 方向已有导出文件与结构草案</li>
+            </ul>
+          </div>
+          <div class="status-card">
+            <h3>待确认 / 待启动</h3>
+            <ul>
+              <li>LinkedIn 企业页是否已正式发布</li>
+              <li>AlternativeTo / Crunchbase / G2 是否已真实创建 profile</li>
+              <li>FAQ / 安全说明 / 帮助中心是否已正式上线到网站</li>
+              <li>Chrome Web Store / Product Hunt 是否进入提交状态</li>
+            </ul>
+          </div>
+        </div>
+        <p class="status-note">说明：以上状态基于当前文件夹中的文档、脚本、素材包和导出文件判断；如果某项已在线上环境完成、但文件夹里没有留痕，这里会保守归为“待确认”。</p>
+      </div>
+
+      <div class="panel">
+        <h2 style="font-size:22px; color:var(--accent);">进度是否可以加速</h2>
+        <div class="status-grid" style="grid-template-columns: 1fr 1fr; margin-top:12px;">
+          <div class="status-card">
+            <h3>可以前置加速的</h3>
+            <ul>
+              <li>LinkedIn 企业页：已有材料包，可立即创建或完善</li>
+              <li>AlternativeTo / Crunchbase：只需基础资料，可提前到 4 月内完成</li>
+              <li>CWS / PH 素材：demo 脚本和视觉素材已具备一部分，可并行整理</li>
+              <li>Blog / use case 选题：已有竞品研究和 GEO/SEO 草案，可直接转文章框架</li>
+            </ul>
+          </div>
+          <div class="status-card">
+            <h3>不建议硬加速的</h3>
+            <ul>
+              <li>Product Hunt 正式 launch：没有案例和承接时会浪费流量</li>
+              <li>G2 评论推动：没有首批真实用户时不应强推</li>
+              <li>大规模外链铺设：当前更适合先做高相关目录，而不是追求数量</li>
+            </ul>
+          </div>
+        </div>
+        <div class="callout" style="margin-top:12px;">
+          更激进但仍合理的节奏是：`4 月完成 LinkedIn 企业页 + AlternativeTo / Crunchbase + FAQ / 安全说明初稿 + CWS / PH 素材框架`，把原本 5 月的一部分“资料准备”前置；但 `PH 正式上线` 和 `G2 评论` 仍应保留在有案例和用户证据之后。
+        </div>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
