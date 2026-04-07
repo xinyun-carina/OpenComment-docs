@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>OpenComment Week1 内容矩阵展示图</title>
+  <style>
+    :root {
+      --bg: #f4efe7;
+      --panel: #fffdf8;
+      --ink: #1d1b18;
+      --muted: #6a6258;
+      --line: #dfd3c1;
+      --blue: #123f6b;
+      --blue-soft: #e8f0f8;
+      --orange: #bf642e;
+      --orange-soft: #f8eadf;
+      --green: #23623f;
+      --green-soft: #e4efe8;
+      --violet: #5742a6;
+      --violet-soft: #ece8fb;
+      --shadow: 0 28px 80px rgba(28, 31, 36, 0.16);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 8% 4%, rgba(18, 63, 107, 0.16), transparent 28%),
+        radial-gradient(circle at 94% 12%, rgba(191, 100, 46, 0.15), transparent 24%),
+        radial-gradient(circle at 50% 100%, rgba(35, 98, 63, 0.10), transparent 26%),
+        linear-gradient(135deg, #efe7d7 0%, #f9f5ee 54%, #edf2f8 100%);
+      font-family: "SF Pro Display", "PingFang SC", "Helvetica Neue", Arial, sans-serif;
+    }
+
+    .page {
+      width: min(1500px, calc(100vw - 40px));
+      margin: 26px auto;
+      padding: 30px;
+      border: 1px solid rgba(0, 0, 0, 0.08);
+      border-radius: 34px;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.88), rgba(255,253,248,0.96)),
+        var(--panel);
+      box-shadow: var(--shadow);
+    }
+
+    .header {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 24px;
+      align-items: stretch;
+      margin-bottom: 22px;
+    }
+
+    .hero {
+      padding: 28px;
+      border: 1px solid var(--line);
+      border-radius: 28px;
+      background:
+        radial-gradient(circle at top right, rgba(18, 63, 107, 0.10), transparent 34%),
+        #fffaf1;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 16px;
+      padding: 8px 14px;
+      border-radius: 999px;
+      background: var(--blue-soft);
+      color: var(--blue);
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    h1, h2, h3, p { margin: 0; }
+
+    h1 {
+      max-width: 880px;
+      font-size: clamp(38px, 4.2vw, 66px);
+      line-height: 0.98;
+      letter-spacing: -0.06em;
+    }
+
+    h2 {
+      font-size: 24px;
+      line-height: 1.1;
+      letter-spacing: -0.03em;
+    }
+
+    h3 {
+      font-size: 17px;
+      line-height: 1.22;
+      color: var(--blue);
+    }
+
+    .subtitle {
+      max-width: 890px;
+      margin-top: 16px;
+      color: var(--muted);
+      font-size: 19px;
+      line-height: 1.5;
+    }
+
+    .mission {
+      display: grid;
+      gap: 14px;
+      padding: 24px;
+      border: 1px solid var(--line);
+      border-radius: 28px;
+      background: rgba(255, 255, 255, 0.86);
+    }
+
+    .mission-card {
+      padding: 16px;
+      border-radius: 20px;
+      background: #fff;
+      border: 1px solid rgba(223, 211, 193, 0.9);
+    }
+
+    .mission-card strong {
+      display: block;
+      margin-bottom: 8px;
+      color: var(--orange);
+      font-size: 14px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .mission-card p {
+      color: var(--ink);
+      font-size: 16px;
+      line-height: 1.45;
+    }
+
+    .section-title {
+      display: flex;
+      justify-content: space-between;
+      align-items: end;
+      gap: 18px;
+      margin: 24px 0 14px;
+    }
+
+    .section-title p {
+      max-width: 620px;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.45;
+      text-align: right;
+    }
+
+    .matrix {
+      display: grid;
+      grid-template-columns: 1fr 1.08fr 1fr;
+      gap: 18px;
+      align-items: stretch;
+    }
+
+    .asset {
+      position: relative;
+      min-height: 380px;
+      padding: 24px;
+      border: 1px solid var(--line);
+      border-radius: 30px;
+      background: rgba(255, 255, 255, 0.92);
+      overflow: hidden;
+    }
+
+    .asset::after {
+      content: "";
+      position: absolute;
+      inset: auto -50px -80px auto;
+      width: 190px;
+      height: 190px;
+      border-radius: 50%;
+      background: rgba(18, 63, 107, 0.08);
+    }
+
+    .asset.article::after { background: rgba(191, 100, 46, 0.11); }
+    .asset.posts::after { background: rgba(35, 98, 63, 0.11); }
+
+    .asset-head {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      margin-bottom: 18px;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 76px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      font-weight: 800;
+      font-size: 13px;
+      color: var(--blue);
+      background: var(--blue-soft);
+      white-space: nowrap;
+    }
+
+    .article .badge {
+      color: var(--orange);
+      background: var(--orange-soft);
+    }
+
+    .posts .badge {
+      color: var(--green);
+      background: var(--green-soft);
+    }
+
+    .asset h3 {
+      position: relative;
+      z-index: 1;
+      margin-bottom: 12px;
+      color: var(--ink);
+      font-size: 26px;
+      letter-spacing: -0.04em;
+    }
+
+    .asset .desc {
+      position: relative;
+      z-index: 1;
+      min-height: 82px;
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.5;
+    }
+
+    .logic {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    .logic-row {
+      display: grid;
+      grid-template-columns: 86px 1fr;
+      gap: 12px;
+      align-items: start;
+      padding: 12px 0;
+      border-top: 1px solid rgba(223, 211, 193, 0.86);
+    }
+
+    .logic-row span {
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .logic-row p {
+      color: var(--ink);
+      font-size: 14px;
+      line-height: 1.45;
+    }
+
+    .flow {
+      display: grid;
+      grid-template-columns: 1.12fr 0.88fr;
+      gap: 18px;
+      align-items: stretch;
+    }
+
+    .map {
+      padding: 24px;
+      border: 1px solid var(--line);
+      border-radius: 30px;
+      background: rgba(255, 255, 255, 0.9);
+    }
+
+    .funnel {
+      display: grid;
+      gap: 12px;
+      margin-top: 18px;
+    }
+
+    .funnel-step {
+      display: grid;
+      grid-template-columns: 160px 1fr 138px;
+      gap: 14px;
+      align-items: center;
+      padding: 15px 16px;
+      border-radius: 20px;
+      background: linear-gradient(90deg, rgba(18,63,107,0.08), rgba(255,255,255,0.9));
+      border: 1px solid rgba(223, 211, 193, 0.88);
+    }
+
+    .funnel-step:nth-child(2) {
+      background: linear-gradient(90deg, rgba(191,100,46,0.10), rgba(255,255,255,0.9));
+    }
+
+    .funnel-step:nth-child(3) {
+      background: linear-gradient(90deg, rgba(35,98,63,0.10), rgba(255,255,255,0.9));
+    }
+
+    .funnel-step strong {
+      color: var(--blue);
+      font-size: 14px;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .funnel-step:nth-child(2) strong { color: var(--orange); }
+    .funnel-step:nth-child(3) strong { color: var(--green); }
+
+    .funnel-step p {
+      color: var(--ink);
+      font-size: 15px;
+      line-height: 1.42;
+    }
+
+    .funnel-step em {
+      color: var(--muted);
+      font-style: normal;
+      font-size: 13px;
+      line-height: 1.35;
+      text-align: right;
+    }
+
+    .topic-card {
+      padding: 24px;
+      border: 1px solid var(--line);
+      border-radius: 30px;
+      background:
+        radial-gradient(circle at top right, rgba(87,66,166,0.12), transparent 34%),
+        #fff;
+    }
+
+    .topic-list {
+      display: grid;
+      gap: 12px;
+      margin-top: 18px;
+    }
+
+    .topic {
+      padding: 14px 16px;
+      border-radius: 18px;
+      background: rgba(236, 232, 251, 0.72);
+      border: 1px solid rgba(87, 66, 166, 0.18);
+    }
+
+    .topic strong {
+      display: block;
+      margin-bottom: 6px;
+      color: var(--violet);
+      font-size: 14px;
+    }
+
+    .topic p {
+      color: var(--ink);
+      font-size: 14px;
+      line-height: 1.42;
+    }
+
+    .calendar {
+      display: grid;
+      grid-template-columns: repeat(7, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .day {
+      min-height: 196px;
+      padding: 15px;
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      background: rgba(255, 255, 255, 0.9);
+    }
+
+    .day .num {
+      display: inline-flex;
+      margin-bottom: 12px;
+      padding: 7px 10px;
+      border-radius: 999px;
+      background: var(--blue-soft);
+      color: var(--blue);
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .day.article-day .num {
+      background: var(--orange-soft);
+      color: var(--orange);
+    }
+
+    .day.post-day .num {
+      background: var(--green-soft);
+      color: var(--green);
+    }
+
+    .day h3 {
+      min-height: 44px;
+      margin-bottom: 10px;
+      color: var(--ink);
+      font-size: 16px;
+      letter-spacing: -0.02em;
+    }
+
+    .day p {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.42;
+    }
+
+    .footer {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 18px;
+    }
+
+    .rule {
+      min-height: 118px;
+      padding: 18px;
+      border-radius: 22px;
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.86);
+    }
+
+    .rule strong {
+      display: block;
+      margin-bottom: 9px;
+      color: var(--orange);
+      font-size: 14px;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    .rule p {
+      color: var(--ink);
+      font-size: 14px;
+      line-height: 1.45;
+    }
+
+    @media (max-width: 1100px) {
+      .header,
+      .matrix,
+      .flow,
+      .footer {
+        grid-template-columns: 1fr;
+      }
+
+      .calendar {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .section-title {
+        display: block;
+      }
+
+      .section-title p {
+        margin-top: 8px;
+        text-align: left;
+      }
+    }
+
+    @media print {
+      body { background: #fff; }
+      .page {
+        width: 100%;
+        margin: 0;
+        border: none;
+        box-shadow: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <section class="header">
+      <div class="hero">
+        <div class="eyebrow">OpenComment Week1 Content Matrix</div>
+        <h1>从冷邮件替代方案到 LinkedIn 战略评论的完整内容漏斗</h1>
+        <p class="subtitle">
+          Week1 用 1 篇 Blog 建立 owned SEO 支柱，用 1 篇 LinkedIn Article 建立平台内权威，再用 5 条 Posts 连续拆解痛点、差异化与行动路径，把“人工战略评论 + KOL 监测”讲清楚。
+        </p>
+      </div>
+
+      <aside class="mission">
+        <div class="mission-card">
+          <strong>核心主题</strong>
+          <p>Cold Email Alternatives 2026 + LinkedIn Engagement Without Automation</p>
+        </div>
+        <div class="mission-card">
+          <strong>产品叙事</strong>
+          <p>OpenComment 不是自动评论工具，而是帮助 B2B 团队监测关键声音、及时提醒、保留人工判断的战略评论工作流。</p>
+        </div>
+        <div class="mission-card">
+          <strong>Week1 目标</strong>
+          <p>建立可信内容资产，测试 LinkedIn 话题互动，并为后续试用注册、主页访问和 warm follow-up 提供入口。</p>
+        </div>
+      </aside>
+    </section>
+
+    <section>
+      <div class="section-title">
+        <h2>Blog - Article - Post 内容矩阵</h2>
+        <p>参考原 Week1 的 Hub & Spoke 逻辑：Blog 是支柱内容，Article 是 LinkedIn-native 权威承接，Posts 是连续 5 天的分发与互动触点。</p>
+      </div>
+
+      <div class="matrix">
+        <article class="asset blog">
+          <div class="asset-head">
+            <span class="badge">DAY 1 / BLOG</span>
+            <span class="badge">Owned SEO</span>
+          </div>
+          <h3>Cold Email Alternatives 2026</h3>
+          <p class="desc">
+            以“冷邮件不是死了，而是旧玩法失效”为切入，系统列出 7 种替代策略，并把 LinkedIn strategic commenting 作为核心工作流。
+          </p>
+          <div class="logic">
+            <div class="logic-row">
+              <span>目标</span>
+              <p>建立可长期复用的支柱资产，承接搜索、引用、产品页内链和后续 LinkedIn 引流。</p>
+            </div>
+            <div class="logic-row">
+              <span>内容</span>
+              <p>7 种策略对比：战略评论、多渠道触达、Sales Intelligence、冷邮件平台、Sales Navigator、社区参与、合作营销。</p>
+            </div>
+            <div class="logic-row">
+              <span>逻辑</span>
+              <p>从“收件箱拥挤”过渡到“公开对话中的相关可见度”，自然引出 OpenComment 的监测与提醒价值。</p>
+            </div>
+          </div>
+        </article>
+
+        <article class="asset article">
+          <div class="asset-head">
+            <span class="badge">DAY 2 / ARTICLE</span>
+            <span class="badge">LinkedIn Authority</span>
+          </div>
+          <h3>LinkedIn Engagement Without Automation</h3>
+          <p class="desc">
+            用案例型叙事解释如何监测 KOL、早期评论、保持人工参与，并把“自动化风险”与“监测提醒工作流”区分开。
+          </p>
+          <div class="logic">
+            <div class="logic-row">
+              <span>目标</span>
+              <p>在 LinkedIn 平台内建立可信观点，让用户理解 OpenComment 的定位不是 auto-commenting。</p>
+            </div>
+            <div class="logic-row">
+              <span>内容</span>
+              <p>4 步工作流：识别 20-50 个关键声音、追踪发帖、人工早期评论、衡量访问与对话结果。</p>
+            </div>
+            <div class="logic-row">
+              <span>逻辑</span>
+              <p>把“timing matters”作为主线，强调 OpenComment 降低发现成本，但不替代人的判断和评论动作。</p>
+            </div>
+          </div>
+        </article>
+
+        <article class="asset posts">
+          <div class="asset-head">
+            <span class="badge">DAY 3-7 / POSTS</span>
+            <span class="badge">Feed + Conversation</span>
+          </div>
+          <h3>5-Day LinkedIn Post Series</h3>
+          <p class="desc">
+            连续 5 条短内容拆解同一个主题：从痛点 Hook、故事、解决方案差异化，到内部早期结果和低摩擦 CTA。
+          </p>
+          <div class="logic">
+            <div class="logic-row">
+              <span>目标</span>
+              <p>提高信息流触达和评论互动，把 Blog 与 Article 的长内容拆成更容易被理解和讨论的观点。</p>
+            </div>
+            <div class="logic-row">
+              <span>内容</span>
+              <p>Day 3 数据 Hook，Day 4 痛点故事，Day 5 方案对比，Day 6 工作流/早期结果，Day 7 ROI 与 CTA。</p>
+            </div>
+            <div class="logic-row">
+              <span>逻辑</span>
+              <p>主文少硬广，链接放首评；每条只讲一个观点，结尾用问题引导讨论和手动互动。</p>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-title">
+        <h2>内容流转逻辑</h2>
+        <p>让用户先理解行业问题，再理解产品方法，最后通过连续 Posts 形成可互动、可转发、可复盘的 LinkedIn 节奏。</p>
+      </div>
+
+      <div class="flow">
+        <div class="map">
+          <h2>Hub & Spoke 路径</h2>
+          <div class="funnel">
+            <div class="funnel-step">
+              <strong>Blog / Pillar</strong>
+              <p>完整解释“为什么冷邮件单一路径不够”，并给出 7 种替代策略的全景地图。</p>
+              <em>Search + owned asset</em>
+            </div>
+            <div class="funnel-step">
+              <strong>Article / Trust</strong>
+              <p>把 Blog 中的核心策略收窄为 LinkedIn 监测和战略评论工作流，降低理解成本。</p>
+              <em>Platform authority</em>
+            </div>
+            <div class="funnel-step">
+              <strong>Posts / Reach</strong>
+              <p>用 5 天连续短内容把观点拆成可讨论片段：痛点、区别、方法、证据、行动。</p>
+              <em>Feed distribution</em>
+            </div>
+          </div>
+        </div>
+
+        <aside class="topic-card">
+          <h2>主题集群</h2>
+          <div class="topic-list">
+            <div class="topic">
+              <strong>核心关键词</strong>
+              <p>Cold email alternatives, LinkedIn engagement, KOL monitoring, strategic commenting.</p>
+            </div>
+            <div class="topic">
+              <strong>核心反差</strong>
+              <p>Private inbox vs public conversation；automation risk vs manual engagement；volume vs relevance.</p>
+            </div>
+            <div class="topic">
+              <strong>核心承诺</strong>
+              <p>帮助团队更快发现值得参与的 LinkedIn 对话，但保留人工判断、人工评论和真实关系建立。</p>
+            </div>
+            <div class="topic">
+              <strong>风控边界</strong>
+              <p>不写绝对合规承诺，不把内部早期数据包装成公开 benchmark，不承诺 FAQ Schema 带来 AI 引用。</p>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-title">
+        <h2>Day 1-7 发布规划</h2>
+        <p>从长内容到短内容，从解释问题到激发互动；每一天都服务于同一个主线：人工战略评论如何成为 B2B 可见度系统。</p>
+      </div>
+
+      <div class="calendar">
+        <article class="day">
+          <span class="num">DAY 1</span>
+          <h3>Blog 发布</h3>
+          <p>发布 Cold Email Alternatives 2026，作为后续 Article 和 Posts 的主题源头与产品页引流资产。</p>
+        </article>
+        <article class="day article-day">
+          <span class="num">DAY 2</span>
+          <h3>LinkedIn Article</h3>
+          <p>发布 LinkedIn Engagement Without Automation，平台内解释战略评论工作流和人工参与边界。</p>
+        </article>
+        <article class="day post-day">
+          <span class="num">DAY 3</span>
+          <h3>Hook / Data Angle</h3>
+          <p>以“冷邮件不是死了，但单一路径更脆弱”切入，提出评论可以成为分发渠道。</p>
+        </article>
+        <article class="day post-day">
+          <span class="num">DAY 4</span>
+          <h3>Pain Story</h3>
+          <p>对比 inbox 和 public conversation，让用户意识到问题不是更多消息，而是更多相关性。</p>
+        </article>
+        <article class="day post-day">
+          <span class="num">DAY 5</span>
+          <h3>Solution Comparison</h3>
+          <p>清晰区分 LinkedIn automation 与 KOL monitoring，强调监测提醒不等于自动评论。</p>
+        </article>
+        <article class="day post-day">
+          <span class="num">DAY 6</span>
+          <h3>Workflow / Early Result</h3>
+          <p>展示内部早期工作流：追踪关键声音、及时提醒、人工评论、复盘相关触达。</p>
+        </article>
+        <article class="day post-day">
+          <span class="num">DAY 7</span>
+          <h3>ROI / CTA</h3>
+          <p>以“错过正确对话的成本”为 CTA 逻辑，邀请用户从小名单测试 OpenComment。</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="footer">
+      <div class="rule">
+        <strong>发布原则 1</strong>
+        <p>Blog 和 Article 负责解释，Posts 负责分发；不要让每条 Post 都承担完整销售任务。</p>
+      </div>
+      <div class="rule">
+        <strong>发布原则 2</strong>
+        <p>LinkedIn Post 正文少放硬外链，OpenComment 链接优先放在首条评论中。</p>
+      </div>
+      <div class="rule">
+        <strong>发布原则 3</strong>
+        <p>数据使用“内部早期结果”口径，除非有截图或公开可验证来源。</p>
+      </div>
+      <div class="rule">
+        <strong>发布原则 4</strong>
+        <p>核心定位保持一致：监测关键声音，提醒团队及时参与，评论本身仍由人完成。</p>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
