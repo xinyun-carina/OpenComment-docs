@@ -290,7 +290,7 @@
   <div class="page">
     <section class="hero">
       <h1>OpenComment 愿景发布确认清单与执行版</h1>
-      <p>可直接复制文案、逐日执行、逐项确认</p>
+      <p>可直接复制文案、逐日执行，只保留真正需要老板拍板的事项</p>
       <div class="meta">
         <span class="pill">开始日期：2026-04-13</span>
         <span class="pill">策略：Post → Article</span>
@@ -314,70 +314,75 @@
         <section class="section-card" id="boss">
           <h2>1. 给老板确认的清单</h2>
 
-          <h3>身份与叙事</h3>
+          <h3>当前默认执行口径</h3>
+          <ul class="list">
+            <li>默认采用：<code>公司账号发 Post + 公司账号发 Article + 团队首轮互动放大</code></li>
+            <li>默认不做：付费推广、视频制作、Carousel 联动</li>
+            <li>默认链接追踪：使用 UTM 链接区分 <code>LinkedIn 公司账号</code> 带来的访问和 waitlist</li>
+            <li>默认 CTA：Post 使用 <code>Learn more</code>；Article 使用 <code>Join the waitlist</code></li>
+            <li>默认 LinkedIn 公司页链接：<code>https://www.linkedin.com/company/opencomment-ai/</code></li>
+            <li>默认对外视角：公司视角，不写具体 founder 背景</li>
+          </ul>
+
+          <h3>已知辅助判断</h3>
+          <ul class="list">
+            <li>根据当前策略 2，这一轮是 <code>自然流量版本</code>，不包含预算投放，所以 <code>预算</code> 不是本轮必须确认项。</li>
+            <li>只有当老板想切换到 <code>少量付费推广</code> 或 <code>Video + Carousel + paid</code>，才需要单独确认预算。</li>
+            <li>当前文案中的 <code>closed beta / onboarding weekly / join the waitlist</code> 与现有策略文件口径一致，可作为默认表达。</li>
+          </ul>
+
+          <h3>只确认高风险、会影响真实性或执行方式的项目</h3>
+
+          <h3>必须确认：身份与发声方式</h3>
           <ul class="list">
             <li>是否确认使用：<code>We're a B2B sales team</code></li>
             <li>是否确认使用：<code>We built OpenComment because we lived the problem</code></li>
-            <li>是否需要写成公司视角，不出现 founder 个人身份</li>
-            <li>Slack 通知模板中的 <code>[创始人名字]</code> 是否填写真实姓名</li>
-            <li>周二 Post 后，创始人个人账号是否会参与点赞和评论</li>
+            <li>周二 Post 后，是否有一个固定公开面孔用个人账号参与点赞和评论</li>
+            <li>如果有，请确认这个人是谁</li>
           </ul>
 
-          <h3>真实性与案例</h3>
+          <h3>必须确认：真实性与案例</h3>
           <ul class="list">
             <li><code>One day, a team member commented on a prospect's post...</code> 是否基于真实经历</li>
             <li><code>That single comment generated more engagement than weeks of cold outreach.</code> 是否确认可公开这样表述</li>
-            <li><code>What we're hearing from early users</code> 下的 3 条引述是否为真实用户原话</li>
-            <li>如果不是真实用户原话，是否改成：<code>A pattern we keep hearing from early conversations is...</code></li>
             <li>是否有可匿名使用的真实 beta 用户反馈</li>
             <li>是否有可匿名写入的真实场景案例</li>
+            <li>如果以上都没有，是否同意我统一改成无引号、无人物、无结果数字的观察性表达</li>
           </ul>
 
-          <h3>数据与结果</h3>
-          <ul class="list">
-            <li>是否确认可以公开写：<code>cold outreach is getting easier to ignore</code></li>
-            <li>是否有真实内部数据可支持：冷邮件回复下降趋势</li>
-            <li>是否有真实数据支持：评论互动优于冷邮件</li>
-            <li>是否有真实数据支持：节省时间、提醒价值、通知频率</li>
-            <li>如果没有，是否同意全部改为观察性表达，不写具体数字</li>
-          </ul>
-
-          <h3>产品与机制</h3>
-          <ul class="list">
-            <li>是否确认 OpenComment 当前支持：监控目标人群 LinkedIn 动态</li>
-            <li>是否确认支持：提醒 relevant moments</li>
-            <li>是否确认支持：AI-assisted comment drafting</li>
-            <li>是否确认支持：human review before posting</li>
-            <li>是否确认支持：thread tracking</li>
-            <li><code>How It Actually Works</code> 中的 5 步流程是否与当前产品一致</li>
-            <li><code>[Name] at [Company] posted about...</code> 这种提醒样式是否符合真实产品体验</li>
-          </ul>
-
-          <h3>合规与表述边界</h3>
+          <h3>必须确认：数据与合规边界</h3>
           <ul class="list">
             <li>是否确认可以公开写：<code>does not auto-post comments</code></li>
             <li>是否确认可以公开写：<code>does not require your LinkedIn password</code></li>
             <li>是否确认可以公开写：<code>does not store LinkedIn credentials</code></li>
-            <li>如果最后一条暂未确认，是否改成：<code>is designed not to require your LinkedIn password</code></li>
-            <li>是否确认 FAQ 中保留：<code>please review LinkedIn's Terms of Service yourself</code></li>
+            <li>如果第三条暂未确认，是否同意改成：<code>is designed not to require your LinkedIn password</code></li>
           </ul>
 
-          <h3>转化与链接</h3>
-          <ul class="list">
-            <li>主 CTA 是否确认使用：<code>Learn more → https://opencomment.ai</code></li>
-            <li>Article CTA 是否确认使用：<code>Join the waitlist</code></li>
-            <li>官网当前是否真的是 waitlist / rolling onboarding，而不是 trial</li>
-            <li>是否需要替换为 demo / book a call / early access</li>
-            <li>公司 LinkedIn 链接是否确认使用：<code>https://linkedin.com/company/opencomment</code></li>
-          </ul>
-
-          <h3>执行资源</h3>
+          <h3>必须确认：执行资源</h3>
           <ul class="list">
             <li>周一是否能完成配图</li>
-            <li>周一是否能完成 UTM 链接</li>
             <li>团队是否能在周二 9:00-9:30 完成首轮互动</li>
             <li>周三是否有时间根据评论微调 Article</li>
             <li>周四发布 Article 后，是否有人负责持续回复评论</li>
+          </ul>
+
+          <h3>已默认采用，无需老板决断</h3>
+          <ul class="list">
+            <li>本轮执行策略：<code>Post → Article</code></li>
+            <li>发布平台：<code>LinkedIn 公司账号</code></li>
+            <li>本轮预算：<code>0 美元付费推广</code></li>
+            <li>使用 UTM 链接追踪来源</li>
+            <li>公司 LinkedIn 链接：<code>https://www.linkedin.com/company/opencomment-ai/</code></li>
+            <li>Post CTA：<code>Learn more</code></li>
+            <li>Article CTA：<code>Join the waitlist</code></li>
+            <li>FAQ 保留：<code>please review LinkedIn's Terms of Service yourself</code></li>
+          </ul>
+
+          <h3>UTM 说明</h3>
+          <ul class="list">
+            <li><code>UTM</code> 是加在链接后面的追踪参数，用来区分流量来源。</li>
+            <li>这次的作用：之后在网站分析工具里区分 <code>这次访问 / waitlist 注册</code> 是来自 <code>LinkedIn 公司 Post</code>，而不是自然流量或其他渠道。</li>
+            <li>不会影响用户打开页面，也不需要老板额外批准预算。</li>
           </ul>
         </section>
 
@@ -416,7 +421,7 @@
           <h2>3. 周一 2026-04-13</h2>
           <h3>动作</h3>
           <ul class="list">
-            <li>确认老板回复第 1 部分全部问题</li>
+            <li>确认老板回复第 1.1 到 1.4 部分</li>
             <li>锁定 Post 最终文案</li>
             <li>锁定 Article 最终文案</li>
             <li>制作 Post 配图</li>
