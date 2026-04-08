@@ -1,0 +1,945 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>OpenComment 愿景发布确认清单与执行版</title>
+  <style>
+    :root {
+      --bg: #f4f6f3;
+      --card: #ffffff;
+      --ink: #162018;
+      --muted: #5f6f62;
+      --line: #d7dfd5;
+      --accent: #1f6b45;
+      --accent-2: #e9f5ee;
+      --warn: #a05a00;
+      --warn-bg: #fff5e8;
+      --code: #f7f8f7;
+      --shadow: 0 10px 30px rgba(22, 32, 24, 0.08);
+      --radius: 16px;
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "SF Pro Text", "PingFang SC", "Noto Sans SC", "Microsoft YaHei", sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at top left, #eef7ef 0, transparent 32%),
+        linear-gradient(180deg, #f7faf7 0%, var(--bg) 100%);
+      line-height: 1.65;
+    }
+
+    .page {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 32px 20px 56px;
+    }
+
+    .hero {
+      background: linear-gradient(135deg, #153b28 0%, #1f6b45 55%, #7db992 100%);
+      color: #fff;
+      border-radius: 24px;
+      padding: 28px 28px 24px;
+      box-shadow: var(--shadow);
+      margin-bottom: 24px;
+    }
+
+    .hero h1 {
+      margin: 0 0 8px;
+      font-size: 34px;
+      line-height: 1.15;
+    }
+
+    .hero p {
+      margin: 0;
+      color: rgba(255,255,255,0.9);
+      font-size: 15px;
+    }
+
+    .meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+    .pill {
+      background: rgba(255,255,255,0.14);
+      border: 1px solid rgba(255,255,255,0.18);
+      border-radius: 999px;
+      padding: 8px 12px;
+      font-size: 13px;
+      color: #fff;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 320px minmax(0, 1fr);
+      gap: 22px;
+      align-items: start;
+    }
+
+    .toc, .section-card, .copy-card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+
+    .toc {
+      position: sticky;
+      top: 18px;
+      padding: 18px 18px 12px;
+    }
+
+    .toc h2 {
+      margin: 0 0 10px;
+      font-size: 16px;
+    }
+
+    .toc a {
+      display: block;
+      color: var(--muted);
+      text-decoration: none;
+      padding: 8px 0;
+      border-bottom: 1px dashed #e7ece7;
+      font-size: 14px;
+    }
+
+    .toc a:last-child { border-bottom: none; }
+    .toc a:hover { color: var(--accent); }
+
+    .content {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .section-card {
+      padding: 22px;
+    }
+
+    .section-card h2 {
+      margin: 0 0 14px;
+      font-size: 24px;
+      line-height: 1.2;
+    }
+
+    .section-card h3 {
+      margin: 20px 0 10px;
+      font-size: 18px;
+      line-height: 1.3;
+    }
+
+    .section-card h4 {
+      margin: 18px 0 8px;
+      font-size: 15px;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .list {
+      margin: 0;
+      padding-left: 0;
+      list-style: none;
+    }
+
+    .list li {
+      position: relative;
+      padding-left: 28px;
+      margin: 8px 0;
+    }
+
+    .list li::before {
+      content: "□";
+      position: absolute;
+      left: 0;
+      top: 0;
+      color: var(--accent);
+      font-weight: 700;
+    }
+
+    .timeline {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 8px;
+    }
+
+    .timeline .item {
+      background: #f9fbf9;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 14px;
+      min-height: 104px;
+    }
+
+    .timeline .day {
+      font-size: 12px;
+      color: var(--muted);
+      margin-bottom: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .timeline .title {
+      font-size: 15px;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+    .copy-card {
+      overflow: hidden;
+      margin-top: 14px;
+    }
+
+    .copy-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 14px 16px;
+      background: #f9fbf9;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .copy-head h4 {
+      margin: 0;
+      font-size: 15px;
+      color: var(--ink);
+      text-transform: none;
+      letter-spacing: normal;
+    }
+
+    .copy-btn {
+      border: 1px solid #b9cdbd;
+      background: #fff;
+      color: var(--accent);
+      border-radius: 10px;
+      padding: 8px 12px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .copy-btn:hover {
+      background: var(--accent-2);
+    }
+
+    pre {
+      margin: 0;
+      padding: 16px;
+      white-space: pre-wrap;
+      word-break: break-word;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+      font-size: 13px;
+      line-height: 1.6;
+      background: var(--code);
+      color: #162018;
+    }
+
+    .note {
+      padding: 14px 16px;
+      border-radius: 14px;
+      background: var(--warn-bg);
+      border: 1px solid #f2d7b5;
+      color: #7a4a00;
+      font-size: 14px;
+    }
+
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .mini {
+      background: #f9fbf9;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 14px 16px;
+    }
+
+    .mini h4 {
+      margin: 0 0 8px;
+      color: var(--ink);
+      text-transform: none;
+      letter-spacing: normal;
+      font-size: 15px;
+    }
+
+    @media (max-width: 980px) {
+      .grid { grid-template-columns: 1fr; }
+      .toc { position: static; }
+      .timeline { grid-template-columns: 1fr 1fr; }
+      .two-col { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 640px) {
+      .hero h1 { font-size: 28px; }
+      .timeline { grid-template-columns: 1fr; }
+      .page { padding: 20px 14px 42px; }
+      .section-card { padding: 18px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <section class="hero">
+      <h1>OpenComment 愿景发布确认清单与执行版</h1>
+      <p>可直接复制文案、逐日执行、逐项确认</p>
+      <div class="meta">
+        <span class="pill">开始日期：2026-04-13</span>
+        <span class="pill">策略：Post → Article</span>
+        <span class="pill">平台：LinkedIn 公司账号</span>
+      </div>
+    </section>
+
+    <div class="grid">
+      <aside class="toc">
+        <h2>目录</h2>
+        <a href="#boss">1. 给老板确认的清单</a>
+        <a href="#schedule">2. 发布时间表</a>
+        <a href="#monday">3. 周一准备</a>
+        <a href="#tuesday">4. 周二 Post 发布</a>
+        <a href="#wednesday">5. 周三微调</a>
+        <a href="#thursday">6. 周四 Article 发布</a>
+        <a href="#friday">7. 周五复盘</a>
+      </aside>
+
+      <main class="content">
+        <section class="section-card" id="boss">
+          <h2>1. 给老板确认的清单</h2>
+
+          <h3>身份与叙事</h3>
+          <ul class="list">
+            <li>是否确认使用：<code>We're a B2B sales team</code></li>
+            <li>是否确认使用：<code>We built OpenComment because we lived the problem</code></li>
+            <li>是否需要写成公司视角，不出现 founder 个人身份</li>
+            <li>Slack 通知模板中的 <code>[创始人名字]</code> 是否填写真实姓名</li>
+            <li>周二 Post 后，创始人个人账号是否会参与点赞和评论</li>
+          </ul>
+
+          <h3>真实性与案例</h3>
+          <ul class="list">
+            <li><code>One day, a team member commented on a prospect's post...</code> 是否基于真实经历</li>
+            <li><code>That single comment generated more engagement than weeks of cold outreach.</code> 是否确认可公开这样表述</li>
+            <li><code>What we're hearing from early users</code> 下的 3 条引述是否为真实用户原话</li>
+            <li>如果不是真实用户原话，是否改成：<code>A pattern we keep hearing from early conversations is...</code></li>
+            <li>是否有可匿名使用的真实 beta 用户反馈</li>
+            <li>是否有可匿名写入的真实场景案例</li>
+          </ul>
+
+          <h3>数据与结果</h3>
+          <ul class="list">
+            <li>是否确认可以公开写：<code>cold outreach is getting easier to ignore</code></li>
+            <li>是否有真实内部数据可支持：冷邮件回复下降趋势</li>
+            <li>是否有真实数据支持：评论互动优于冷邮件</li>
+            <li>是否有真实数据支持：节省时间、提醒价值、通知频率</li>
+            <li>如果没有，是否同意全部改为观察性表达，不写具体数字</li>
+          </ul>
+
+          <h3>产品与机制</h3>
+          <ul class="list">
+            <li>是否确认 OpenComment 当前支持：监控目标人群 LinkedIn 动态</li>
+            <li>是否确认支持：提醒 relevant moments</li>
+            <li>是否确认支持：AI-assisted comment drafting</li>
+            <li>是否确认支持：human review before posting</li>
+            <li>是否确认支持：thread tracking</li>
+            <li><code>How It Actually Works</code> 中的 5 步流程是否与当前产品一致</li>
+            <li><code>[Name] at [Company] posted about...</code> 这种提醒样式是否符合真实产品体验</li>
+          </ul>
+
+          <h3>合规与表述边界</h3>
+          <ul class="list">
+            <li>是否确认可以公开写：<code>does not auto-post comments</code></li>
+            <li>是否确认可以公开写：<code>does not require your LinkedIn password</code></li>
+            <li>是否确认可以公开写：<code>does not store LinkedIn credentials</code></li>
+            <li>如果最后一条暂未确认，是否改成：<code>is designed not to require your LinkedIn password</code></li>
+            <li>是否确认 FAQ 中保留：<code>please review LinkedIn's Terms of Service yourself</code></li>
+          </ul>
+
+          <h3>转化与链接</h3>
+          <ul class="list">
+            <li>主 CTA 是否确认使用：<code>Learn more → https://opencomment.ai</code></li>
+            <li>Article CTA 是否确认使用：<code>Join the waitlist</code></li>
+            <li>官网当前是否真的是 waitlist / rolling onboarding，而不是 trial</li>
+            <li>是否需要替换为 demo / book a call / early access</li>
+            <li>公司 LinkedIn 链接是否确认使用：<code>https://linkedin.com/company/opencomment</code></li>
+          </ul>
+
+          <h3>执行资源</h3>
+          <ul class="list">
+            <li>周一是否能完成配图</li>
+            <li>周一是否能完成 UTM 链接</li>
+            <li>团队是否能在周二 9:00-9:30 完成首轮互动</li>
+            <li>周三是否有时间根据评论微调 Article</li>
+            <li>周四发布 Article 后，是否有人负责持续回复评论</li>
+          </ul>
+        </section>
+
+        <section class="section-card" id="schedule">
+          <h2>2. 发布时间表</h2>
+          <div class="timeline">
+            <div class="item">
+              <div class="day">2026-04-13</div>
+              <div class="title">周一</div>
+              <div>准备日</div>
+            </div>
+            <div class="item">
+              <div class="day">2026-04-14 9:00am</div>
+              <div class="title">周二</div>
+              <div>发布 Post</div>
+            </div>
+            <div class="item">
+              <div class="day">2026-04-15</div>
+              <div class="title">周三</div>
+              <div>根据反馈微调 Article</div>
+            </div>
+            <div class="item">
+              <div class="day">2026-04-16 9:00am</div>
+              <div class="title">周四</div>
+              <div>发布 Article</div>
+            </div>
+            <div class="item">
+              <div class="day">2026-04-17 10:00am</div>
+              <div class="title">周五</div>
+              <div>复盘</div>
+            </div>
+          </div>
+        </section>
+
+        <section class="section-card" id="monday">
+          <h2>3. 周一 2026-04-13</h2>
+          <h3>动作</h3>
+          <ul class="list">
+            <li>确认老板回复第 1 部分全部问题</li>
+            <li>锁定 Post 最终文案</li>
+            <li>锁定 Article 最终文案</li>
+            <li>制作 Post 配图</li>
+            <li>设置 UTM 链接</li>
+            <li>准备 3 条评论模板</li>
+            <li>准备 FAQ 回复模板</li>
+            <li>下午发团队 Slack 通知</li>
+          </ul>
+
+          <div class="copy-card">
+            <div class="copy-head">
+              <h4>UTM 链接</h4>
+              <button class="copy-btn" data-copy-target="utm-link">复制</button>
+            </div>
+            <pre id="utm-link">https://opencomment.ai?utm_source=linkedin&amp;utm_medium=company_post&amp;utm_campaign=vision_april2026</pre>
+          </div>
+
+          <div class="copy-card">
+            <div class="copy-head">
+              <h4>Slack 通知文案</h4>
+              <button class="copy-btn" data-copy-target="slack-copy">复制</button>
+            </div>
+            <pre id="slack-copy">📢 明天（周二）上午 9 点，我们会在公司 LinkedIn 发布愿景 Post
+
+需要你做的：
+1. 9:00-9:15 点赞
+2. 9:15-9:30 写 1-2 句真实评论
+3. 可选：转发到个人账号，加上你的真实观察
+
+不要只写：
+"Great post!"
+
+可参考：
+- 这个观点很有共鸣，我们也感受到 cold outreach 越来越难了。
+- 买家注意力确实更多转向公开对话，而不是私密外联。
+- 这也是我们为什么会认真思考 comments 作为分发渠道。
+
+明天 9 点我会把链接发到这里。</pre>
+          </div>
+        </section>
+
+        <section class="section-card" id="tuesday">
+          <h2>4. 周二 2026-04-14 9:00am</h2>
+
+          <h3>发布前 8:45am</h3>
+          <ul class="list">
+            <li>打开 LinkedIn 公司账号草稿</li>
+            <li>检查文案格式</li>
+            <li>检查链接可点击</li>
+            <li>检查配图显示正常</li>
+            <li>复制评论 1 到剪贴板</li>
+          </ul>
+
+          <div class="copy-card">
+            <div class="copy-head">
+              <h4>Post 文案</h4>
+              <button class="copy-btn" data-copy-target="post-copy">复制</button>
+            </div>
+            <pre id="post-copy">We're a B2B sales team who built OpenComment because we lived the problem.
+
+Cold outreach is getting easier to ignore. Meanwhile, our prospects are out there — posting about challenges, celebrating wins, asking questions — all on LinkedIn.
+
+We knew there had to be a better way.
+
+OpenComment isn't another "scale your outreach 10x" tool. It's not an auto-comment bot that makes you look like a robot.
+
+It's designed to help teams work with how B2B relationships actually happen:
+
+→ Track the people who matter to your business
+→ Get alerted to relevant moments (promotions, posts, discussions)
+→ Draft contextual comments with AI assistance
+→ Review and approve before anything goes live
+
+You stay in control. We help you notice the moments that are easy to miss.
+
+Our vision:
+Help teams earn visibility through timely, relevant public conversations — not by sending more messages into crowded inboxes.
+
+Because in 2026, attention doesn't belong to the loudest.
+It belongs to the most relevant.
+
+---
+
+We're writing up the full story of why we built this. What's working for you in B2B outreach these days? 👇
+
+Learn more → https://opencomment.ai
+
+#B2BSales #SalesStrategy #LinkedInMarketing #StartupStory</pre>
+          </div>
+
+          <h3>9:00am 发布动作</h3>
+          <ul class="list">
+            <li>9:00 发布 Post</li>
+            <li>9:02 发布评论 1</li>
+            <li>9:03 把 Post 链接发到团队群</li>
+            <li>9:05 创始人个人账号点赞</li>
+            <li>9:05 创始人个人账号评论</li>
+          </ul>
+
+          <div class="two-col">
+            <div class="copy-card">
+              <div class="copy-head">
+                <h4>评论 1</h4>
+                <button class="copy-btn" data-copy-target="comment1-copy">复制</button>
+              </div>
+              <pre id="comment1-copy">Quick context on why we're sharing this:
+
+We've spent the last few months building OpenComment in response to what we (and many B2B teams we've talked to) have experienced: cold email isn't landing like it used to.
+
+We're curious to hear from this community:
+
+→ What's your cold email / cold outreach experience been in 2026?
+→ If you've moved to other channels (LinkedIn, community, etc.), what's working?
+→ What makes it hard to engage on LinkedIn at scale?
+
+We're writing up the full story for later this week — would love to include perspectives from other teams navigating this shift. 🙏</pre>
+            </div>
+
+            <div class="copy-card">
+              <div class="copy-head">
+                <h4>创始人个人评论</h4>
+                <button class="copy-btn" data-copy-target="founder-copy">复制</button>
+              </div>
+              <pre id="founder-copy">As the founder, I'll add: we didn't want to build another AI tool for the sake of it.
+
+We wanted to understand why work that used to feel repeatable in B2B outreach was getting harder — and what a more natural workflow might look like instead.
+
+We're still learning, and we'd genuinely love to hear how other teams are thinking about this.</pre>
+            </div>
+          </div>
+
+          <h3>9:05-9:30am 动作</h3>
+          <ul class="list">
+            <li>回复每一条评论</li>
+            <li>在回复里 @ 对方</li>
+            <li>不复制粘贴机械模板</li>
+            <li>记录高频问题</li>
+          </ul>
+
+          <div class="copy-card">
+            <div class="copy-head">
+              <h4>快速回复模板</h4>
+              <button class="copy-btn" data-copy-target="reply-copy">复制</button>
+            </div>
+            <pre id="reply-copy">@[Name] 完全理解。我们也感受到同样的变化。你们 team 现在在尝试什么方法？
+
+@[Name] 这个点很重要。我们最近也在反复思考：问题不只是 outreach 本身，而是买家的注意力到底去了哪里。
+
+@[Name] 谢谢你提这个问题。我们周四会把完整故事发出来，也会把这个问题放进去回答。</pre>
+          </div>
+
+          <h3>11:00am 数据记录</h3>
+          <ul class="list">
+            <li>展示次数</li>
+            <li>点击次数</li>
+            <li>互动数</li>
+            <li>评论数</li>
+            <li>分享数</li>
+            <li>CTR</li>
+          </ul>
+
+          <h3>2:00pm 复盘动作</h3>
+          <ul class="list">
+            <li>列出评论主题</li>
+            <li>选出最有共鸣的句子</li>
+            <li>记录 Article 需要补充的问题</li>
+          </ul>
+        </section>
+
+        <section class="section-card" id="wednesday">
+          <h2>5. 周三 2026-04-15</h2>
+          <h3>动作</h3>
+          <ul class="list">
+            <li>根据周二评论微调 Article</li>
+            <li>删除未确认真实性的案例 / 引述 / 数据</li>
+            <li>准备 Article 配图</li>
+            <li>准备评论 2 和评论 3</li>
+            <li>内部审阅通过</li>
+          </ul>
+
+          <h3>周三必须确认</h3>
+          <ul class="list">
+            <li>Article 中所有案例是否真实</li>
+            <li>FAQ 中所有合规表述是否确认</li>
+            <li>CTA 是否还是 waitlist</li>
+          </ul>
+        </section>
+
+        <section class="section-card" id="thursday">
+          <h2>6. 周四 2026-04-16 9:00am</h2>
+
+          <div class="note">Article 很长，已放完整可复制版。发布前先再次核对：案例真实性、TOS 相关表述、CTA 与官网实际一致。</div>
+
+          <div class="copy-card">
+            <div class="copy-head">
+              <h4>Article 文案</h4>
+              <button class="copy-btn" data-copy-target="article-copy">复制</button>
+            </div>
+            <pre id="article-copy"># Why We Built OpenComment: The Complete Story
+
+**We're a B2B sales team. And we noticed something we couldn't ignore.**
+
+Our cold emails weren't getting replies. But our prospects? They were actively posting on LinkedIn — sharing challenges, asking for advice, discussing problems we could help with.
+
+The disconnect was obvious: We were reaching out privately, while they were having public conversations without us.
+
+That realization led us to build OpenComment. Here's why.
+
+---
+
+## The Problem We Kept Running Into
+
+Like most B2B teams, we relied on cold email for years. And like most B2B teams in 2026, we've watched it become less effective.
+
+**The shift was gradual, then obvious:**
+- Replies took longer to arrive
+- More emails went unanswered entirely
+- When prospects did reply, it was often "not the right time"
+
+We tried everything: Better subject lines. More personalization. Different sending times. A/B testing every variable.
+
+Nothing moved the needle.
+
+**Meanwhile, we noticed a pattern:**
+
+The same prospects who ignored our emails were actively posting on LinkedIn. They were:
+- Sharing team wins
+- Asking their network for tool recommendations
+- Posting about challenges they were facing
+- Engaging in industry discussions
+
+One day, a team member commented on a prospect's post about a challenge we'd tried to email them about three times. The prospect replied to the comment within an hour. Two other people from the same company joined the conversation. One sent a DM.
+
+**That single comment generated more engagement than weeks of cold outreach.**
+
+---
+
+## The Insight We Couldn't Scale
+
+We started experimenting: Instead of cold emailing prospects, we'd monitor their LinkedIn activity and comment when they posted something relevant.
+
+**The difference was dramatic:**
+- Prospects actually responded
+- Conversations felt natural, not forced
+- We weren't interrupting — we were joining conversations they chose to start
+
+But there was a problem: **This approach didn't scale.**
+
+Manually monitoring hundreds of prospects took hours every day:
+- Checking LinkedIn multiple times to catch posts early
+- Trying to figure out which posts were worth commenting on
+- Drafting comments that added value without sounding salesy
+- Keeping track of who we'd engaged with and when
+
+We needed a way to keep the authenticity of manual engagement while removing the manual burden.
+
+---
+
+## What We Decided to Build
+
+OpenComment started with a question: *What if we could help teams show up in the right conversations, at the right time, without it feeling automated?*
+
+**We didn't want to build another automation tool.** The market already has tools that auto-comment, auto-connect, and auto-message at scale. They're part of why LinkedIn feels spammy.
+
+**We built OpenComment around three principles:**
+
+### 1. Monitor, Don't Automate
+OpenComment tracks the LinkedIn activity of people who matter to your business — prospects, customers, industry voices. When something relevant happens, you get alerted.
+
+We don't auto-post. We don't send messages on your behalf. We monitor and notify.
+
+### 2. Filter for Relevance, Not Volume
+We don't send you every post from every person. Our system identifies moments that matter:
+- Is this post related to what you do?
+- Does it mention a challenge you solve?
+- Is this a conversation where your input would genuinely add value?
+
+You get alerts for high-signal moments, not noise.
+
+### 3. Assist, Don't Replace
+When a relevant moment is identified, OpenComment helps you respond. It can suggest comment angles based on the post content and your expertise.
+
+But you always review and approve before anything goes live.
+
+**You stay in control. We help you notice the moments that are easy to miss.**
+
+---
+
+## How It Actually Works
+
+Let's walk through a realistic scenario:
+
+**Scenario: You sell marketing software to small business owners.**
+
+**Step 1: You tell OpenComment who to monitor**
+- 50 target prospects
+- 20 industry influencers
+- 10 current customers
+
+**Step 2: OpenComment monitors their activity**
+- Tracks when these people post on LinkedIn
+- Filters for posts mentioning relevant themes
+
+**Step 3: You get alerted to relevant moments**
+- A prospect posts about a real challenge
+- OpenComment notifies you
+- Provides context on why this moment matters
+
+**Step 4: Draft assistance (optional)**
+- Suggests comment angles
+- You add your voice, edit, or write from scratch
+
+**Step 5: You engage**
+- You post the comment
+- If they reply, you get alerted to continue the conversation
+- OpenComment tracks the thread so you don't lose track
+
+**The goal:** Show up when it matters, with something useful to say, before 100 other people comment with generic responses.
+
+---
+
+## What We're Learning
+
+OpenComment is in closed beta. We're onboarding new users every week and learning as we go.
+
+**A pattern we keep hearing from early conversations is:**
+
+*"I used to find out a key customer got promoted weeks later. Now I get notified the same day and can reach out while it's still news."*
+
+*"I've been manually doing this for months — checking LinkedIn constantly, setting reminders. This just saves me hours every week."*
+
+*"The filter is what makes it work. I don't want 100 notifications. I want the 3-5 moments per week that actually matter."*
+
+**What we're still figuring out:**
+- How to balance alert volume
+- Which types of posts generate the best conversations
+- How to help users craft comments that feel authentic, not templated
+
+This is early. We're building in public and learning from every user.
+
+---
+
+## Our Vision: Distribution for the AI Era
+
+Cold email may still work for some teams, but it is no longer enough on its own. The channel that defined B2B sales for decades is now increasingly saturated, filtered, and harder to break through.
+
+**But buyer attention hasn't disappeared — it's moved.**
+
+In 2026, B2B decision-makers are:
+- Posting their challenges publicly
+- Asking their network for recommendations
+- Engaging with people who add value to their thinking
+
+**Distribution in the AI era belongs to teams who earn attention through relevance, not volume.**
+
+That's what OpenComment is building toward: A distribution workflow where teams:
+1. Monitor the signals that matter
+2. Show up in public conversations at the right time
+3. Earn visibility through context and genuine value
+4. Build relationships before ever sending a pitch
+
+**Comments over cold emails.
+Context over automation.
+Conversations over campaigns.**
+
+We're not building a tool to spam LinkedIn. We're building a way for teams to participate in the conversations that are already happening — without the manual burden of tracking everything themselves.
+
+---
+
+## Try It (We're Onboarding Weekly)
+
+We're in closed beta and onboarding new users on a rolling basis. If you're a B2B team experimenting with alternatives to cold email, we'd love to have you as part of this early phase.
+
+**Join the waitlist:** [https://opencomment.ai](https://opencomment.ai)
+
+No credit card required. We'll reach out when a spot opens up.
+
+---
+
+## What We'd Love to Hear From You
+
+We're genuinely curious:
+
+**What's your experience been with cold outreach in 2026?**
+Is it still working for you? Have you moved to other channels?
+
+**If you're experimenting with LinkedIn engagement, what's hard about it?**
+Is it finding the right moments? Crafting comments that don't sound salesy? Keeping track of who you've engaged with?
+
+Drop a comment or DM us. We're learning as much from other teams' experiences as from our own.
+
+---
+
+**[Join the waitlist](https://opencomment.ai)** | **[Connect with us](https://linkedin.com/company/opencomment)**
+
+---
+
+## FAQ
+
+**Q: How is this different from LinkedIn automation tools?**
+A: Most tools auto-comment at scale (which feels spammy). OpenComment monitors, alerts, and assists — but you always approve before anything goes live. It's an assistant, not a bot.
+
+**Q: Does this violate LinkedIn's Terms of Service?**
+A: OpenComment is designed around public monitoring and human-reviewed engagement. It does not auto-post comments or require your LinkedIn password. We don't store LinkedIn credentials, auto-post on your behalf, or send messages without your explicit approval. That said, we recommend reviewing LinkedIn's Terms of Service yourself to ensure your usage aligns with their guidelines.
+
+**Q: What's the pricing?**
+A: We're in closed beta. Join the waitlist at opencomment.ai — we're onboarding users on a rolling basis.
+
+**Q: Can I try it before committing?**
+A: Yes. Once onboarded, you get full access to test with your target accounts.</pre>
+          </div>
+
+          <h3>周四 9:00am 发布动作</h3>
+          <ul class="list">
+            <li>9:00 发布 Article</li>
+            <li>9:02 发布评论 3</li>
+            <li>9:05 回到周二 Post 下发布评论 2</li>
+            <li>9:10 通知团队点赞和评论</li>
+          </ul>
+
+          <div class="two-col">
+            <div class="copy-card">
+              <div class="copy-head">
+                <h4>评论 2：回到周二 Post 下导流</h4>
+                <button class="copy-btn" data-copy-target="comment2-copy">复制</button>
+              </div>
+              <pre id="comment2-copy">Update: We published the full story 👉 [Article链接]
+
+For everyone who commented here about cold email challenges and LinkedIn engagement — thank you. Your input helped us shape how we told the story.
+
+In the article we go deeper on:
+• Why we built OpenComment the way we did (monitoring + assistance, not automation)
+• How it actually works (with a realistic walkthrough)
+• What we're still figuring out (we're in beta, learning as we go)
+
+Would love your thoughts if you have 5 minutes to read it.</pre>
+            </div>
+
+            <div class="copy-card">
+              <div class="copy-head">
+                <h4>评论 3：Article 评论区置顶</h4>
+                <button class="copy-btn" data-copy-target="comment3-copy">复制</button>
+              </div>
+              <pre id="comment3-copy">This is the full story behind the post we shared earlier this week.
+
+A few things we intentionally left open-ended here:
+
+→ We're in closed beta, onboarding users weekly — if you want early access, join the waitlist at opencomment.ai
+
+→ We're genuinely curious what's working for other B2B teams. Cold email? LinkedIn? Communities? Something else? Drop a comment.
+
+→ If you've tried "LinkedIn engagement" as a strategy, what's been hard about it? We're still learning what real users need most.
+
+Thanks for reading. 🙏</pre>
+            </div>
+          </div>
+        </section>
+
+        <section class="section-card" id="friday">
+          <h2>7. 周五 2026-04-17 10:00am</h2>
+          <h3>复盘动作</h3>
+          <ul class="list">
+            <li>汇总 Post 总数据（周二-周五）</li>
+            <li>汇总 Article 总数据（周四-周五）</li>
+            <li>分类评论主题</li>
+            <li>记录最有共鸣的句子</li>
+            <li>统计网站访问和 waitlist 注册</li>
+            <li>完成 Week 1 Report</li>
+            <li>决定 2 周后下一篇内容</li>
+          </ul>
+
+          <div class="two-col">
+            <div class="mini">
+              <h4>追踪指标</h4>
+              <ul class="list">
+                <li>展示</li>
+                <li>点击</li>
+                <li>互动</li>
+                <li>评论</li>
+                <li>分享</li>
+                <li>CTR</li>
+                <li>Waitlist 注册</li>
+              </ul>
+            </div>
+            <div class="mini">
+              <h4>复盘输出</h4>
+              <ul class="list">
+                <li>哪些表达最有共鸣</li>
+                <li>哪些问题被反复提问</li>
+                <li>哪些内容可以变成 FAQ</li>
+                <li>下次内容要保留什么</li>
+                <li>下次内容要删除什么</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <script>
+    async function copyText(id, button) {
+      const el = document.getElementById(id);
+      if (!el) return;
+      const text = el.innerText;
+      const original = button.textContent;
+      try {
+        await navigator.clipboard.writeText(text);
+        button.textContent = "已复制";
+      } catch (e) {
+        const range = document.createRange();
+        range.selectNodeContents(el);
+        const selection = window.getSelection();
+        selection.removeAllRanges();
+        selection.addRange(range);
+        button.textContent = "请手动复制";
+      }
+      setTimeout(() => button.textContent = original, 1200);
+    }
+
+    document.querySelectorAll(".copy-btn").forEach((btn) => {
+      btn.addEventListener("click", () => copyText(btn.dataset.copyTarget, btn));
+    });
+  </script>
+</body>
+</html>
