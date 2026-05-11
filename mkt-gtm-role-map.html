@@ -1,0 +1,1387 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>OpenComment 产品 x 运营 x Skills 职能链路图</title>
+  <style>
+    :root {
+      --bg: #f6f7f4;
+      --ink: #1d2522;
+      --muted: #64706b;
+      --line: #d7dfd8;
+      --line-strong: #aebdb3;
+      --surface: #ffffff;
+      --soft: #f9faf8;
+      --product: #236b8e;
+      --product-soft: #dcebf2;
+      --product-line: #abcdda;
+      --mkt: #1f7a61;
+      --mkt-soft: #dff0e9;
+      --mkt-line: #abd8c8;
+      --partial: #94691d;
+      --partial-soft: #f4ead5;
+      --future: #6d5c9c;
+      --future-soft: #ebe7f5;
+      --shadow: 0 18px 48px rgba(25, 42, 35, 0.10);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.48;
+    }
+
+    .page {
+      width: min(1200px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 30px 0 56px;
+    }
+
+    header {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 24px;
+      align-items: end;
+      margin-bottom: 24px;
+    }
+
+    .eyebrow {
+      margin: 0 0 8px;
+      color: var(--mkt);
+      font-size: 13px;
+      font-weight: 900;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(32px, 5vw, 54px);
+      line-height: 1.08;
+      letter-spacing: 0;
+    }
+
+    .intro {
+      max-width: 780px;
+      margin: 12px 0 0;
+      color: var(--muted);
+      font-size: 16px;
+    }
+
+    .legend {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      gap: 8px;
+      max-width: 540px;
+    }
+
+    .legend span,
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      min-height: 28px;
+      padding: 4px 9px;
+      border: 1px solid var(--line);
+      background: var(--surface);
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 850;
+      white-space: nowrap;
+    }
+
+    .dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 999px;
+      background: var(--muted);
+    }
+
+    .dot.product { background: var(--product); }
+    .dot.mkt { background: var(--mkt); }
+    .dot.partial { background: var(--partial); }
+    .dot.future { background: var(--future); }
+
+    .tag.product {
+      color: var(--product);
+      background: var(--product-soft);
+      border-color: var(--product-line);
+    }
+
+    .tag.mkt {
+      color: var(--mkt);
+      background: var(--mkt-soft);
+      border-color: var(--mkt-line);
+    }
+
+    .tag.doing {
+      color: var(--mkt);
+      background: var(--mkt-soft);
+      border-color: var(--mkt-line);
+    }
+
+    .tag.partial {
+      color: var(--partial);
+      background: var(--partial-soft);
+      border-color: #dec68d;
+    }
+
+    .tag.future {
+      color: var(--future);
+      background: var(--future-soft);
+      border-color: #ccc3e2;
+    }
+
+
+    .hero {
+      display: grid;
+      grid-template-columns: 0.9fr 1.1fr;
+      gap: 18px;
+      margin-bottom: 28px;
+    }
+
+    .root-card,
+    .logic-card,
+    .panel {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+    }
+
+    .root-card {
+      display: grid;
+      gap: 12px;
+      align-content: center;
+      padding: 26px;
+      background: #123c33;
+      color: #fff;
+    }
+
+    .root-card h2 {
+      margin: 0;
+      font-size: 34px;
+      line-height: 1.12;
+      letter-spacing: 0;
+    }
+
+    .root-card p {
+      margin: 0;
+      color: #d9e9e2;
+    }
+
+    .logic-card {
+      padding: 22px;
+      box-shadow: none;
+    }
+
+    .logic-card h2,
+    .section-title h2,
+    .panel h3 {
+      margin: 0;
+      letter-spacing: 0;
+    }
+
+    .product-flow {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 8px;
+      margin-top: 16px;
+    }
+
+    .flow-step {
+      position: relative;
+      min-height: 106px;
+      padding: 12px;
+      background: var(--soft);
+      border: 1px solid var(--line);
+    }
+
+    .flow-step::after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      right: -8px;
+      width: 8px;
+      height: 2px;
+      background: var(--line-strong);
+    }
+
+    .flow-step:last-child::after {
+      display: none;
+    }
+
+    .flow-step strong {
+      display: block;
+      margin-bottom: 6px;
+      font-size: 15px;
+    }
+
+    .flow-step p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .section-title {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      align-items: end;
+      margin: 30px 0 16px;
+    }
+
+    .section-title p {
+      margin: 0;
+      max-width: 640px;
+      color: var(--muted);
+    }
+
+    .timeline {
+      position: relative;
+      display: grid;
+      gap: 24px;
+      padding-left: 34px;
+    }
+
+    .timeline::before {
+      content: "";
+      position: absolute;
+      left: 16px;
+      top: 26px;
+      bottom: 26px;
+      width: 2px;
+      background: var(--line-strong);
+    }
+
+    .phase {
+      position: relative;
+      display: grid;
+      grid-template-columns: 210px 1fr 88px 1fr;
+      gap: 14px;
+      align-items: stretch;
+    }
+
+    .phase::before {
+      content: "";
+      position: absolute;
+      left: -26px;
+      top: 30px;
+      width: 15px;
+      height: 15px;
+      border-radius: 999px;
+      background: var(--surface);
+      border: 3px solid var(--mkt);
+      z-index: 1;
+    }
+
+    .phase-head {
+      display: grid;
+      gap: 9px;
+      align-content: start;
+      min-height: 188px;
+      padding: 16px;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      box-shadow: 0 8px 20px rgba(25, 42, 35, 0.05);
+    }
+
+    .phase-number {
+      color: var(--mkt);
+      font-size: 12px;
+      font-weight: 950;
+    }
+
+    .phase-head h3 {
+      margin: 0;
+      font-size: 21px;
+      line-height: 1.16;
+      letter-spacing: 0;
+    }
+
+    .phase-head p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .side {
+      display: grid;
+      gap: 12px;
+      align-content: start;
+      padding: 16px;
+      background: var(--surface);
+      border: 1px solid var(--line);
+    }
+
+    .side.product-side {
+      border-color: var(--product-line);
+      background: linear-gradient(0deg, rgba(220, 235, 242, 0.50), #fff);
+    }
+
+    .side.mkt-side {
+      border-color: var(--mkt-line);
+      background: linear-gradient(0deg, rgba(223, 240, 233, 0.50), #fff);
+    }
+
+    .side-head {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 10px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .side h4 {
+      margin: 0;
+      font-size: 18px;
+      line-height: 1.2;
+      letter-spacing: 0;
+    }
+
+    .en {
+      display: block;
+      margin-top: 3px;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 850;
+    }
+
+    .cards {
+      display: grid;
+      gap: 8px;
+    }
+
+    .card {
+      min-height: 78px;
+      padding: 10px;
+      background: rgba(255, 255, 255, 0.76);
+      border: 1px solid var(--line);
+    }
+
+    .card.doing {
+      border-color: var(--mkt-line);
+      background: #f3fbf7;
+    }
+
+    .card.partial {
+      border-color: #dfc88b;
+      background: #fffaf0;
+    }
+
+    .card.future {
+      border-color: #ccc3e2;
+      background: #f8f5ff;
+    }
+
+    .card-title {
+      display: flex;
+      align-items: flex-start;
+      gap: 6px;
+      margin-bottom: 4px;
+      font-size: 13px;
+      font-weight: 920;
+    }
+
+    .check {
+      display: inline-grid;
+      place-items: center;
+      flex: 0 0 auto;
+      width: 17px;
+      height: 17px;
+      border-radius: 999px;
+      background: var(--mkt);
+      color: #fff;
+      font-size: 12px;
+      font-weight: 1000;
+      line-height: 1;
+      margin-top: 1px;
+    }
+
+    .card p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .card-skill {
+      display: grid;
+      gap: 4px;
+      margin-top: 8px;
+      padding-top: 8px;
+      border-top: 1px dashed var(--line-strong);
+    }
+
+    .card-skill span {
+      color: #2d3b36;
+      font-size: 11px;
+      font-weight: 920;
+    }
+
+    .card-skill code {
+      display: block;
+      color: var(--muted);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 10.5px;
+      line-height: 1.38;
+      word-break: break-word;
+    }
+
+    .link {
+      display: grid;
+      align-content: center;
+      justify-items: center;
+      gap: 8px;
+      min-height: 188px;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 900;
+      text-align: center;
+    }
+
+    .arrow {
+      display: grid;
+      place-items: center;
+      width: 48px;
+      height: 48px;
+      color: var(--mkt);
+      background: var(--surface);
+      border: 1px solid var(--line-strong);
+      border-radius: 999px;
+      font-size: 24px;
+      line-height: 1;
+    }
+
+    .link-note {
+      padding: 7px 8px;
+      background: var(--surface);
+      border: 1px dashed var(--line-strong);
+    }
+
+    .connection-strip {
+      display: grid;
+      grid-column: 2 / 5;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+      padding: 12px 14px;
+      background: #fbfcfa;
+      border: 1px dashed var(--line-strong);
+    }
+
+    .connection-strip span {
+      position: relative;
+      padding: 8px 9px;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      color: #34423d;
+      font-size: 12px;
+      font-weight: 820;
+      text-align: center;
+    }
+
+    .connection-strip span::after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      right: -9px;
+      width: 9px;
+      height: 2px;
+      background: var(--line-strong);
+    }
+
+    .connection-strip span:last-child::after {
+      display: none;
+    }
+
+    .bottom {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+      margin-top: 28px;
+    }
+
+    .panel {
+      padding: 20px;
+      box-shadow: none;
+    }
+
+    .panel p {
+      margin: 8px 0 0;
+      color: var(--muted);
+    }
+
+    .focus-list {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .focus-item {
+      padding: 11px;
+      border: 1px solid var(--line);
+      background: var(--soft);
+      font-size: 13px;
+      font-weight: 850;
+    }
+
+    .searches,
+    .sources {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .sources a {
+      display: inline-flex;
+      min-height: 28px;
+      align-items: center;
+      padding: 4px 9px;
+      color: var(--product);
+      background: var(--product-soft);
+      border: 1px solid var(--product-line);
+      font-size: 12px;
+      font-weight: 850;
+      text-decoration: none;
+    }
+
+    .skill-section {
+      margin-top: 28px;
+    }
+
+    .skill-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 14px;
+    }
+
+    .skill-card {
+      display: grid;
+      gap: 9px;
+      padding: 13px;
+      background: var(--surface);
+      border: 1px solid var(--line);
+    }
+
+    .skill-card.product-owner {
+      border-color: var(--product-line);
+      background: linear-gradient(0deg, rgba(220, 235, 242, 0.42), #fff);
+    }
+
+    .skill-card.mkt-owner {
+      border-color: var(--mkt-line);
+      background: linear-gradient(0deg, rgba(223, 240, 233, 0.42), #fff);
+    }
+
+    .skill-card.partial-owner {
+      border-color: #dfc88b;
+      background: #fffaf0;
+    }
+
+    .skill-card.future-owner {
+      border-color: #ccc3e2;
+      background: #f8f5ff;
+    }
+
+    .skill-title {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 14px;
+      font-weight: 950;
+    }
+
+    .skill-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .skill-card p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .skill-command {
+      padding: 9px 10px;
+      background: #f3f5f2;
+      border: 1px solid var(--line);
+      color: #27332f;
+      font-size: 12px;
+      line-height: 1.45;
+      word-break: break-word;
+    }
+
+    .skill-command code {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 11px;
+    }
+
+    @media (max-width: 1060px) {
+      header,
+      .hero,
+      .bottom {
+        grid-template-columns: 1fr;
+      }
+
+      .legend {
+        justify-content: flex-start;
+      }
+
+      .product-flow {
+        grid-template-columns: repeat(3, 1fr);
+      }
+
+      .flow-step::after {
+        display: none;
+      }
+
+      .phase {
+        grid-template-columns: 1fr;
+      }
+
+      .link {
+        min-height: auto;
+        grid-template-columns: auto 1fr;
+        justify-items: start;
+        text-align: left;
+      }
+
+      .arrow {
+        transform: rotate(90deg);
+        width: 40px;
+        height: 40px;
+      }
+
+      .connection-strip {
+        grid-column: auto;
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .connection-strip span::after {
+        display: none;
+      }
+    }
+
+    @media (max-width: 680px) {
+      .page {
+        width: min(100% - 20px, 1200px);
+        padding-top: 20px;
+      }
+
+      .product-flow,
+      .connection-strip,
+      .focus-list,
+      .skill-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .timeline {
+        padding-left: 18px;
+      }
+
+      .timeline::before {
+        left: 8px;
+      }
+
+      .phase::before {
+        left: -17px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header>
+      <div>
+        <p class="eyebrow">Product GTM Skills Map</p>
+        <h1>产品 x 运营 x Skills 职能链路图</h1>
+        <p class="intro">
+          这版按产品发展顺序从上到下展开：每个阶段左侧是产品侧职责，右侧是运营 / MKT 侧职责，中间展示两边如何互相承接。
+          同时把已安装的 marketing skills 映射到具体工作内容上，方便你在 Codex 里按任务直接调用。
+          带勾的是你当前正在做的事项；“部分涉及”表示你已经参与但不是完整 owner；“未来要做”表示后续阶段再启动。
+        </p>
+      </div>
+      <div class="legend">
+        <span><span class="dot product"></span>产品侧职责</span>
+        <span><span class="dot mkt"></span>运营 / MKT 侧职责</span>
+        <span><span class="dot partial"></span>部分涉及</span>
+        <span><span class="dot future"></span>未来要做</span>
+        <span>Skills = Codex 可调用工作流</span>
+      </div>
+    </header>
+
+    <section class="hero">
+      <article class="root-card">
+        <span class="tag doing">Your Current Scope</span>
+        <h2>Early-stage Product GTM Skill Loop</h2>
+        <p>你的工作不是单点运营，而是在产品、市场和增长之间，把研究、定位、内容、上线、转化、数据和复盘变成可重复的 Codex 工作流。</p>
+      </article>
+
+      <article class="logic-card">
+        <p class="eyebrow">Main Sequence</p>
+        <h2>产品发展顺序</h2>
+        <div class="product-flow">
+          <div class="flow-step"><strong>1. 市场与用户研究</strong><p>用 research、竞品和用户语言决定问题、ICP、关键词和选题。</p></div>
+          <div class="flow-step"><strong>2. 定位与方案定义</strong><p>把产品边界、价值主张、定价和反对意见写清楚。</p></div>
+          <div class="flow-step"><strong>3. 体验与素材交付</strong><p>把产品流程、prompt、demo、截图、视频和图片变成可发布资产。</p></div>
+          <div class="flow-step"><strong>4. 内容与上线发布</strong><p>通过 Blog、社媒、官网、目录、PH、CWS 和外链进入市场。</p></div>
+          <div class="flow-step"><strong>5. 转化与增长验证</strong><p>观察注册、onboarding、表单、邮件、销售和互动线索。</p></div>
+          <div class="flow-step"><strong>6. 数据与复盘迭代</strong><p>用 tracking、CRO、实验、复盘和留存信号回流产品与内容。</p></div>
+        </div>
+      </article>
+    </section>
+
+    <section>
+      <div class="section-title">
+        <div>
+          <p class="eyebrow">Vertical Chain</p>
+          <h2>按产品发展顺序看：产品侧与运营侧如何连接</h2>
+        </div>
+        <p>蓝色框是产品职责，绿色框是运营 / MKT 职责；中间箭头说明两边在这个阶段的交接关系。</p>
+      </div>
+
+      <div class="timeline">
+        <section class="phase">
+          <aside class="phase-head">
+            <span class="phase-number">Phase 01</span>
+            <h3>关键词与需求观察</h3>
+            <p>先从搜索工具和公开讨论里找到用户语言、关键词、问题表达，再决定内容主题。</p>
+          </aside>
+
+          <article class="side product-side">
+            <div class="side-head">
+              <div><h4>产品侧</h4><span class="en">PM / User Research</span></div>
+              <span class="tag product">产品</span>
+            </div>
+            <div class="cards">
+              <div class="card partial"><div class="card-title">产品机会识别</div><p>从用户痛点、竞品缺口和业务目标里判断是否存在产品机会。</p><div class="card-skill"><span>Skill: customer-research</span><code>使用 customer-research，帮我从这些材料里提炼用户痛点、触发事件和产品机会。</code></div></div>
+              <div class="card future"><div class="card-title">用户问题整理</div><p>未来可以结合访谈、用户反馈、支持记录，整理真实使用问题。</p><div class="card-skill"><span>Skill: customer-research</span><code>使用 customer-research，帮我把这些反馈整理成主题、原话、频率和强度。</code></div></div>
+              <div class="card partial"><div class="card-title">ICP / JTBD</div><p>梳理目标用户、使用场景、购买动机和要完成的任务。</p><div class="card-skill"><span>Skill: product-marketing-context</span><code>使用 product-marketing-context，帮我更新 OpenComment 的 ICP、persona 和 JTBD。</code></div></div>
+            </div>
+          </article>
+
+          <div class="link">
+            <div class="arrow">→</div>
+            <div class="link-note">用户语言变成关键词和选题</div>
+          </div>
+
+          <article class="side mkt-side">
+            <div class="side-head">
+              <div><h4>运营 / MKT 侧</h4><span class="en">Market Research / Product Marketing</span></div>
+              <span class="tag mkt">运营</span>
+            </div>
+            <div class="cards">
+              <div class="card doing"><div class="card-title"><span class="check">✓</span>竞品研究</div><p>Taplio、AuthoredUp、Warmr、Favikon、Shield。</p><div class="card-skill"><span>Skill: competitor-profiling</span><code>使用 competitor-profiling，帮我分析这个竞品并提炼对 OpenComment 的启发。</code></div></div>
+              <div class="card doing"><div class="card-title"><span class="check">✓</span>目标人群判断</div><p>founder、marketing team、sales、BD、KOL 等优先级。</p><div class="card-skill"><span>Skill: product-marketing-context</span><code>使用 product-marketing-context，帮我校准目标人群、优先级和 anti-ICP。</code></div><div class="card-skill"><span>Skill: marketing-psychology</span><code>使用 marketing-psychology，帮我分析这个目标人群为什么会关心 / 犹豫 / 不行动。</code></div></div>
+              <div class="card future"><div class="card-title">关键词研究</div><p>未来用 Semrush、搜索结果、竞品内容等找和产品相关的关键词。</p><div class="card-skill"><span>Skill: content-strategy</span><code>使用 content-strategy，帮我把这些关键词分成 searchable / shareable 和 buyer stage。</code></div></div>
+              <div class="card future"><div class="card-title">用户语言观察</div><p>未来从 Reddit、LinkedIn、社群、行业讨论里观察潜在用户在搜什么、问什么、怎么表达问题。</p><div class="card-skill"><span>Skill: customer-research</span><code>使用 customer-research，帮我从这些公开讨论里提取用户原话和高频问题。</code></div></div>
+              <div class="card future"><div class="card-title">内容角度沉淀</div><p>未来把关键词和用户提问转成文章选题、FAQ、use case、LinkedIn post。</p><div class="card-skill"><span>Skill: content-strategy</span><code>使用 content-strategy，帮我把这些用户问题转成内容支柱、主题簇和选题池。</code></div></div>
+            </div>
+          </article>
+
+          <div class="connection-strip">
+            <span>Semrush / Search</span>
+            <span>Reddit / LinkedIn / 社群</span>
+            <span>关键词与用户问题</span>
+            <span>内容主题 / FAQ / Post</span>
+          </div>
+
+        </section>
+
+        <section class="phase">
+          <aside class="phase-head">
+            <span class="phase-number">Phase 02</span>
+            <h3>方案定义</h3>
+            <p>把已确认的问题翻译成产品方案，同时明确市场该怎么讲。</p>
+          </aside>
+
+          <article class="side product-side">
+            <div class="side-head">
+              <div><h4>产品侧</h4><span class="en">Product Management / Product Owner</span></div>
+              <span class="tag product">产品</span>
+            </div>
+            <div class="cards">
+              <div class="card partial"><div class="card-title">需求拆解</div><p>把确认要做的问题拆成 user story、字段、流程、验收条件。</p><div class="card-skill"><span>Skill: customer-research</span><code>使用 customer-research，帮我把这些用户问题拆成 JTBD、使用场景和需求输入。</code></div></div>
+              <div class="card partial"><div class="card-title">功能范围定义</div><p>确认当前版本做什么、不做什么，哪些能力需要未来迭代。</p><div class="card-skill"><span>Skill: product-marketing-context</span><code>使用 product-marketing-context，帮我把当前功能边界和不能承诺的内容写清楚。</code></div></div>
+              <div class="card partial"><div class="card-title">优先级判断</div><p>平衡用户价值、业务价值和实现成本。</p><div class="card-skill"><span>Skill: marketing-ideas</span><code>使用 marketing-ideas，帮我基于阶段、资源和目标筛选最值得先做的增长 / 产品实验。</code></div><div class="card-skill"><span>Skill: pricing-strategy</span><code>使用 pricing-strategy，未来帮我判断不同功能、套餐和价格假设的商业优先级。</code></div></div>
+              <div class="card future"><div class="card-title">需求验证</div><p>未来从用户反馈、访谈、使用数据中验证哪些需求值得做。</p><div class="card-skill"><span>Skill: analytics-tracking</span><code>使用 analytics-tracking，帮我定义验证这个需求是否成立需要追踪哪些事件和指标。</code></div></div>
+            </div>
+          </article>
+
+          <div class="link">
+            <div class="arrow">→</div>
+            <div class="link-note">功能边界决定 Messaging 边界</div>
+          </div>
+
+          <article class="side mkt-side">
+            <div class="side-head">
+              <div><h4>运营 / MKT 侧</h4><span class="en">Product Marketing / Messaging</span></div>
+              <span class="tag mkt">运营</span>
+            </div>
+            <div class="cards">
+              <div class="card doing"><div class="card-title"><span class="check">✓</span>产品定位</div><p>OpenComment 是 comment-led growth workflow。</p><div class="card-skill"><span>Skill: product-marketing-context</span><code>使用 product-marketing-context，帮我更新 OpenComment 的定位、差异化和一句话描述。</code></div></div>
+              <div class="card doing"><div class="card-title"><span class="check">✓</span>信息框架</div><p>价值主张、FAQ、安全边界、comparison 说法。</p><div class="card-skill"><span>Skill: copywriting</span><code>使用 copywriting，帮我把价值主张、FAQ 和安全边界写成对外文案。</code></div><div class="card-skill"><span>Skill: competitor-alternatives</span><code>使用 competitor-alternatives，帮我把 comparison 说法整理成 alternative / vs 页面逻辑。</code></div></div>
+              <div class="card doing"><div class="card-title"><span class="check">✓</span>不能说的边界</div><p>避免写成 auto-DM、blind automation、虚构结果。</p><div class="card-skill"><span>Skill: copy-editing</span><code>使用 copy-editing，帮我检查这段文案有没有过度承诺、虚构 proof 或 automation 风险。</code></div></div>
+            </div>
+          </article>
+
+          <div class="connection-strip">
+            <span>产品字段和流程</span>
+            <span>可承诺能力</span>
+            <span>Messaging / FAQ</span>
+            <span>内容和 Demo 的表达边界</span>
+          </div>
+
+        </section>
+
+        <section class="phase">
+          <aside class="phase-head">
+            <span class="phase-number">Phase 03</span>
+            <h3>MVP / 交付</h3>
+            <p>产品形成可用流程后，市场侧才能拿到真实素材做 demo、截图和内容。</p>
+          </aside>
+
+          <article class="side product-side">
+            <div class="side-head">
+              <div><h4>产品侧</h4><span class="en">Product Execution / UX / AI Product Ops</span></div>
+              <span class="tag product">产品</span>
+            </div>
+            <div class="cards">
+              <div class="card partial"><div class="card-title">用户流程</div><p>Company setup、KOL groups、activities、accept/reject、posting。</p><div class="card-skill"><span>Skill: onboarding-cro</span><code>使用 onboarding-cro，帮我分析这个用户流程如何更快到达第一次有价值评论建议。</code></div></div>
+              <div class="card doing"><div class="card-title"><span class="check">✓</span>功能使用反馈</div><p>你在使用 comment suggestion 功能时提出 bug / CR / 体验问题。</p><div class="card-skill"><span>Skill: customer-research</span><code>使用 customer-research，帮我把这些使用反馈整理成 bug、confusion、missing feature 和 expectation mismatch。</code></div></div>
+              <div class="card doing"><div class="card-title"><span class="check">✓</span>Prompt / 评论质量测试</div><p>测试评论是否自然、贴 post、身份稳定；变量边界也归在 comment suggestion 优化里。</p><div class="card-skill"><span>Skill: copy-editing</span><code>使用 copy-editing，帮我按清晰度、语气、自然度和风险检查这些评论建议。</code></div></div>
+              <div class="card future"><div class="card-title">用户反馈入池</div><p>未来从真实用户反馈记录问题、上需求池、验证和排优先级。</p><div class="card-skill"><span>Skill: revops</span><code>使用 revops，未来帮我设计用户反馈从记录到 owner、状态和跟进的流转规则。</code></div></div>
+            </div>
+          </article>
+
+          <div class="link">
+            <div class="arrow">→</div>
+            <div class="link-note">真实流程变成可发布素材</div>
+          </div>
+
+          <article class="side mkt-side">
+            <div class="side-head">
+              <div><h4>运营 / MKT 侧</h4><span class="en">Content / Creative / Demo Assets</span></div>
+              <span class="tag mkt">运营</span>
+            </div>
+            <div class="cards">
+              <div class="card doing"><div class="card-title"><span class="check">✓</span>Demo 脚本</div><p>用真实产品流程讲清为什么值得看。</p><div class="card-skill"><span>Skill: video</span><code>使用 video，帮我把这个产品流程写成 60 秒 demo 脚本、字幕和 shot list。</code></div></div>
+              <div class="card doing"><div class="card-title"><span class="check">✓</span>产品截图素材</div><p>CWS / PH / Blog / Article 所需截图。</p><div class="card-skill"><span>Skill: directory-submissions</span><code>使用 directory-submissions，帮我列出 CWS / PH / G2 需要哪些截图、logo 和 demo 素材。</code></div></div>
+              <div class="card doing"><div class="card-title"><span class="check">✓</span>Workflow / 配图</div><p>把产品流程转成文章配图、comparison 图。</p><div class="card-skill"><span>Skill: image</span><code>使用 image，帮我为这个 workflow / comparison 设计配图 brief 和画面结构。</code></div></div>
+            </div>
+          </article>
+
+          <div class="connection-strip">
+            <span>可用产品流程</span>
+            <span>Bug / CR / Prompt 质量</span>
+            <span>截图 / Demo / 配图</span>
+            <span>可发布内容包</span>
+          </div>
+
+        </section>
+
+        <section class="phase">
+          <aside class="phase-head">
+            <span class="phase-number">Phase 04</span>
+            <h3>上线发布</h3>
+            <p>产品素材进入市场，开始被看见、被理解、被评论和被试用。</p>
+          </aside>
+
+          <article class="side product-side">
+            <div class="side-head">
+              <div><h4>产品侧</h4><span class="en">Launch Readiness / Website Conversion</span></div>
+              <span class="tag product">产品</span>
+            </div>
+            <div class="cards">
+              <div class="card partial"><div class="card-title">官网承接</div><p>首页、FAQ、demo、CTA、use case 页面协作。</p><div class="card-skill"><span>Skill: page-cro</span><code>使用 page-cro，帮我审计首页 / FAQ / demo 页面是否能承接用户并推动注册。</code></div><div class="card-skill"><span>Skill: site-architecture</span><code>使用 site-architecture，帮我规划首页、use case、FAQ、comparison 和 blog 的信息架构。</code></div><div class="card-skill"><span>Skill: schema-markup</span><code>使用 schema-markup，帮我为官网 / FAQ / Product 页面生成结构化数据。</code></div></div>
+              <div class="card partial"><div class="card-title">上线准备</div><p>确认功能、页面、隐私、安全说明和支持入口可用。</p><div class="card-skill"><span>Skill: launch-strategy</span><code>使用 launch-strategy，帮我检查这次上线前、上线当天和上线后的准备清单。</code></div></div>
+              <div class="card partial"><div class="card-title">平台资料一致性</div><p>确保官网、CWS、PH、外链平台的产品口径一致。</p><div class="card-skill"><span>Skill: product-marketing-context</span><code>使用 product-marketing-context，帮我校准各平台产品描述、定位和不能说的边界。</code></div></div>
+              <div class="card future"><div class="card-title">首次价值动作定义</div><p>未来定义用户第一次获得产品价值的关键动作。</p><div class="card-skill"><span>Skill: onboarding-cro</span><code>使用 onboarding-cro，帮我定义 OpenComment 的 first value action 和 aha moment。</code></div><div class="card-skill"><span>Skill: form-cro</span><code>使用 form-cro，帮我优化 waitlist / demo 表单，让用户更容易完成第一步。</code></div><div class="card-skill"><span>Skill: paywall-upgrade-cro</span><code>使用 paywall-upgrade-cro，未来帮我设计免费到付费的升级路径。</code></div></div>
+            </div>
+          </article>
+
+          <div class="link">
+            <div class="arrow">→</div>
+            <div class="link-note">产品承接页支持渠道分发</div>
+          </div>
+
+          <article class="side mkt-side">
+            <div class="side-head">
+              <div><h4>运营 / MKT 侧</h4><span class="en">Launch / Channel / Distribution</span></div>
+              <span class="tag mkt">运营</span>
+            </div>
+            <div class="cards">
+              <div class="card doing"><div class="card-title"><span class="check">✓</span>Blog / Article / Post</div><p>每周内容、LinkedIn 内容、first comment。</p><div class="card-skill"><span>Skill: social-content</span><code>使用 social-content，帮我把这篇母稿拆成 Blog、LinkedIn Article、Post 和 first comment。</code></div><div class="card-skill"><span>Skill: seo-audit</span><code>使用 seo-audit，帮我检查这篇 Blog / 发布页的 SEO 基础问题。</code></div><div class="card-skill"><span>Skill: ai-seo</span><code>使用 ai-seo，帮我优化这篇内容，让它更容易被 AI 搜索理解和引用。</code></div><div class="card-skill"><span>Skill: programmatic-seo</span><code>使用 programmatic-seo，未来帮我把这个主题扩展成可批量生成的页面模板。</code></div></div>
+              <div class="card doing"><div class="card-title"><span class="check">✓</span>CWS / PH 素材</div><p>简介、logo、截图、demo、maker 文案。</p><div class="card-skill"><span>Skill: directory-submissions</span><code>使用 directory-submissions，帮我准备 CWS / Product Hunt 的 tagline、描述、截图和 maker comment。</code></div></div>
+              <div class="card doing"><div class="card-title"><span class="check">✓</span>外链和平台注册</div><p>准备并注册 AlternativeTo、Crunchbase、G2、BetaList、CWS、Product Hunt 等入口。</p><div class="card-skill"><span>Skill: directory-submissions</span><code>使用 directory-submissions，帮我做外链平台优先级、提交素材和 tracker。</code></div></div>
+              <div class="card future"><div class="card-title">平台资料维护</div><p>未来维护描述、截图、链接、FAQ、support email、隐私/安全说明。</p><div class="card-skill"><span>Skill: aso-audit</span><code>使用 aso-audit，未来帮我审计和更新 CWS / app listing 的标题、描述、截图和关键词。</code></div><div class="card-skill"><span>Skill: schema-markup</span><code>使用 schema-markup，帮我检查平台资料页是否需要 Product / FAQ / Organization schema。</code></div></div>
+            </div>
+          </article>
+
+          <div class="connection-strip">
+            <span>官网 / FAQ / Demo</span>
+            <span>Launch 素材</span>
+            <span>LinkedIn / CWS / PH / 外链</span>
+            <span>访问和互动信号</span>
+          </div>
+
+        </section>
+
+        <section class="phase">
+          <aside class="phase-head">
+            <span class="phase-number">Phase 05</span>
+            <h3>增长验证</h3>
+            <p>上线后不是结束，而是通过使用、互动和信任信号判断产品与市场是否对上。</p>
+          </aside>
+
+          <article class="side product-side">
+            <div class="side-head">
+              <div><h4>产品侧</h4><span class="en">Growth Product / Product Analytics</span></div>
+              <span class="tag product">产品</span>
+            </div>
+            <div class="cards">
+              <div class="card future"><div class="card-title">新用户首次使用路径</div><p>未来看用户是否能顺利完成注册、配置公司、添加 KOL、得到第一条有价值评论建议。</p><div class="card-skill"><span>Skill: signup-flow-cro</span><code>使用 signup-flow-cro，帮我分析注册到首次配置的流程阻力和优化点。</code></div></div>
+              <div class="card future"><div class="card-title">功能使用情况</div><p>未来看 KOL groups、activities、accept/reject、auto comment 等功能是否真的被使用。</p><div class="card-skill"><span>Skill: analytics-tracking</span><code>使用 analytics-tracking，帮我定义 KOL groups、activities、accept/reject 的事件和属性。</code></div></div>
+              <div class="card future"><div class="card-title">持续使用情况</div><p>未来看用户是否每天或每周回到产品，是否形成可重复 workflow。</p><div class="card-skill"><span>Skill: churn-prevention</span><code>使用 churn-prevention，未来帮我识别用户不持续使用的原因和挽回动作。</code></div></div>
+              <div class="card future"><div class="card-title">市场互动线索整理</div><p>未来可把 LinkedIn 互动里出现的潜在客户、异议、常见问题整理给产品和销售参考。</p><div class="card-skill"><span>Skill: revops</span><code>使用 revops，帮我设计 LinkedIn 互动线索如何进入 lead lifecycle 和后续跟进。</code></div></div>
+            </div>
+          </article>
+
+          <div class="link">
+            <div class="arrow">→</div>
+            <div class="link-note">产品使用信号和市场互动一起判断</div>
+          </div>
+
+          <article class="side mkt-side">
+            <div class="side-head">
+              <div><h4>运营 / MKT 侧</h4><span class="en">Social Growth / Demand Creation</span></div>
+              <span class="tag mkt">运营</span>
+            </div>
+            <div class="cards">
+              <div class="card doing"><div class="card-title"><span class="check">✓</span>LinkedIn 评论</div><p>目前主要停留在 comment post，观察哪些话题和对象更相关。</p><div class="card-skill"><span>Skill: social-content</span><code>使用 social-content，帮我基于这条 LinkedIn post 写 3 个自然评论候选。</code></div></div>
+              <div class="card future"><div class="card-title">目标客户判断</div><p>未来在评论互动时判断对方是否可能是 ICP、潜在客户、KOL 或 partner。</p><div class="card-skill"><span>Skill: customer-research</span><code>使用 customer-research，帮我根据这些 LinkedIn 互动判断潜在 ICP、KOL 和 partner 信号。</code></div></div>
+              <div class="card future"><div class="card-title">互动承接</div><p>未来做二次回复、founder 跟进、邀请关注、保存线索和后续动作。</p><div class="card-skill"><span>Skill: cold-email</span><code>使用 cold-email，帮我基于这次 LinkedIn 互动写一封低压力 follow-up。</code></div></div>
+              <div class="card future"><div class="card-title">SaaS 找客户动作</div><p>未来可扩展到 prospect list、社群观察、竞品评论区、目录平台、cold warm-up、demo invite。</p><div class="card-skill"><span>Skill: sales-enablement</span><code>使用 sales-enablement，帮我把这些线索整理成 prospecting playbook 和 objection notes。</code></div><div class="card-skill"><span>Skill: community-marketing</span><code>使用 community-marketing，帮我设计 Reddit / 社群里非硬广的参与和获客方式。</code></div><div class="card-skill"><span>Skill: lead-magnets</span><code>使用 lead-magnets，帮我设计一个能承接这些潜在客户的 checklist / 模板 / 报告。</code></div><div class="card-skill"><span>Skill: free-tool-strategy</span><code>使用 free-tool-strategy，帮我 brainstorm OpenComment 可以做的免费工具获客入口。</code></div></div>
+              <div class="card future"><div class="card-title">结果截图</div><p>未来保存高质量互动、回复、profile visits、connection requests。</p><div class="card-skill"><span>Skill: copywriting</span><code>使用 copywriting，帮我把这些互动结果整理成可信但不过度承诺的 proof snippets。</code></div></div>
+            </div>
+          </article>
+
+          <div class="connection-strip">
+            <span>产品使用</span>
+            <span>LinkedIn 评论与承接</span>
+            <span>潜客 / 需求 / 结果证明</span>
+            <span>增长方向判断</span>
+          </div>
+
+        </section>
+
+        <section class="phase">
+          <aside class="phase-head">
+            <span class="phase-number">Phase 06</span>
+            <h3>复盘迭代</h3>
+            <p>把数据和反馈系统化，回到产品发现和市场定位，进入下一轮迭代。</p>
+          </aside>
+
+          <article class="side product-side">
+            <div class="side-head">
+              <div><h4>产品侧</h4><span class="en">Product Ops / Product Analytics</span></div>
+              <span class="tag product">产品</span>
+            </div>
+            <div class="cards">
+              <div class="card doing"><div class="card-title"><span class="check">✓</span>Comment suggestion 优化记录</div><p>daily tracker、评论样本、prompt 对比、质量原因，用于产品功能优化。</p><div class="card-skill"><span>Skill: analytics-tracking</span><code>使用 analytics-tracking，帮我把 comment suggestion 质量记录设计成可追踪字段和指标。</code></div></div>
+              <div class="card partial"><div class="card-title">Bug / CR 记录</div><p>把你在使用中的问题和改进建议整理成可跟进条目。</p><div class="card-skill"><span>Skill: customer-research</span><code>使用 customer-research，帮我把这些 bug / CR 归类成用户困惑、缺失功能和期望错位。</code></div></div>
+              <div class="card future"><div class="card-title">需求池管理</div><p>收集你自己使用产品遇到的问题，以及未来真实用户使用反馈；记录状态、优先级和处理结果。</p><div class="card-skill"><span>Skill: revops</span><code>使用 revops，未来帮我设计需求池字段、owner、状态、优先级和交接规则。</code></div></div>
+              <div class="card future"><div class="card-title">流程标准化</div><p>未来把记录、评测、复盘固定成可重复流程。</p><div class="card-skill"><span>Skill: product-marketing-context</span><code>使用 product-marketing-context，帮我把已验证的流程和口径写回长期上下文。</code></div></div>
+              <div class="card future"><div class="card-title">工具与数据栈</div><p>未来可接 Langfuse、analytics、feedback 工具。</p><div class="card-skill"><span>Skill: analytics-tracking</span><code>使用 analytics-tracking，帮我设计产品反馈、使用行为和营销转化的数据追踪方案。</code></div></div>
+            </div>
+          </article>
+
+          <div class="link">
+            <div class="arrow">→</div>
+            <div class="link-note">复盘结论回流到产品和内容</div>
+          </div>
+
+          <article class="side mkt-side">
+            <div class="side-head">
+              <div><h4>运营 / MKT 侧</h4><span class="en">Marketing Ops / Customer Proof</span></div>
+              <span class="tag mkt">运营</span>
+            </div>
+            <div class="cards">
+              <div class="card doing"><div class="card-title"><span class="check">✓</span>内容总控台</div><p>归档关键词、文案、配图、审核、发布状态。</p><div class="card-skill"><span>Skill: content-strategy</span><code>使用 content-strategy，帮我根据终稿更新内容总控台、关键词、主题和复用机会。</code></div></div>
+              <div class="card future"><div class="card-title">发布复盘</div><p>未来系统记录 30 分钟、48 小时、1 周表现和洞察。</p><div class="card-skill"><span>Skill: social-content</span><code>使用 social-content，帮我复盘这批社媒内容表现，并提出可复用的 hook 和格式。</code></div></div>
+              <div class="card future"><div class="card-title">线索和互动复盘</div><p>未来记录哪些人群、平台、话题、评论角度值得继续跟进。</p><div class="card-skill"><span>Skill: customer-research</span><code>使用 customer-research，帮我从这些互动记录里提炼 ICP 信号、异议和后续选题。</code></div></div>
+              <div class="card future"><div class="card-title">案例 / 证明页</div><p>未来把结果截图和使用场景沉淀为公开信任资产。</p><div class="card-skill"><span>Skill: sales-enablement</span><code>使用 sales-enablement，帮我把这些结果截图整理成 case study brief 和 proof points。</code></div><div class="card-skill"><span>Skill: referral-program</span><code>使用 referral-program，未来帮我把满意用户和 proof 转成推荐 / review / ambassador 机制。</code></div><div class="card-skill"><span>Skill: co-marketing</span><code>使用 co-marketing，未来帮我把案例或行业洞察设计成联合内容 / webinar / partner campaign。</code></div></div>
+            </div>
+          </article>
+
+          <div class="connection-strip">
+            <span>数据和反馈</span>
+            <span>复盘结论</span>
+            <span>产品 / Prompt / 内容调整</span>
+            <span>回到 Phase 01</span>
+          </div>
+
+        </section>
+
+        <section class="phase">
+          <aside class="phase-head">
+            <span class="phase-number">Future Track</span>
+            <h3>未来要做</h3>
+            <p>这些也是产品和增长体系里会出现的事项，只是目前还没有开始做。</p>
+          </aside>
+
+          <article class="side product-side">
+            <div class="side-head">
+              <div><h4>产品侧</h4><span class="en">Advanced Product Analytics</span></div>
+              <span class="tag future">未来要做</span>
+            </div>
+            <div class="cards">
+              <div class="card future"><div class="card-title">复杂 A/B 实验平台</div><p>未来样本和流量更充足后再考虑。</p><div class="card-skill"><span>Skill: ab-test-setup</span><code>使用 ab-test-setup，未来帮我设计页面、注册或 onboarding 的实验假设、指标和样本要求。</code></div></div>
+              <div class="card future"><div class="card-title">成熟数据仓库</div><p>未来规模化后再系统建设。</p><div class="card-skill"><span>Skill: analytics-tracking</span><code>使用 analytics-tracking，未来帮我规划事件、属性、UTM 和 dashboard 的数据基础。</code></div></div>
+            </div>
+          </article>
+
+          <div class="link">
+            <div class="arrow">→</div>
+            <div class="link-note">暂时不在当前执行范围</div>
+          </div>
+
+          <article class="side mkt-side">
+            <div class="side-head">
+              <div><h4>运营 / MKT 侧</h4><span class="en">Performance / Mature CRM</span></div>
+              <span class="tag future">未来要做</span>
+            </div>
+            <div class="cards">
+              <div class="card future"><div class="card-title">广告投放</div><p>未来如果有预算，再负责出价、CPL、CAC 等。</p><div class="card-skill"><span>Skill: paid-ads</span><code>使用 paid-ads，未来帮我设计 OpenComment 的广告 campaign、受众、预算和落地页匹配。</code></div><div class="card-skill"><span>Skill: ad-creative</span><code>使用 ad-creative，未来帮我生成广告 hook、文案、视觉 brief 和 CTA 变体。</code></div></div>
+              <div class="card future"><div class="card-title">成熟 CRM 自动化</div><p>未来有用户池后，再负责 nurture、激活、留存邮件流程。</p><div class="card-skill"><span>Skill: email-sequence</span><code>使用 email-sequence，未来帮我设计 nurture、activation、re-engagement 和 product update 邮件流程。</code></div><div class="card-skill"><span>Skill: popup-cro</span><code>使用 popup-cro，未来帮我设计 newsletter / waitlist popup 并避免打扰用户。</code></div></div>
+            </div>
+          </article>
+        </section>
+      </div>
+    </section>
+
+    <section class="panel skill-section">
+      <div class="section-title" style="margin-top: 0;">
+        <div>
+          <p class="eyebrow">Codex Skill Command Map</p>
+          <h2>做什么工作时，调用什么 Skill</h2>
+        </div>
+        <p>每个 skill 都对应一个具体工作内容；绿色偏运营 owner，蓝色偏产品 owner，黄色表示你参与但不是完整 owner，紫色表示未来阶段再启动。</p>
+      </div>
+
+      <div class="skill-grid">
+        <article class="skill-card mkt-owner">
+          <div class="skill-title"><span>产品营销上下文</span><div class="skill-meta"><span class="tag mkt">运营负责</span><span class="tag doing">当前</span></div></div>
+          <p>建立 OpenComment 的产品、ICP、定位、竞品、语言边界和目标底座，供其他营销 skill 自动引用。</p>
+          <div class="skill-command"><code>使用 product-marketing-context，帮我更新 OpenComment 的产品营销上下文。</code></div>
+        </article>
+
+        <article class="skill-card mkt-owner">
+          <div class="skill-title"><span>用户研究与 VOC</span><div class="skill-meta"><span class="tag mkt">运营负责</span><span class="tag doing">当前</span></div></div>
+          <p>分析访谈、评论、Reddit、G2、support notes，提炼痛点、触发事件、原话、JTBD 和 persona。</p>
+          <div class="skill-command"><code>使用 customer-research，帮我从这些材料里提炼用户痛点、money quotes 和 JTBD。</code></div>
+        </article>
+
+        <article class="skill-card mkt-owner">
+          <div class="skill-title"><span>竞品画像研究</span><div class="skill-meta"><span class="tag mkt">运营负责</span><span class="tag doing">当前</span></div></div>
+          <p>拆解 Taplio、Supergrow、Warmr、AuthoredUp、Shield 等竞品的定位、功能、口碑、定价和运营方式。</p>
+          <div class="skill-command"><code>使用 competitor-profiling，帮我分析这个竞品 URL，并输出定位、受众、功能、定价和启发。</code></div>
+        </article>
+
+        <article class="skill-card mkt-owner">
+          <div class="skill-title"><span>竞品替代页与对比页</span><div class="skill-meta"><span class="tag mkt">运营负责</span><span class="tag doing">当前</span></div></div>
+          <p>准备 “X alternative”、“X alternatives”、“OpenComment vs X” 页面，承接高意图搜索和销售对比问题。</p>
+          <div class="skill-command"><code>使用 competitor-alternatives，帮我设计 OpenComment 和 [竞品名] 的 alternative / vs 页面结构。</code></div>
+        </article>
+
+        <article class="skill-card mkt-owner">
+          <div class="skill-title"><span>内容策略与主题簇</span><div class="skill-meta"><span class="tag mkt">运营负责</span><span class="tag doing">当前</span></div></div>
+          <p>决定长期写什么：content pillars、topic clusters、searchable vs shareable、buyer stage 和优先级。</p>
+          <div class="skill-command"><code>使用 content-strategy，帮我基于 OpenComment 当前阶段规划下个月内容支柱和选题优先级。</code></div>
+        </article>
+
+        <article class="skill-card mkt-owner">
+          <div class="skill-title"><span>社媒内容生产与复用</span><div class="skill-meta"><span class="tag mkt">运营负责</span><span class="tag doing">当前</span></div></div>
+          <p>把 Blog、产品更新、demo、复盘拆成 LinkedIn、X、Reddit、公众号、小红书等多平台内容资产。</p>
+          <div class="skill-command"><code>使用 social-content，帮我把这篇母稿拆成多平台社媒内容，并保留不同平台格式。</code></div>
+        </article>
+
+        <article class="skill-card mkt-owner">
+          <div class="skill-title"><span>官网 / PH / Landing 文案</span><div class="skill-meta"><span class="tag mkt">运营负责</span><span class="tag doing">当前</span></div></div>
+          <p>写首页、功能页、hero、CTA、value proposition、Product Hunt、demo 区块和产品说明。</p>
+          <div class="skill-command"><code>使用 copywriting，帮我写 OpenComment 的 landing page hero、subheadline、CTA 和 FAQ 文案。</code></div>
+        </article>
+
+        <article class="skill-card mkt-owner">
+          <div class="skill-title"><span>文案编辑与发布前修稿</span><div class="skill-meta"><span class="tag mkt">运营负责</span><span class="tag doing">当前</span></div></div>
+          <p>用 clarity、so what、prove it、specificity、zero risk 等维度检查现有文案。</p>
+          <div class="skill-command"><code>使用 copy-editing，帮我按 Seven Sweeps 检查并改进这段文案。</code></div>
+        </article>
+
+        <article class="skill-card mkt-owner">
+          <div class="skill-title"><span>Launch 策略</span><div class="skill-meta"><span class="tag mkt">运营负责</span><span class="tag doing">当前</span></div></div>
+          <p>规划产品 / 功能发布：pre-launch、launch day、post-launch、owned / rented / borrowed channels。</p>
+          <div class="skill-command"><code>使用 launch-strategy，帮我为这次 OpenComment 功能更新设计 launch plan。</code></div>
+        </article>
+
+        <article class="skill-card mkt-owner">
+          <div class="skill-title"><span>目录平台与外链提交</span><div class="skill-meta"><span class="tag mkt">运营负责</span><span class="tag doing">当前</span></div></div>
+          <p>准备 Product Hunt、CWS、AlternativeTo、Crunchbase、G2、BetaList 等公开入口和素材追踪。</p>
+          <div class="skill-command"><code>使用 directory-submissions，帮我准备 OpenComment 的目录提交素材和 submission tracker。</code></div>
+        </article>
+
+        <article class="skill-card partial-owner">
+          <div class="skill-title"><span>页面转化审计</span><div class="skill-meta"><span class="tag partial">部分涉及</span><span class="tag product">产品 + 运营</span></div></div>
+          <p>检查 homepage、landing page、pricing、feature page 的价值主张、CTA、信任、异议和摩擦点。</p>
+          <div class="skill-command"><code>使用 page-cro，帮我审计这个页面为什么不转化，并给 quick wins 和 test ideas。</code></div>
+        </article>
+
+        <article class="skill-card partial-owner">
+          <div class="skill-title"><span>注册流程优化</span><div class="skill-meta"><span class="tag partial">部分涉及</span><span class="tag product">产品侧</span></div></div>
+          <p>优化 signup、trial、账号创建和 CTA 到注册之间的流失点，属于产品增长协作区。</p>
+          <div class="skill-command"><code>使用 signup-flow-cro，帮我分析 OpenComment 注册流程的阻力和优化建议。</code></div>
+        </article>
+
+        <article class="skill-card partial-owner">
+          <div class="skill-title"><span>新用户激活与 Onboarding</span><div class="skill-meta"><span class="tag partial">部分涉及</span><span class="tag product">产品侧</span></div></div>
+          <p>围绕 first value、aha moment、首次配置公司和 KOL group 的路径做激活优化。</p>
+          <div class="skill-command"><code>使用 onboarding-cro，帮我设计 OpenComment 新用户从注册到第一次有价值评论建议的 onboarding。</code></div>
+        </article>
+
+        <article class="skill-card partial-owner">
+          <div class="skill-title"><span>表单与 Lead Capture</span><div class="skill-meta"><span class="tag partial">部分涉及</span><span class="tag mkt">运营侧</span></div></div>
+          <p>优化 waitlist、demo request、contact form、lead magnet 表单字段、摩擦和转化。</p>
+          <div class="skill-command"><code>使用 form-cro，帮我优化这个 waitlist / demo 表单，让用户更容易提交。</code></div>
+        </article>
+
+        <article class="skill-card future-owner">
+          <div class="skill-title"><span>弹窗 / Banner / Slide-in</span><div class="skill-meta"><span class="tag future">未来打算</span><span class="tag mkt">运营侧</span></div></div>
+          <p>未来流量稳定后，用 popup、banner、slide-in 做轻量转化和 lead capture。</p>
+          <div class="skill-command"><code>使用 popup-cro，帮我设计一个不打扰用户的 newsletter / waitlist popup。</code></div>
+        </article>
+
+        <article class="skill-card future-owner">
+          <div class="skill-title"><span>付费墙 / 升级路径</span><div class="skill-meta"><span class="tag future">未来打算</span><span class="tag product">产品侧</span></div></div>
+          <p>未来有 freemium / paid plan 后，优化 upgrade prompt、feature gate 和付费转化。</p>
+          <div class="skill-command"><code>使用 paywall-upgrade-cro，帮我设计 OpenComment 免费用户升级到付费的提示和页面。</code></div>
+        </article>
+
+        <article class="skill-card mkt-owner">
+          <div class="skill-title"><span>SEO 审计</span><div class="skill-meta"><span class="tag mkt">运营负责</span><span class="tag future">未来打算</span></div></div>
+          <p>审计网站技术 SEO、页面 SEO、索引、关键词和内容基础盘。</p>
+          <div class="skill-command"><code>使用 seo-audit，帮我审计 OpenComment 官网的 SEO 问题和优先级。</code></div>
+        </article>
+
+        <article class="skill-card mkt-owner">
+          <div class="skill-title"><span>AI SEO / GEO</span><div class="skill-meta"><span class="tag mkt">运营负责</span><span class="tag future">未来打算</span></div></div>
+          <p>为 ChatGPT、Claude、Perplexity、AI Overview 等 AI 搜索和 citation 优化内容结构。</p>
+          <div class="skill-command"><code>使用 ai-seo，帮我优化这篇 OpenComment 页面，让它更容易被 AI 搜索理解和引用。</code></div>
+        </article>
+
+        <article class="skill-card partial-owner">
+          <div class="skill-title"><span>网站结构与内链</span><div class="skill-meta"><span class="tag partial">部分涉及</span><span class="tag product">产品 + 运营</span></div></div>
+          <p>规划官网信息架构、use case、alternative pages、blog hub、FAQ 和导航结构。</p>
+          <div class="skill-command"><code>使用 site-architecture，帮我规划 OpenComment 官网的信息架构和内链结构。</code></div>
+        </article>
+
+        <article class="skill-card future-owner">
+          <div class="skill-title"><span>Programmatic SEO</span><div class="skill-meta"><span class="tag future">未来打算</span><span class="tag mkt">运营侧</span></div></div>
+          <p>未来基于行业、竞品、use case、模板库批量生成结构化 SEO 页面。</p>
+          <div class="skill-command"><code>使用 programmatic-seo，帮我设计一组可批量生成的 OpenComment SEO 页面模板。</code></div>
+        </article>
+
+        <article class="skill-card future-owner">
+          <div class="skill-title"><span>Schema / 结构化数据</span><div class="skill-meta"><span class="tag future">未来打算</span><span class="tag product">产品 + 运营</span></div></div>
+          <p>为官网、FAQ、Product、SoftwareApplication、Organization、Review 等页面加结构化数据。</p>
+          <div class="skill-command"><code>使用 schema-markup，帮我为这个 OpenComment 页面生成合适的结构化数据。</code></div>
+        </article>
+
+        <article class="skill-card future-owner">
+          <div class="skill-title"><span>App Store / CWS Listing 审计</span><div class="skill-meta"><span class="tag future">未来打算</span><span class="tag mkt">运营侧</span></div></div>
+          <p>未来如果产品有 Chrome Web Store / app listing，用 ASO 思路优化标题、截图、描述和关键词。</p>
+          <div class="skill-command"><code>使用 aso-audit，帮我审计 OpenComment 的 Chrome Web Store listing 文案和素材。</code></div>
+        </article>
+
+        <article class="skill-card partial-owner">
+          <div class="skill-title"><span>数据追踪与指标体系</span><div class="skill-meta"><span class="tag partial">部分涉及</span><span class="tag product">产品 + 运营</span></div></div>
+          <p>定义事件、UTM、转化、dashboard 和 tracking plan，把增长动作变成可测量信号。</p>
+          <div class="skill-command"><code>使用 analytics-tracking，帮我为 OpenComment 的 LinkedIn -> 官网 -> 注册闭环设计 tracking plan。</code></div>
+        </article>
+
+        <article class="skill-card future-owner">
+          <div class="skill-title"><span>A/B 测试设计</span><div class="skill-meta"><span class="tag future">未来打算</span><span class="tag product">产品侧</span></div></div>
+          <p>未来流量足够后，用实验验证 hero、CTA、pricing、signup、onboarding 的假设。</p>
+          <div class="skill-command"><code>使用 ab-test-setup，帮我设计一个测试 OpenComment 首页 headline 的 A/B experiment。</code></div>
+        </article>
+
+        <article class="skill-card future-owner">
+          <div class="skill-title"><span>广告投放策略</span><div class="skill-meta"><span class="tag future">未来打算</span><span class="tag mkt">运营侧</span></div></div>
+          <p>未来有预算后，设计 Google、LinkedIn、Meta、X 等 paid acquisition campaign。</p>
+          <div class="skill-command"><code>使用 paid-ads，帮我设计一组 LinkedIn Ads campaign 结构、受众和落地页匹配。</code></div>
+        </article>
+
+        <article class="skill-card future-owner">
+          <div class="skill-title"><span>广告创意迭代</span><div class="skill-meta"><span class="tag future">未来打算</span><span class="tag mkt">运营侧</span></div></div>
+          <p>未来做投放时，用多组 hook、角度、视觉、CTA 迭代广告素材。</p>
+          <div class="skill-command"><code>使用 ad-creative，帮我为 OpenComment 生成 10 个广告角度、标题和素材 brief。</code></div>
+        </article>
+
+        <article class="skill-card mkt-owner">
+          <div class="skill-title"><span>营销图片与配图</span><div class="skill-meta"><span class="tag mkt">运营负责</span><span class="tag doing">当前</span></div></div>
+          <p>为 Blog、LinkedIn Article、Product Hunt、CWS、carousel、comparison 图生成视觉 brief 或图片。</p>
+          <div class="skill-command"><code>使用 image，帮我为这篇文章设计一张 LinkedIn / Blog 配图 brief。</code></div>
+        </article>
+
+        <article class="skill-card mkt-owner">
+          <div class="skill-title"><span>视频脚本与 Demo 视频</span><div class="skill-meta"><span class="tag mkt">运营负责</span><span class="tag doing">当前</span></div></div>
+          <p>写 45-60 秒 demo、Product Hunt video、walkthrough、短视频和字幕优先脚本。</p>
+          <div class="skill-command"><code>使用 video，帮我把这个产品流程写成 60 秒 demo 视频脚本和 shot list。</code></div>
+        </article>
+
+        <article class="skill-card mkt-owner">
+          <div class="skill-title"><span>营销想法与增长实验</span><div class="skill-meta"><span class="tag mkt">运营负责</span><span class="tag doing">当前</span></div></div>
+          <p>当不知道下一步做什么时，根据阶段、预算、资源和目标筛 3-5 个增长实验。</p>
+          <div class="skill-command"><code>使用 marketing-ideas，帮我基于 OpenComment 当前阶段提出 5 个低预算增长实验。</code></div>
+        </article>
+
+        <article class="skill-card partial-owner">
+          <div class="skill-title"><span>营销心理与行为机制</span><div class="skill-meta"><span class="tag partial">部分涉及</span><span class="tag mkt">运营侧</span></div></div>
+          <p>用 JTBD、social proof、loss aversion、status quo bias、EAST 等模型解释用户行为。</p>
+          <div class="skill-command"><code>使用 marketing-psychology，帮我分析这个转化阻力背后可能有哪些心理机制。</code></div>
+        </article>
+
+        <article class="skill-card future-owner">
+          <div class="skill-title"><span>Lead Magnet</span><div class="skill-meta"><span class="tag future">未来打算</span><span class="tag mkt">运营侧</span></div></div>
+          <p>未来用 checklist、模板、report、playbook 等换取 email 或 demo 线索。</p>
+          <div class="skill-command"><code>使用 lead-magnets，帮我设计一个面向 healthcare B2B 团队的 OpenComment lead magnet。</code></div>
+        </article>
+
+        <article class="skill-card future-owner">
+          <div class="skill-title"><span>免费工具获客</span><div class="skill-meta"><span class="tag future">未来打算</span><span class="tag mkt">运营侧</span></div></div>
+          <p>未来设计轻量 free tool，用工具型入口承接 SEO、社媒和 lead generation。</p>
+          <div class="skill-command"><code>使用 free-tool-strategy，帮我 brainstorm OpenComment 可以做的免费工具获客点。</code></div>
+        </article>
+
+        <article class="skill-card future-owner">
+          <div class="skill-title"><span>推荐 / Affiliate / 口碑增长</span><div class="skill-meta"><span class="tag future">未来打算</span><span class="tag mkt">运营侧</span></div></div>
+          <p>未来有满意用户后，设计 referral、affiliate、ambassador 或 review incentive。</p>
+          <div class="skill-command"><code>使用 referral-program，帮我设计 OpenComment 早期用户推荐机制。</code></div>
+        </article>
+
+        <article class="skill-card future-owner">
+          <div class="skill-title"><span>社区营销</span><div class="skill-meta"><span class="tag future">未来打算</span><span class="tag mkt">运营侧</span></div></div>
+          <p>未来进入 Reddit、Slack、Discord、Indie Hackers、行业社群时，用非硬广方式建立存在感。</p>
+          <div class="skill-command"><code>使用 community-marketing，帮我设计 OpenComment 在一个 healthcare / B2B 社区里的参与策略。</code></div>
+        </article>
+
+        <article class="skill-card future-owner">
+          <div class="skill-title"><span>联合营销</span><div class="skill-meta"><span class="tag future">未来打算</span><span class="tag mkt">运营侧</span></div></div>
+          <p>未来和顾问、KOL、newsletter、podcast、垂直社区做 webinar、报告或联合内容。</p>
+          <div class="skill-command"><code>使用 co-marketing，帮我设计一个 OpenComment 和 healthcare GTM KOL 的联合营销方案。</code></div>
+        </article>
+
+        <article class="skill-card future-owner">
+          <div class="skill-title"><span>邮件培育流程</span><div class="skill-meta"><span class="tag future">未来打算</span><span class="tag mkt">运营侧</span></div></div>
+          <p>设计 waitlist、welcome、onboarding、nurture、re-engagement、product update 邮件序列。</p>
+          <div class="skill-command"><code>使用 email-sequence，帮我设计 OpenComment waitlist 用户的 5 封 nurture sequence。</code></div>
+        </article>
+
+        <article class="skill-card future-owner">
+          <div class="skill-title"><span>冷邮件 / 主动外联</span><div class="skill-meta"><span class="tag future">未来打算</span><span class="tag mkt">运营侧</span></div></div>
+          <p>未来做 founder / BD / partner outreach 时，用短、具体、低压力的邮件获得回复。</p>
+          <div class="skill-command"><code>使用 cold-email，帮我给这个 healthcare BD lead 写一封低压力的 cold email 和 follow-up。</code></div>
+        </article>
+
+        <article class="skill-card future-owner">
+          <div class="skill-title"><span>销售支持材料</span><div class="skill-meta"><span class="tag future">未来打算</span><span class="tag mkt">运营 + 销售</span></div></div>
+          <p>未来准备 one-pager、demo talk track、objection handling、battle card、case study brief。</p>
+          <div class="skill-command"><code>使用 sales-enablement，帮我为 OpenComment 准备一页 sales one-pager 和 objection handling。</code></div>
+        </article>
+
+        <article class="skill-card future-owner">
+          <div class="skill-title"><span>RevOps / 线索交接</span><div class="skill-meta"><span class="tag future">未来打算</span><span class="tag mkt">运营 + 销售</span></div></div>
+          <p>未来用户池变大后，定义 MQL/SQL、lead scoring、routing、CRM 字段、pipeline 和 SLA。</p>
+          <div class="skill-command"><code>使用 revops，帮我设计 OpenComment 从 waitlist 到 demo 到 trial 的 lead lifecycle。</code></div>
+        </article>
+
+        <article class="skill-card future-owner">
+          <div class="skill-title"><span>定价与包装</span><div class="skill-meta"><span class="tag future">未来打算</span><span class="tag product">产品 + 商业</span></div></div>
+          <p>未来从 beta 到收费时，设计 plan、packaging、usage limits、trial、discount 和价格心理。</p>
+          <div class="skill-command"><code>使用 pricing-strategy，帮我为 OpenComment 设计早期 SaaS pricing 和 packaging 假设。</code></div>
+        </article>
+
+        <article class="skill-card future-owner">
+          <div class="skill-title"><span>流失预防与取消流程</span><div class="skill-meta"><span class="tag future">未来打算</span><span class="tag product">产品 + CS</span></div></div>
+          <p>未来有付费用户后，处理 cancellation、win-back、save offer、失败付款和 churn reason。</p>
+          <div class="skill-command"><code>使用 churn-prevention，帮我设计 OpenComment 用户取消订阅时的 save flow。</code></div>
+        </article>
+      </div>
+    </section>
+
+    <section class="bottom">
+      <article class="panel">
+        <h3>你现在最核心的位置</h3>
+        <p>你不是只在“运营侧”，而是在产品和市场之间做连接。</p>
+        <div class="focus-list">
+          <div class="focus-item">✓ 关键词 / 用户语言发现 -> 内容主题</div>
+          <div class="focus-item">✓ 功能边界 -> Messaging 边界</div>
+          <div class="focus-item">✓ Onboarding 字段 -> Prompt 质量</div>
+          <div class="focus-item">✓ 产品流程 -> Demo / 截图 / Launch 素材</div>
+          <div class="focus-item">✓ LinkedIn 评论 -> 判断 ICP / 是否承接</div>
+          <div class="focus-item">✓ 外链和平台注册 -> 公开入口建设</div>
+          <div class="focus-item">✓ Daily tracker -> comment suggestion 功能优化</div>
+          <div class="focus-item">✓ Bug / CR -> 需求池 / 产品迭代</div>
+        </div>
+      </article>
+
+      <article class="panel">
+        <h3>统一后的学习关键词</h3>
+        <p>按产品发展顺序去学，会比单独搜“运营”或“产品”更清楚。</p>
+        <div class="searches">
+          <span class="tag product">Product Management Basics</span>
+          <span class="tag product">User Research SaaS</span>
+          <span class="tag product">Product Operations</span>
+          <span class="tag product">Growth Product Manager</span>
+          <span class="tag product">Product Analytics</span>
+          <span class="tag mkt">B2B SaaS Product Marketing</span>
+          <span class="tag mkt">B2B Content Marketing</span>
+          <span class="tag mkt">LinkedIn B2B Growth</span>
+          <span class="tag mkt">B2B SaaS Customer Acquisition</span>
+          <span class="tag mkt">Directory Listing Marketing</span>
+          <span class="tag mkt">Social Listening for SEO</span>
+          <span class="tag mkt">Reddit Keyword Research</span>
+          <span class="tag mkt">SaaS Launch Marketing</span>
+          <span class="tag mkt">Marketing Operations</span>
+        </div>
+      </article>
+    </section>
+
+    <section class="panel" style="margin-top: 18px;">
+      <h3>参考来源</h3>
+      <p>用于校准产品与 MKT 职责分类：Atlassian、ProductPlan、Reforge、IBM、Pendo、Amplitude、Product Marketing Alliance、HubSpot 等公开资料。</p>
+      <div class="sources">
+        <a href="https://www.atlassian.com/agile/product-management">Atlassian Product Management</a>
+        <a href="https://www.productplan.com/learn/what-is-product-management/">ProductPlan Product Management</a>
+        <a href="https://www.reforge.com/previews/product/what-does-a-product-manager-do">Reforge PM Responsibilities</a>
+        <a href="https://www.pendo.io/glossary/product-operations/">Pendo Product Ops</a>
+        <a href="https://amplitude.com/explore/analytics/product-analytics-guide">Amplitude Product Analytics</a>
+        <a href="https://www.productmarketingalliance.com/what-is-product-marketing/">Product Marketing Alliance</a>
+        <a href="https://www.hubspot.com/careers/marketing">HubSpot Marketing Teams</a>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
