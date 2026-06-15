@@ -1,0 +1,860 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>OpenComment for LinkedIn: Comment-Led Reach Out Workflow</title>
+  <style>
+    :root {
+      --bg: #f7f8fb;
+      --panel: #ffffff;
+      --ink: #141414;
+      --muted: #5f6673;
+      --line: #e5e7eb;
+      --brand: #111827;
+      --accent: #2563eb;
+      --unique: #0f766e;
+      --overlap: #b45309;
+      --support: #475569;
+      --soft-blue: #eef5ff;
+      --soft-green: #ecfdf5;
+      --soft-amber: #fffbeb;
+      --soft-slate: #f1f5f9;
+      --shadow: 0 16px 40px rgba(15, 23, 42, 0.08);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, "PingFang SC", "Microsoft YaHei", sans-serif;
+      color: var(--ink);
+      background: var(--bg);
+      line-height: 1.6;
+    }
+
+    a {
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: 650;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    .page {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 48px 28px 72px;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: 1.4fr 0.8fr;
+      gap: 28px;
+      align-items: stretch;
+      margin-bottom: 28px;
+    }
+
+    .hero-main,
+    .hero-side,
+    .section {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      box-shadow: var(--shadow);
+    }
+
+    .hero-main {
+      padding: 36px;
+    }
+
+    .hero-side {
+      padding: 28px;
+    }
+
+    .eyebrow {
+      margin: 0 0 12px;
+      color: var(--accent);
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    h1,
+    h2,
+    h3 {
+      margin: 0;
+      line-height: 1.18;
+      color: var(--brand);
+    }
+
+    h1 {
+      max-width: 820px;
+      font-size: 42px;
+      letter-spacing: 0;
+    }
+
+    h2 {
+      font-size: 26px;
+      margin-bottom: 14px;
+    }
+
+    h3 {
+      font-size: 18px;
+      margin-bottom: 8px;
+    }
+
+    p {
+      margin: 0;
+      color: var(--muted);
+    }
+
+    .hero-copy {
+      max-width: 840px;
+      margin-top: 18px;
+      font-size: 18px;
+    }
+
+    .positioning {
+      margin-top: 26px;
+      padding: 18px 20px;
+      border-left: 4px solid var(--accent);
+      background: var(--soft-blue);
+      border-radius: 6px;
+      color: #1e3a8a;
+      font-size: 18px;
+      font-weight: 760;
+    }
+
+    .side-list {
+      display: grid;
+      gap: 14px;
+      margin-top: 18px;
+    }
+
+    .side-item {
+      padding: 14px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fafafa;
+    }
+
+    .side-item strong {
+      display: block;
+      color: var(--brand);
+      margin-bottom: 4px;
+    }
+
+    .legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 24px;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 7px 10px;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 760;
+      border: 1px solid transparent;
+      white-space: nowrap;
+    }
+
+    .pill.unique {
+      color: var(--unique);
+      background: var(--soft-green);
+      border-color: #99f6e4;
+    }
+
+    .pill.overlap {
+      color: var(--overlap);
+      background: var(--soft-amber);
+      border-color: #fde68a;
+    }
+
+    .pill.support {
+      color: var(--support);
+      background: var(--soft-slate);
+      border-color: #cbd5e1;
+    }
+
+    .section {
+      margin-top: 28px;
+      padding: 30px;
+      overflow: hidden;
+    }
+
+    .section-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 24px;
+      align-items: flex-start;
+      margin-bottom: 20px;
+    }
+
+    .section-head p {
+      max-width: 620px;
+    }
+
+    .table-wrap {
+      overflow-x: auto;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 980px;
+    }
+
+    th,
+    td {
+      padding: 14px 16px;
+      border-bottom: 1px solid var(--line);
+      text-align: left;
+      vertical-align: top;
+    }
+
+    th {
+      color: #374151;
+      background: #f9fafb;
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    td {
+      color: #343a46;
+      font-size: 14px;
+    }
+
+    tr:last-child td {
+      border-bottom: 0;
+    }
+
+    .tag {
+      display: inline-flex;
+      padding: 5px 9px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
+    .tag.unique {
+      color: var(--unique);
+      background: var(--soft-green);
+    }
+
+    .tag.overlap {
+      color: var(--overlap);
+      background: var(--soft-amber);
+    }
+
+    .tag.support {
+      color: var(--support);
+      background: var(--soft-slate);
+    }
+
+    .flow {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 18px;
+    }
+
+    .step {
+      position: relative;
+      min-height: 168px;
+      padding: 18px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+    }
+
+    .step-num {
+      display: inline-grid;
+      place-items: center;
+      width: 28px;
+      height: 28px;
+      margin-bottom: 10px;
+      border-radius: 50%;
+      background: var(--brand);
+      color: #fff;
+      font-size: 13px;
+      font-weight: 850;
+    }
+
+    .step h3 {
+      margin-bottom: 8px;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .card {
+      padding: 18px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+    }
+
+    .card ul,
+    .plain-list {
+      margin: 12px 0 0;
+      padding-left: 18px;
+      color: #374151;
+    }
+
+    .card li,
+    .plain-list li {
+      margin: 7px 0;
+    }
+
+    .callout {
+      margin-top: 18px;
+      padding: 18px 20px;
+      border: 1px solid #bfdbfe;
+      border-radius: 8px;
+      background: var(--soft-blue);
+    }
+
+    .callout strong {
+      color: #1e3a8a;
+    }
+
+    .tool-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .footer-note {
+      margin-top: 24px;
+      color: #6b7280;
+      font-size: 13px;
+    }
+
+    @media (max-width: 900px) {
+      .page {
+        padding: 28px 16px 48px;
+      }
+
+      .hero,
+      .flow,
+      .cards,
+      .tool-grid {
+        grid-template-columns: 1fr;
+      }
+
+      h1 {
+        font-size: 32px;
+      }
+
+      .hero-main,
+      .hero-side,
+      .section {
+        padding: 22px;
+      }
+
+      .section-head {
+        display: block;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <section class="hero">
+      <div class="hero-main">
+        <p class="eyebrow">OpenComment for LinkedIn</p>
+        <h1>Comment-Led Reach Out Workflow</h1>
+        <p class="hero-copy">
+          OpenComment helps B2B teams discover relevant LinkedIn contacts, track their posts, and reach out through high-quality public comments that are easier to see, easier to trust, and easier to continue than cold email or generic LinkedIn DMs.
+        </p>
+        <div class="positioning">
+          Other tools help you build the list. OpenComment helps you reach out where your contacts are already paying attention.
+        </div>
+        <div class="legend">
+          <span class="pill unique">Unique: OpenComment 主工具</span>
+          <span class="pill overlap">Overlap: 与其他工具重叠</span>
+          <span class="pill support">Complementary: 外部工具更强</span>
+        </div>
+      </div>
+      <aside class="hero-side">
+        <h2>两条主线</h2>
+        <div class="side-list">
+          <div class="side-item">
+            <strong>Influence Contact Reach Out</strong>
+            <p>找到目标客户可能关注的行业声音：KOL、顾问、媒体、社区主理人、合作伙伴和竞品相关账号，并通过高质量评论进入公开对话。</p>
+          </div>
+          <div class="side-item">
+            <strong>Target Contact Reach Out</strong>
+            <p>找到潜在客户、展会发帖人和目标账号，用 LinkedIn 评论作为更直接、更容易被看见的第一触达方式。</p>
+          </div>
+        </div>
+      </aside>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">Route 1</p>
+          <h2>LinkedIn Contact 路线：Influence Contacts</h2>
+        </div>
+        <p>这里弱化 KOL 这个概念，统一叫 Contact。原因是系统生成的人未必都是严格 KOL，可能是顾问、媒体、合作伙伴、竞品账号、行业从业者或潜在传播节点。</p>
+      </div>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>阶段</th>
+              <th>功能点</th>
+              <th>判断</th>
+              <th>重叠 / 相关工具</th>
+              <th>具体说明</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>找 contacts</td>
+              <td>根据公司信息、目标行业、关键词生成 LinkedIn contact pool</td>
+              <td><span class="tag overlap">部分重叠</span></td>
+              <td><a href="https://business.linkedin.com/sales-solutions/sales-navigator" target="_blank" rel="noreferrer">Sales Navigator</a>、<a href="https://www.favikon.com/" target="_blank" rel="noreferrer">Favikon</a>、<a href="https://www.easykol.com/" target="_blank" rel="noreferrer">EasyKOL</a></td>
+              <td>OpenComment 可以直接生成初始 contact pool；但深度 creator 数据、受众画像和影响力排名不是第一阶段主战场。</td>
+            </tr>
+            <tr>
+              <td>导入 contacts</td>
+              <td>导入外部 LinkedIn URL / CSV</td>
+              <td><span class="tag support">补充型</span></td>
+              <td><a href="https://www.clay.com/" target="_blank" rel="noreferrer">Clay</a>、Google Sheets、Airtable</td>
+              <td>外部工具找完人后，OpenComment 承接名单进入 LinkedIn comment-led reach out workflow。</td>
+            </tr>
+            <tr>
+              <td>Contact 分组</td>
+              <td>KOL、Advisor、Partner、Competitor、Media、Community、Target Lead 等分组</td>
+              <td><span class="tag unique">Unique</span></td>
+              <td>CRM、Airtable</td>
+              <td>外部工具也能分组，但 OpenComment 的分组直接连接后续监控、评论策略和互动记录。</td>
+            </tr>
+            <tr>
+              <td>活动抓取</td>
+              <td>抓取 contacts 最近 LinkedIn posts，并形成 Activities</td>
+              <td><span class="tag unique">Unique</span></td>
+              <td>LinkedIn 手动查看、<a href="https://taplio.com/" target="_blank" rel="noreferrer">Taplio</a> 部分重叠</td>
+              <td>OpenComment 的重点不是泛浏览，而是把 contact 最新帖子变成可处理的评论机会。</td>
+            </tr>
+            <tr>
+              <td>帖子筛选</td>
+              <td>判断哪些帖子值得评论，哪些只观察</td>
+              <td><span class="tag unique">Unique</span></td>
+              <td><a href="https://chatgpt.com/" target="_blank" rel="noreferrer">ChatGPT</a> 可辅助</td>
+              <td>结合业务背景、contact 类型、关键词和目标客户相关度判断是否值得互动。</td>
+            </tr>
+            <tr>
+              <td>评论建议</td>
+              <td>基于原帖上下文生成 comment draft</td>
+              <td><span class="tag overlap">重叠但更场景化</span></td>
+              <td><a href="https://chatgpt.com/" target="_blank" rel="noreferrer">ChatGPT</a>、<a href="https://taplio.com/" target="_blank" rel="noreferrer">Taplio</a>、<a href="https://www.supergrow.ai/" target="_blank" rel="noreferrer">Supergrow</a></td>
+              <td>单条评论生成别人也能做；OpenComment 的优势是基于 tracked person、post、business context 和 group strategy。</td>
+            </tr>
+            <tr>
+              <td>人工审核</td>
+              <td>Accept / Reject / Edit 评论建议</td>
+              <td><span class="tag unique">Unique</span></td>
+              <td>一般 AI 写作工具没有闭环</td>
+              <td>让产品区别于 auto-comment bot，强调 human-reviewed 和品牌安全。</td>
+            </tr>
+            <tr>
+              <td>发布与记录</td>
+              <td>发布到 LinkedIn 后保存 comment URL</td>
+              <td><span class="tag unique">Unique</span></td>
+              <td>CRM / Sheet 可手动记</td>
+              <td>把评论结果和原 activity 绑定，形成可复盘的互动历史。</td>
+            </tr>
+            <tr>
+              <td>反馈学习</td>
+              <td>Accepted / Rejected items 改善未来建议</td>
+              <td><span class="tag unique">Unique</span></td>
+              <td>ChatGPT 没有自然记录链路</td>
+              <td>用户越用，系统越知道什么评论适合这个品牌、市场和对话场景。</td>
+            </tr>
+            <tr>
+              <td>关系升级</td>
+              <td>Contact 回复后转 DM / email / partner outreach</td>
+              <td><span class="tag support">补充型</span></td>
+              <td>LinkedIn DM、Email、CRM</td>
+              <td>OpenComment 提供上下文和互动记录，正式沟通仍可在 LinkedIn、email 或 CRM 完成。</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">Route 2</p>
+          <h2>LinkedIn Contact 路线：Target Leads</h2>
+        </div>
+        <p>目标是找到潜在客户，并在 cold email 或 LinkedIn DM 前，通过公开评论让对方先见过你。</p>
+      </div>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>阶段</th>
+              <th>功能点</th>
+              <th>判断</th>
+              <th>重叠 / 相关工具</th>
+              <th>具体说明</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>找目标公司</td>
+              <td>按行业、职位、公司类型找 leads</td>
+              <td><span class="tag support">补充型</span></td>
+              <td><a href="https://business.linkedin.com/sales-solutions/sales-navigator" target="_blank" rel="noreferrer">Sales Navigator</a>、<a href="https://www.apollo.io/" target="_blank" rel="noreferrer">Apollo</a>、<a href="https://www.clay.com/" target="_blank" rel="noreferrer">Clay</a>、<a href="https://www.zoominfo.com/" target="_blank" rel="noreferrer">ZoomInfo</a></td>
+              <td>数据库工具在复杂筛选和 enrichment 上更强，OpenComment 不必硬抢这个环节。</td>
+            </tr>
+            <tr>
+              <td>找 LinkedIn leads</td>
+              <td>根据 LinkedIn 搜索、关键词、目标角色发现人</td>
+              <td><span class="tag overlap">部分重叠</span></td>
+              <td><a href="https://business.linkedin.com/sales-solutions/sales-navigator" target="_blank" rel="noreferrer">Sales Navigator</a>、LinkedIn 搜索</td>
+              <td>OpenComment 可以做轻量发现，但 Sales Navigator 更适合复杂筛选。</td>
+            </tr>
+            <tr>
+              <td>导入 leads</td>
+              <td>导入 LinkedIn URL、公司、人名、CSV</td>
+              <td><span class="tag support">补充型</span></td>
+              <td><a href="https://www.clay.com/" target="_blank" rel="noreferrer">Clay</a>、<a href="https://www.apollo.io/" target="_blank" rel="noreferrer">Apollo</a>、CRM</td>
+              <td>外部工具负责 enrichment，OpenComment 接入后把这些 contacts 转成可评论触达对象。</td>
+            </tr>
+            <tr>
+              <td>Target Contact 分组</td>
+              <td>Target Leads、Event Leads、Partners、Customers、Competitors、Influence Contacts</td>
+              <td><span class="tag unique">Unique</span></td>
+              <td>CRM、Sheet</td>
+              <td>OpenComment 分组不是为了销售管道，而是为了决定监控和评论策略。</td>
+            </tr>
+            <tr>
+              <td>抓取发帖</td>
+              <td>跟踪目标 lead 最近 LinkedIn posts</td>
+              <td><span class="tag unique">Unique</span></td>
+              <td>LinkedIn 手动查看</td>
+              <td>不只是找到 lead，而是知道这个人最近在关心什么。</td>
+            </tr>
+            <tr>
+              <td>判断 reach out 机会</td>
+              <td>判断这个 lead 的哪条帖子适合评论</td>
+              <td><span class="tag unique">Unique</span></td>
+              <td><a href="https://chatgpt.com/" target="_blank" rel="noreferrer">ChatGPT</a> 无法主动监控</td>
+              <td>重点是“什么时候出手”，不是只写什么。</td>
+            </tr>
+            <tr>
+              <td>评论触达</td>
+              <td>为 lead 的帖子生成自然评论</td>
+              <td><span class="tag overlap">重叠但更贴近触达</span></td>
+              <td><a href="https://chatgpt.com/" target="_blank" rel="noreferrer">ChatGPT</a>、<a href="https://taplio.com/" target="_blank" rel="noreferrer">Taplio</a></td>
+              <td>评论本身就是第一次 reach out；如果对方回复，第二次评论可以自然补充观点、引出产品或邀请继续聊。</td>
+            </tr>
+            <tr>
+              <td>记录触点</td>
+              <td>保存 comment URL、是否已互动、是否值得 follow-up</td>
+              <td><span class="tag unique">Unique</span></td>
+              <td>CRM 可记录，但不天然连接 LinkedIn 评论</td>
+              <td>把评论变成 sales / BD 流程中的正式 touchpoint。</td>
+            </tr>
+            <tr>
+              <td>生成 follow-up angle</td>
+              <td>根据评论和原帖，给邮件/DM 提供开场角度</td>
+              <td><span class="tag overlap">部分重叠</span></td>
+              <td><a href="https://www.instantly.ai/" target="_blank" rel="noreferrer">Instantly</a>、<a href="https://www.lavender.ai/" target="_blank" rel="noreferrer">Lavender</a>、<a href="https://chatgpt.com/" target="_blank" rel="noreferrer">ChatGPT</a></td>
+              <td>OpenComment 拥有真实互动上下文，因此 follow-up 更自然。</td>
+            </tr>
+            <tr>
+              <td>正式 outreach</td>
+              <td>发 email / LinkedIn DM / meeting invite</td>
+              <td><span class="tag support">补充型</span></td>
+              <td><a href="https://www.instantly.ai/" target="_blank" rel="noreferrer">Instantly</a>、<a href="https://www.lemlist.com/" target="_blank" rel="noreferrer">Lemlist</a>、<a href="https://www.apollo.io/" target="_blank" rel="noreferrer">Apollo</a>、LinkedIn DM</td>
+              <td>OpenComment 不替代邮件发送工具，而是让邮件/DM 变成评论互动后的二次跟进，而不是完全冷启动。</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">Strong Use Case</p>
+          <h2>展会 Contacts：OpenComment 可以独立完成的强场景</h2>
+        </div>
+        <p>用户不需要先准备完整名单。输入展会名称后，OpenComment 可以通过 LinkedIn 展会 tag、关键词和近期帖子发现发帖人。发帖人可能是 lead、speaker、researcher、partner、sponsor、exhibitor 或 KOL，因此统一称为 conference contacts。</p>
+      </div>
+
+      <div class="flow">
+        <div class="step">
+          <span class="step-num">1</span>
+          <h3>输入 Conference</h3>
+          <p>Conference name、group name、keywords、date range、result limit。</p>
+        </div>
+        <div class="step">
+          <span class="step-num">2</span>
+          <h3>检索相关 Posts</h3>
+          <p>自动生成 conference tags、hashtag 和 keyword combinations，检索 LinkedIn 相关帖子。</p>
+        </div>
+        <div class="step">
+          <span class="step-num">3</span>
+          <h3>提取 Authors</h3>
+          <p>从帖子中提取发帖人，并初步判断 speaker、sponsor、exhibitor、buyer、partner、researcher 或 KOL。</p>
+        </div>
+        <div class="step">
+          <span class="step-num">4</span>
+          <h3>评论触达</h3>
+          <p>加入 conference reachout group，生成评论建议，人工审核后在 LinkedIn 上互动。</p>
+        </div>
+      </div>
+
+      <div class="callout">
+        <strong>展会场景卖点：</strong>
+        Enter a conference name. OpenComment finds relevant LinkedIn posts, identifies the authors, and helps you reach out through contextual comments that are likely to be seen during the event cycle.
+      </div>
+
+      <div class="table-wrap" style="margin-top: 20px;">
+        <table>
+          <thead>
+            <tr>
+              <th>阶段</th>
+              <th>功能点</th>
+              <th>判断</th>
+              <th>重叠 / 相关工具</th>
+              <th>具体说明</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>输入展会名称</td>
+              <td>Conference Name + Keywords + Date Range</td>
+              <td><span class="tag unique">Unique</span></td>
+              <td><a href="https://business.linkedin.com/sales-solutions/sales-navigator" target="_blank" rel="noreferrer">Sales Navigator</a> 没有这个闭环</td>
+              <td>用户不用先准备名单，只需输入展会名称和关键词。</td>
+            </tr>
+            <tr>
+              <td>生成 query</td>
+              <td>自动生成 conference tags / hashtag / keyword combinations</td>
+              <td><span class="tag unique">Unique</span></td>
+              <td>手动 LinkedIn 搜索可替代，但低效</td>
+              <td>这是把展会变成 search campaign 的关键。</td>
+            </tr>
+            <tr>
+              <td>检索 posts</td>
+              <td>找包含展会 tag / keyword 的 LinkedIn posts</td>
+              <td><span class="tag unique">Unique</span></td>
+              <td>LinkedIn 手动搜索、<a href="https://apify.com/" target="_blank" rel="noreferrer">Apify</a> 部分重叠</td>
+              <td>OpenComment 把检索结果直接接入后续评论 workflow。</td>
+            </tr>
+            <tr>
+              <td>找到发帖人</td>
+              <td>从 posts 中提取 authors</td>
+              <td><span class="tag unique">Unique</span></td>
+              <td><a href="https://www.clay.com/" target="_blank" rel="noreferrer">Clay</a>、<a href="https://phantombuster.com/" target="_blank" rel="noreferrer">PhantomBuster</a> 可抓取，但非业务闭环</td>
+              <td>发帖人天然对这个展会或主题有兴趣，可以先作为 conference contacts，再进一步判断是否是 lead、KOL 或 partner。</td>
+            </tr>
+            <tr>
+              <td>判断 lead 类型</td>
+              <td>Speaker、Sponsor、Exhibitor、Researcher、Buyer、Partner、KOL</td>
+              <td><span class="tag overlap">部分重叠</span></td>
+              <td><a href="https://www.clay.com/" target="_blank" rel="noreferrer">Clay</a> AI enrichment</td>
+              <td>OpenComment 可以根据 post 内容和 profile 做轻分类，深度 enrichment 可交给 Clay。</td>
+            </tr>
+            <tr>
+              <td>加入 group</td>
+              <td>自动创建 CVPR 2026 Reachout 等 group</td>
+              <td><span class="tag unique">Unique</span></td>
+              <td>CRM / Airtable 可做，但不连接评论</td>
+              <td>这个 group 后续可以持续监控和评论。</td>
+            </tr>
+            <tr>
+              <td>评论触达</td>
+              <td>对相关展会 posts 生成评论建议</td>
+              <td><span class="tag unique">Unique</span></td>
+              <td><a href="https://chatgpt.com/" target="_blank" rel="noreferrer">ChatGPT</a> 可写，但不连接 search / post / group</td>
+              <td>从找到帖子到评论互动，一条链完成。</td>
+            </tr>
+            <tr>
+              <td>Campaign history</td>
+              <td>保存搜索历史、结果、已评论对象</td>
+              <td><span class="tag unique">Unique</span></td>
+              <td>Sheet 可手动记</td>
+              <td>方便复盘每场展会的 reach-out campaign。</td>
+            </tr>
+            <tr>
+              <td>后续 outreach</td>
+              <td>发 DM / email / 约见面</td>
+              <td><span class="tag support">补充型</span></td>
+              <td><a href="https://www.instantly.ai/" target="_blank" rel="noreferrer">Instantly</a>、LinkedIn DM、<a href="https://www.apollo.io/" target="_blank" rel="noreferrer">Apollo</a>、<a href="https://www.hubspot.com/" target="_blank" rel="noreferrer">HubSpot</a></td>
+              <td>OpenComment 提供真实评论互动上下文，后续触达仍可用外部工具。</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">Tool Relationship</p>
+          <h2>工具关系总表</h2>
+        </div>
+        <p>这张表用于讲清楚 OpenComment 不抢哪些工具的主价值，以及自己真正独特的步骤在哪里。</p>
+      </div>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>工具</th>
+              <th>主要强项</th>
+              <th>和 OpenComment 重叠的地方</th>
+              <th>OpenComment 更独特的地方</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><a href="https://business.linkedin.com/sales-solutions/sales-navigator" target="_blank" rel="noreferrer">Sales Navigator</a></td>
+              <td>找 B2B 人和公司</td>
+              <td>找 leads、筛选职位、行业、公司</td>
+              <td>不负责基于帖子评论触达，也不记录 comment workflow。</td>
+            </tr>
+            <tr>
+              <td><a href="https://www.apollo.io/" target="_blank" rel="noreferrer">Apollo</a></td>
+              <td>找邮箱、公司数据、sequence</td>
+              <td>找 leads、发邮件</td>
+              <td>不负责 LinkedIn post monitoring + comment-led reach out。</td>
+            </tr>
+            <tr>
+              <td><a href="https://www.clay.com/" target="_blank" rel="noreferrer">Clay</a></td>
+              <td>数据 enrichment、AI research、workflow</td>
+              <td>lead research、分类、补数据</td>
+              <td>不专注 LinkedIn 评论触达闭环。</td>
+            </tr>
+            <tr>
+              <td><a href="https://www.instantly.ai/" target="_blank" rel="noreferrer">Instantly</a></td>
+              <td>cold email outreach</td>
+              <td>lead database、发邮件</td>
+              <td>不解决发邮件前的 LinkedIn public familiarity。</td>
+            </tr>
+            <tr>
+              <td><a href="https://taplio.com/" target="_blank" rel="noreferrer">Taplio</a></td>
+              <td>LinkedIn 内容创作和增长</td>
+              <td>评论建议、LinkedIn engagement</td>
+              <td>OpenComment 更聚焦 contact tracking + comment-led reach out，不是个人品牌内容工具。</td>
+            </tr>
+            <tr>
+              <td><a href="https://www.favikon.com/" target="_blank" rel="noreferrer">Favikon</a></td>
+              <td>KOL discovery 和 creator 数据</td>
+              <td>找 KOL</td>
+              <td>不负责把 KOL 的帖子持续转成评论机会。</td>
+            </tr>
+            <tr>
+              <td><a href="https://www.easykol.com/" target="_blank" rel="noreferrer">EasyKOL</a></td>
+              <td>找 creator / 邮箱</td>
+              <td>KOL discovery</td>
+              <td>OpenComment 更偏 LinkedIn post-based reach out。</td>
+            </tr>
+            <tr>
+              <td><a href="https://phantombuster.com/" target="_blank" rel="noreferrer">PhantomBuster</a> / <a href="https://apify.com/" target="_blank" rel="noreferrer">Apify</a></td>
+              <td>抓取 LinkedIn 数据</td>
+              <td>post / profile scraping</td>
+              <td>OpenComment 把抓取结果产品化成 campaign、group、comment、history。</td>
+            </tr>
+            <tr>
+              <td><a href="https://chatgpt.com/" target="_blank" rel="noreferrer">ChatGPT</a></td>
+              <td>单次生成评论 / 邮件</td>
+              <td>评论文案生成</td>
+              <td>没有名单、帖子、分组、评论记录、反馈闭环。</td>
+            </tr>
+            <tr>
+              <td><a href="https://www.hubspot.com/" target="_blank" rel="noreferrer">HubSpot</a> / CRM / Sheet</td>
+              <td>记录名单和状态</td>
+              <td>分组、记录</td>
+              <td>不会主动发现 posts，也不会生成评论建议。</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">Messaging</p>
+          <h2>最终包装方式</h2>
+        </div>
+      </div>
+
+      <div class="cards">
+        <div class="card">
+          <h3>OpenComment Unique</h3>
+          <ul>
+            <li>Conference name -> LinkedIn posts -> authors -> comments</li>
+            <li>Contact group-based tracking</li>
+            <li>LinkedIn post monitoring</li>
+            <li>Post relevance scoring</li>
+            <li>Human-reviewed Accept / Reject</li>
+            <li>Comment URL recording</li>
+            <li>Campaign history</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>OpenComment Overlap</h3>
+          <ul>
+            <li>找 contacts / KOL / leads</li>
+            <li>生成评论</li>
+            <li>生成 follow-up 文案</li>
+            <li>分组管理</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>Partner Tools</h3>
+          <ul>
+            <li>邮箱查找：Apollo、Hunter</li>
+            <li>数据 enrichment：Clay、ZoomInfo</li>
+            <li>邮件群发：Instantly、Lemlist</li>
+            <li>CRM pipeline：HubSpot、Pipedrive</li>
+            <li>深度 influencer 数据：Favikon、HypeAuditor、Modash</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="callout">
+        <strong>Recommended positioning:</strong>
+        OpenComment is not just a LinkedIn lead finder or AI comment writer. It is a comment-led reach out workflow that turns relevant contacts, target leads, and conference posts into trackable public outreach opportunities.
+      </div>
+
+      <p class="footer-note">
+        Note: Tool links point to official websites. Pricing and feature details may change; use official pricing pages for final buyer-facing materials.
+      </p>
+    </section>
+  </main>
+</body>
+</html>
